@@ -33,6 +33,7 @@ const theme = createTheme();
 
 export default function Register({setIsLogin}) {
   const [error, setError] = React.useState('');
+  const [success, setSuccess] = React.useState('');
   const [loading, setLoading] = React.useState(false);
   const { signup } = useAuth();
 
@@ -43,12 +44,17 @@ export default function Register({setIsLogin}) {
     console.log({
       email: data.get('email'),
       password: data.get('password'),
+      name: data.get('firstName')
     });
+
+    const displayName = data.get('firstName').concat(' ', data.get('lastName'));
 
     try {
       setError('');
+      setSuccess('');
       setLoading(true);
-      await signup(data.get('email'), data.get('password'));
+      await signup(data.get('email'), data.get('password'), displayName);
+      setSuccess('Succesfully Singed Up! You can login now');
     } catch (e) {
       setError(e.message);
     }
@@ -81,6 +87,7 @@ export default function Register({setIsLogin}) {
             Sign up
           </Typography>
           { error && <Alert severity='error'>{error}</Alert> }
+          { success && <Alert severy='success'>{success}</Alert> }
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>

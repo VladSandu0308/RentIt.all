@@ -14,6 +14,7 @@ import LockResetIcon from '@mui/icons-material/LockReset';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import GoogleButton from 'react-google-button';
 
 import { useAuth } from '../context/UserAuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -39,12 +40,27 @@ export default function Login({setIsLogin}) {
   const [passwordReset, setPasswordReset] = React.useState(false);
   const [message, setMessage] = React.useState('');
 
-  const { login, resetPassword } = useAuth();
+  const { login, resetPassword, google } = useAuth();
 
   const navigate = useNavigate();
 
+  const handleGoogle = async (event) => {
+    event.preventDefault();
 
-  const handleSubmit = async (event) => {
+    try {
+      setError('');
+      setLoading(true);
+      await google();
+      navigate("/profile");
+    } catch (e) {
+      setError(e.message);
+    }
+
+    setLoading(false);
+
+  }
+
+  const handleLogin = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
@@ -161,7 +177,7 @@ export default function Login({setIsLogin}) {
             Sign in
           </Typography>
           { error && <Alert severity='error'>{error}</Alert> }
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={handleLogin} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
@@ -195,6 +211,7 @@ export default function Login({setIsLogin}) {
             >
               Sign In
             </Button>
+            <GoogleButton className='mx-auto' onClick={handleGoogle} />
             <Grid container>
               <Grid item xs>
                 <Link onClick={() => setPasswordReset(true)} tabIndex={0} component="button">
