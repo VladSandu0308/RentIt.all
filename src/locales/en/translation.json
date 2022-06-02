@@ -1,4 +1,15 @@
 {
   "password": "Pasword",
-  "signup": "Don't have an account? Sign Up Here"
+  "no-account": "Don't have an account? Sign up here!",
+  "forgot-password": "Forgot your password?",
+  "login": "Sign In",
+  "first-name": "First Name",
+  "last-name": "Last Name",
+  "phone": "Phone Number",
+  "confirm-password": "Confirm password",
+  "signup": "Sign Up",
+  "already-account": "Already have an account? Sign in here!",
+  "google-login": "Sign in with Google",
+  "google-signup": "Sign up with Google"
+
 }
