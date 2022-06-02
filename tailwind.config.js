@@ -4,8 +4,25 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        primary: '#A3CDC8',
+        secondary: '#EDE6DB',
+      },
+      gridTemplateRows: {
+        '12': 'repeat(12, minmax(0, 1fr))',
+      },
+      gridRow: {
+        'span-13': 'span 13 / span 13',
+        'span-9': 'span 9 / span 9',
+      },
+      boxShadow: {
+        '3xl': '0 7px 5px  rgba(0, 0, 0, 0.25)',
+      },
       backgroundImage: {
         'login': "url('/src/images/background.jpg')",
+      },
+      fontFamily: {
+        'ultra': ['Ultra']
       }
     },
   },

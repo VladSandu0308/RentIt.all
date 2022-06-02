@@ -3,6 +3,7 @@
   "no-account": "Încă nu ai cont? Fă-ți unul chiar acum!",
   "forgot-password": "Ți-ai uitat parola?",
   "login": "Conectare",
+  "logout": "Delogheaza-te",
   "first-name": "Prenume",
   "last-name": "Nume",
   "phone": "Număr de telefon",
@@ -10,5 +11,14 @@
   "signup": "Înregistreză-te",
   "already-account": "Ai deja cont? Conectează-te chiar acum!",
   "google-login": "Conecteaza-te cu Google",
-  "google-signup": "Înregistreză-te cu Google"
+  "google-signup": "Înregistreză-te cu Google",
+  "password-match": "Parolele nu se potrivesc",
+  "error": "S-a intamplat o eroare",
+  "update-info-title": "Actualizeaza informatile personale",
+  "update-info-subtitle": "Astfel gazda te va putea cunoaste mai bine.",
+  "say-sth-ab-yourself": "Spune-ne ceva despre tine:",
+  "your-interest": "Care sunt interesele tale?",
+  "your-purpose": "Care este scopul tau pe acest site?",
+  "upload-profile-picture": "Uploadeaza o noua poza de profil",
+  "delete-current-profile-picture": "Sterge poza curenta"
 }

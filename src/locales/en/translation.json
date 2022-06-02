@@ -3,6 +3,7 @@
   "no-account": "Don't have an account? Sign up here!",
   "forgot-password": "Forgot your password?",
   "login": "Sign In",
+  "logout": "Sign Out",
   "first-name": "First Name",
   "last-name": "Last Name",
   "phone": "Phone Number",
@@ -10,6 +11,15 @@
   "signup": "Sign Up",
   "already-account": "Already have an account? Sign in here!",
   "google-login": "Sign in with Google",
-  "google-signup": "Sign up with Google"
+  "google-signup": "Sign up with Google",
+  "password-match": "Passwords do not match",
+  "error": "Something went wrong",
+  "update-info-title": "Update your profile information",
+  "update-info-subtitle": "This way the host knows more about you.",
+  "say-sth-ab-yourself": "Say something about yourself:",
+  "your-interest": "What are your interests?",
+  "your-purpose": "What is your purpose?",
+  "upload-profile-picture": "Upload a new profile picture",
+  "delete-current-profile-picture": "Delete current profile picture"
 
 }
