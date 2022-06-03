@@ -30,7 +30,7 @@ const Register = () => {
       setError('');
       await signup(data.email, data.password, data.name);
       await login(data.email, data.password);
-      navigate("/updateProfile");
+      navigate("/updateProfile", {state: {profile: data}});
     } catch (e) {
       setError(e.message);
       console.log("Error: " + e);
@@ -53,7 +53,7 @@ const Register = () => {
               <p class="font-bold">{t("error")}</p>
               <p class="text-sm">{error}</p>
             </div>
-          }
+        }
         <div className='mt-4 mx-auto flex'>
           <form className='flex flex-col' onSubmit={handleSubmit(onSubmit)}>
             <div className='mb-4 relative flex flex-row gap-6'>

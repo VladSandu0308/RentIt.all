@@ -20,6 +20,8 @@
   "your-interest": "What are your interests?",
   "your-purpose": "What is your purpose?",
   "upload-profile-picture": "Upload a new profile picture",
-  "delete-current-profile-picture": "Delete current profile picture"
+  "delete-current-profile-picture": "Delete current profile picture",
+  "type-here": "Type here...",
+  "submit": "Submit"
 
 }

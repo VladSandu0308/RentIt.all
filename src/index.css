@@ -16,3 +16,12 @@ select:-webkit-autofill:focus {
   -webkit-box-shadow: 0 0 0px 1000px #233C3B inset;
   transition: background-color 5000s ease-in-out 0s;
 }
+
+.big-text {
+  @apply w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-primary/70 bg-clip-padding border border-solid border-gray-300
+  rounded-xl
+  transition
+  ease-in-out
+  m-0
+  focus:text-gray-700 focus:bg-secondary focus:border-primary focus:outline-none 
+}
