@@ -10,6 +10,7 @@ module.exports = {
       },
       gridTemplateRows: {
         '12': 'repeat(12, minmax(0, 1fr))',
+        '9': 'repeat(9, minmax(0, 1fr))',
       },
       gridRow: {
         'span-13': 'span 13 / span 13',

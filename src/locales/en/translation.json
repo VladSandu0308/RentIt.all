@@ -22,6 +22,8 @@
   "upload-profile-picture": "Upload a new profile picture",
   "delete-current-profile-picture": "Delete current profile picture",
   "type-here": "Type here...",
-  "submit": "Submit"
+  "submit": "Submit",
+  "host-functions": "Host Functions",
+  "search-house": "Search House"
 
 }
