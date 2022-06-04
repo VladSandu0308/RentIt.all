@@ -7,7 +7,7 @@ const Navbar = ({current, state}) => {
   const {t} = useTranslation();
 
   return (
-    <nav className="basis-full flex items-center flex-wrap">
+    <nav className="basis-full flex items-center flex-wrap mt-1">
       <div className="flex items-center flex-shrink-0 text-white mr-6 ml-2">
         <img className='w-12' src={logo} alt='logo'/>
       </div>
@@ -26,8 +26,8 @@ const Navbar = ({current, state}) => {
                 Contact
               </button>
             </div>
-            <div className='mr-4 flex flex-row mt-2'>
-              <span className="font-semibold text-xl tracking-tight text-[#233c3b] mr-6 mt-1">{current}</span>
+            <div className='mr-4 flex flex-row'>
+              <span className="font-semibold text-xl tracking-tight text-[#233c3b] mr-6 mt-1.5">{current}</span>
               <ProfileDropdown user={state.user} />
             </div>
           </div>
