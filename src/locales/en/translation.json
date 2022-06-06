@@ -24,6 +24,26 @@
   "type-here": "Type here...",
   "submit": "Submit",
   "host-functions": "Host Functions",
-  "search-house": "Search House"
+  "search-house": "Search House",
+  "update-profile": "Update Profile",
+  "your-requests": "Your requests",
+  "history": "History",
+  "search-future-residence": "Search for your future residence",
+  "add-search-details": "Add some details so you can find exactly what you want:",
+  "search-location": "Where are you going?",
+  "adults-count": "How many adults?",
+  "kids-count": "How many children?",
+  "your-results": "Your resulst:",
+  "capacity": "Camapcity",
+  "adults": "Adults",
+  "kids": "Kids",
+  "go-back": "Go back",
+  "your-current-residences": "Your current residences:",
+  "current-bookings": "See current bookings",
+  "requests": "See requests",
+  "modify-residence": "Modify residence",
+  "delete-residence": "Delete residence",
+  "buy": "Buy",
+  "rent": "Rent"
 
 }

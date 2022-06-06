@@ -52,7 +52,7 @@ const Login = () => {
       </div>
       <div className='m-auto bg-[#233C3B] bg-opacity-60 py-6 px-14 rounded-2xl flex flex-col'>
         <div className='mx-auto'>
-          <img className='w-40 mx-8' src={logo} alt='logo'/>
+          <img className='w-36 mx-8' src={logo} alt='logo'/>
         </div>
         { error && 
             

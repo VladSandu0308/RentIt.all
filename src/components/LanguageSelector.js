@@ -6,7 +6,7 @@ const LanguageSelector = () => {
   return (
     <div class="flex justify-center">
       <div>
-        <div class="dropdown relative">
+        <div class="dropdown relative flex items-center">
           <button
             class="dropdown-toggle"
             type="button"
@@ -15,7 +15,7 @@ const LanguageSelector = () => {
             aria-expanded="false"
             
           >
-            <Icon icon="fa-solid:globe" color="#ead7ba" height="28"/>
+            <Icon icon="fa-solid:globe" color="#233c3b" height="28"/>
           </button>
           <ul
             class="

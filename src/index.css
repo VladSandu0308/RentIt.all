@@ -25,3 +25,29 @@ select:-webkit-autofill:focus {
   m-0
   focus:text-gray-700 focus:bg-secondary focus:border-primary focus:outline-none 
 }
+
+.search-text {
+  @apply w-full mr-8 pl-10 py-2.5 2xl:py-5 text-base font-normal text-gray-700 bg-primary/70 bg-clip-padding border border-solid border-gray-300
+  rounded-xl
+  transition
+  ease-in-out
+  m-0 placeholder-[#233c3b] hover:placeholder-[#233c3b]/80 transition-colors duration-300 
+  focus:text-gray-700 focus:bg-secondary focus:border-primary focus:outline-none 
+}
+
+.select-text {
+  @apply appearance-none
+  block
+  w-full
+  pl-10 pr-3
+  py-2.5 2xl:py-5
+  text-base
+  font-normal
+  text-gray-700 bg-primary/70 bg-clip-padding bg-no-repeat
+  border border-solid border-gray-300
+  rounded-xl
+  transition
+  ease-in-out
+  m-0
+  focus:text-gray-700 focus:bg-secondary focus:outline-none 
+}
