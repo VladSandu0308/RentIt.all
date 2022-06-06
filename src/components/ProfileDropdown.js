@@ -21,7 +21,7 @@ const ProfileDropdown = ({user}) => {
             aria-expanded="false"  
           >
              <img class="w-8 rounded-full mr-1.5" src={user.profile} alt="dummy-image"></img>
-             <span className='text-md'>{user.first_name}</span>
+             <span className='text-xl'>{user.first_name}</span>
              <Icon icon="gridicons:dropdown" color="black" height="18"/>
           </button>
           <ul
@@ -33,7 +33,7 @@ const ProfileDropdown = ({user}) => {
               text-base
               z-50
               float-left
-              py-2
+              py-1.5
               list-none
               text-left
               rounded-lg
@@ -55,7 +55,7 @@ const ProfileDropdown = ({user}) => {
                 class="
                   dropdown-item
                   text-sm
-                  py-2
+                  py-1.5
                   px-4
                   font-normal
                   block
@@ -73,7 +73,7 @@ const ProfileDropdown = ({user}) => {
                 class="
                   dropdown-item
                   text-sm
-                  py-2
+                  py-1.5
                   px-4
                   font-normal
                   block
@@ -91,7 +91,7 @@ const ProfileDropdown = ({user}) => {
                 class="
                   dropdown-item
                   text-sm
-                  py-2
+                  py-1.5
                   px-4
                   font-normal
                   block
@@ -109,7 +109,7 @@ const ProfileDropdown = ({user}) => {
                 class="
                   dropdown-item
                   text-sm
-                  py-2
+                  py-1.5
                   px-4
                   font-normal
                   block

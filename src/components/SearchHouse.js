@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom';
 import Navbar from './Navbar';
 import { Icon } from '@iconify/react';
 import { useForm } from 'react-hook-form';
+import Footer from './Footer';
 
 const SearchHouse = () => {
   const {state} = useLocation();
@@ -19,9 +20,9 @@ const SearchHouse = () => {
   console.log(state);
 
   return (
-    <div className='min-w-screen min-h-screen grid grid-rows-9'>
+    <div className='min-w-screen min-h-screen grid grid-rows-9 z-0'>
       <div className='bg-primary flex-flex-row sticky top-0'>
-        <Navbar current={t("search-house")} state={state}/>
+        <Navbar current={t("search-house")} state={state} className="z-20"/>
       </div>
       <div className='row-span-8 bg-secondary'>
         <div className='border-0 border-l-4 border-primary border-solid ml-8 mt-8 pb-6 flex flex-col'>
@@ -41,7 +42,7 @@ const SearchHouse = () => {
                 <Icon icon="gridicons:dropdown" color="black" height="24" className='right-2 absolute'/>
               </div>
               <div className='basis-3/4 relative flex items-center'>
-                <Icon icon="entypo:location-pin" color="#233c3b" height="24" className='absolute ml-2 pb-0.5'/>
+                <Icon icon="entypo:location-pin" color="#233c3b" height="24" className='absolute ml-2 pb-0.5 z-0'/>
                 <input {...register("location")} placeholder={t("search-location")} className='search-text'>
                 </input>
               </div>
@@ -64,7 +65,7 @@ const SearchHouse = () => {
 
             {
               mode == "Rent" ? (
-                <div className='flex flex-row mb-28 2xl:mb-48'>
+                <div className='flex flex-row mb-36 2xl:mb-48'>
                   <div className='basis-1/2 relative flex items-center'>
                     <Icon icon="bi:person-fill" color="#233c3b" height="24" className='absolute ml-2 pb-0.5'/>
                     <input {...register("adults")} placeholder={t("adults-count")} className='search-text'>
@@ -77,7 +78,7 @@ const SearchHouse = () => {
                   </div>
                 </div>
               ) : (
-                <div className='flex flex-row mb-48 2xl:mb-72'>
+                <div className='flex flex-row mb-56 2xl:mb-72'>
                   <div className='basis-1/2 relative flex items-center'>
                     <Icon icon="bi:person-fill" color="#233c3b" height="24" className='absolute ml-2 pb-0.5'/>
                     <input {...register("adults")} placeholder={t("adults-count")} className='search-text'>
@@ -95,12 +96,16 @@ const SearchHouse = () => {
 
             
 
-            <button type="submit" className='absolute bottom-10 2xl:bottom-16 2xl:w-64 bg-[#3ea1a9] hover:bg-[#3ea1a9]/80 transition-colors duration-300 mt-8 mb-4 w-52 text-white py-2 px-4 rounded-2xl self-end mr-10'>{t("submit")}</button>
+            <button type="submit" className='absolute bottom-16 2xl:bottom-40 2xl:w-64 bg-[#3ea1a9] hover:bg-[#3ea1a9]/80 transition-colors duration-300 mt-8 mb-4 w-52 text-white py-2 px-4 rounded-2xl self-end mr-10'>{t("submit")}</button>
 
           </form>
         </div>
-
+        
       </div>
+      <div className='bottom-0'>
+      <Footer />   
+      </div>
+       
     </div>
   )
 }
