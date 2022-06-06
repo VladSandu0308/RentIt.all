@@ -19,7 +19,7 @@ const Navbar = ({current, state}) => {
               <button className="block inline-block text-[#233c3b] hover:text-[#233c3b]/70 mr-4 text-xl font-serif transition-colors duration-300" onClick={() => navigate("/search", {state})}>
                 {t("search-house")}
               </button>
-              <button className="block inline-block text-[#233c3b] hover:text-[#233c3b]/70 mr-4 text-xl font-serif  transition-colors duration-300" onClick={() => navigate("/hostFunctions", {state})}>
+              <button className="block inline-block text-[#233c3b] hover:text-[#233c3b]/70 mr-4 text-xl font-serif  transition-colors duration-300" onClick={() => navigate("/host", {state})}>
                 {t("host-functions")}
               </button>
               <button className="block inline-block text-[#233c3b] hover:text-[#233c3b]/70 mr-4 text-xl font-serif  transition-colors duration-300" onClick={() => navigate("/blog", {state})}>

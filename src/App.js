@@ -1,6 +1,10 @@
 import { BrowserRouter, Route, Routes, Switch} from 'react-router-dom';
 import Blog from './components/Blog';
 import Contact from './components/Contact';
+import AddDescription from './components/Host/AddDescription';
+import AddGuests from './components/Host/AddGuests';
+import AddLocation from './components/Host/AddLocation';
+import AddName from './components/Host/AddName';
 import HostMain from './components/Host/HostMain';
 import Login from './components/Login';
 import PrivateRoute from './components/PrivateRoute';
@@ -32,9 +36,29 @@ function App() {
                   <SearchHouse />
                 </PrivateRoute>
               }/>
-              <Route path="/hostFunctions" element={
+              <Route path="/host" element={
                 <PrivateRoute>
                   <HostMain />
+                </PrivateRoute>
+              }/>
+              <Route path="/host/add/location" element={
+                <PrivateRoute>
+                  <AddLocation />
+                </PrivateRoute>
+              }/>
+              <Route path="/host/add/title" element={
+                <PrivateRoute>
+                  <AddName />
+                </PrivateRoute>
+              }/>
+              <Route path="/host/add/description" element={
+                <PrivateRoute>
+                  <AddDescription />
+                </PrivateRoute>
+              }/>
+              <Route path="/host/add/guests" element={
+                <PrivateRoute>
+                  <AddGuests />
                 </PrivateRoute>
               }/>
               <Route path="/blog" element={

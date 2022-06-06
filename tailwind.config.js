@@ -7,6 +7,7 @@ module.exports = {
       colors: {
         primary: '#A3CDC8',
         secondary: '#EDE6DB',
+        textMain: '#233c3b',
       },
       gridTemplateRows: {
         '12': 'repeat(12, minmax(0, 1fr))',

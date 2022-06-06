@@ -44,6 +44,9 @@
   "modify-residence": "Modify residence",
   "delete-residence": "Delete residence",
   "buy": "Buy",
-  "rent": "Rent"
+  "rent": "Rent",
+  "go-back": "Go back",
+  "add-location": "Add your location",
+  "next": "Next"
 
 }

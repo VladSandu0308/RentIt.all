@@ -44,5 +44,8 @@
   "modify-residence": "Modifica anuntul",
   "delete-residence": "Sterge anuntul",
   "buy": "Cumparare",
-  "rent": "Inchiriere"
+  "rent": "Inchiriere",
+  "go-back": "Pagina principala",
+  "add-location": "Adaugati locatia dumneavoastra",
+  "next": "Inainte"
 }
