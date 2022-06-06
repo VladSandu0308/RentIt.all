@@ -16,16 +16,16 @@ const Navbar = ({current, state}) => {
       </div>
       <div className="w-full block flex-grow flex items-center w-auto">
             <div className="text-sm flex-grow">
-              <button className="block inline-block text-[#233c3b] hover:text-[#233c3b]/70 mr-4 text-xl font-serif transition-colors duration-300">
+              <button className="block inline-block text-[#233c3b] hover:text-[#233c3b]/70 mr-4 text-xl font-serif transition-colors duration-300" onClick={() => navigate("/search", {state})}>
                 {t("search-house")}
               </button>
-              <button className="block inline-block text-[#233c3b] hover:text-[#233c3b]/70 mr-4 text-xl font-serif  transition-colors duration-300">
+              <button className="block inline-block text-[#233c3b] hover:text-[#233c3b]/70 mr-4 text-xl font-serif  transition-colors duration-300" onClick={() => navigate("/hostFunctions", {state})}>
                 {t("host-functions")}
               </button>
-              <button className="block inline-block text-[#233c3b] hover:text-[#233c3b]/70 mr-4 text-xl font-serif  transition-colors duration-300">
+              <button className="block inline-block text-[#233c3b] hover:text-[#233c3b]/70 mr-4 text-xl font-serif  transition-colors duration-300" onClick={() => navigate("/blog", {state})}>
                 Blog
               </button>
-              <button className="block inline-block text-[#233c3b] hover:text-[#233c3b]/70 text-xl font-serif  transition-colors duration-300">
+              <button className="block inline-block text-[#233c3b] hover:text-[#233c3b]/70 text-xl font-serif  transition-colors duration-300" onClick={() => navigate("/contact", {state})}>
                 Contact
               </button>
             </div>

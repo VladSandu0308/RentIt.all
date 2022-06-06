@@ -1,4 +1,7 @@
 import { BrowserRouter, Route, Routes, Switch} from 'react-router-dom';
+import Blog from './components/Blog';
+import Contact from './components/Contact';
+import HostMain from './components/Host/HostMain';
 import Login from './components/Login';
 import PrivateRoute from './components/PrivateRoute';
 import Register from './components/Register';
@@ -27,6 +30,21 @@ function App() {
               <Route path="/search" element={
                 <PrivateRoute>
                   <SearchHouse />
+                </PrivateRoute>
+              }/>
+              <Route path="/hostFunctions" element={
+                <PrivateRoute>
+                  <HostMain />
+                </PrivateRoute>
+              }/>
+              <Route path="/blog" element={
+                <PrivateRoute>
+                  <Blog />
+                </PrivateRoute>
+              }/>
+              <Route path="/contact" element={
+                <PrivateRoute>
+                  <Contact />
                 </PrivateRoute>
               }/>
             </Routes>
