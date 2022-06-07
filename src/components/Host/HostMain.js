@@ -15,7 +15,7 @@ const HostMain = () => {
         <Navbar current={t("host-functions")} state={state} className="z-20"/>
       </div>
       <div className='row-span-8 bg-secondary'>
-        <button onClick={() => navigate("/host/add/title", {state})}>
+        <button onClick={() => navigate("/host/add/mode", {state})}>
           Add new location
         </button>
       </div>

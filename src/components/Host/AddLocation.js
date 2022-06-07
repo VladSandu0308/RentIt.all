@@ -11,8 +11,7 @@ const AddLocation = () => {
   const navigate = useNavigate();
   let {state} = useLocation();
   const {t} = useTranslation();
-
-  const [input, setInput] = useState();
+  
   const [location, setLocation] = useState();
   const [coords, setCoords] = useState();
 
@@ -21,7 +20,7 @@ const AddLocation = () => {
   const onSubmit = e => {
     e.preventDefault();
 
-    state.body = {...state.body, description: input}
+    state.body = {...state.body, location, coords}
     console.log(state);
 
     navigate("/host/add/guests", {state});
@@ -53,8 +52,8 @@ const AddLocation = () => {
         </div>
         <div className='mb-20 flex relative w-full h-full'>
           <CustomMap coords={coords}/>
-          <div className='absolute top-8 left-8'>
-            <Icon icon="entypo:location-pin" color="#233c3b" height="24" className='absolute ml-2 top-2.5 pb-0.5 z-0'/>
+          <div className='absolute top-3 left-4'>
+            <Icon icon="entypo:location-pin" color="#233c3b" height="24" className='absolute ml-2 top-3 pb-0.5 z-0'/>
             <input value={location} autoComplete="off" class="search-text" id="name" placeholder='Location' onChange={e => {setLocation(e.target.value); address.onChange(e);}}/>
                   {
                       address.suggestions?.length > 0 && (

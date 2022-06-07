@@ -26,6 +26,21 @@ select:-webkit-autofill:focus {
   focus:text-gray-700 focus:bg-secondary focus:border-primary focus:outline-none 
 }
 
+.facilities-box {
+  @apply w-48 px-4 py-8 mr-8  font-semibold text-gray-700 
+  rounded-xl transition ease-in-out flex flex-col items-center tracking-wide uppercase
+hover:border-[#233c3b] hover:border-solid transition-colors duration-300
+}
+
+.button-select {
+  @apply min-w-fit mx-36 py-10 text-xl font-semibold text-gray-700 bg-primary/70 bg-clip-padding border border-solid border-gray-300
+  rounded-xl
+  transition
+  ease-in-out
+   hover:border-[#233c3b] hover:border-4 transition-colors duration-300 
+  focus:text-gray-700 focus:bg-secondary focus:border-primary focus:border-4 focus:outline-none
+}
+
 .search-text {
   @apply w-full mr-8 pl-10 py-2.5 2xl:py-5 text-base font-normal text-gray-700 bg-primary/70 bg-clip-padding border border-solid border-gray-300
   rounded-xl

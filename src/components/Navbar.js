@@ -11,26 +11,25 @@ const Navbar = ({current, state}) => {
 
   return (
     <nav className="basis-full flex items-center flex-wrap h-full sticky top-0">
-      <div className="flex items-center flex-shrink-0 text-white mr-6 ml-2">
-        <img className='w-14' src={logo} alt='logo'/>
+      <div className="flex items-center flex-shrink-0 text-white mr-8 ml-4">
+        <img className='w-16' src={logo} alt='logo'/>
       </div>
       <div className="w-full block flex-grow flex items-center w-auto">
             <div className="text-sm flex-grow">
-              <button className="block inline-block text-[#233c3b] hover:text-[#233c3b]/70 mr-4 text-xl font-serif transition-colors duration-300" onClick={() => navigate("/search", {state})}>
+              <button className={`block inline-block ${current === t("search-house") ? 'underline underline-offset-4 font-semibold' : ''} text-[#233c3b] hover:text-[#233c3b]/70 mr-6 text-xl font-serif transition-colors duration-300`} onClick={() => navigate("/search", {state})}>
                 {t("search-house")}
               </button>
-              <button className="block inline-block text-[#233c3b] hover:text-[#233c3b]/70 mr-4 text-xl font-serif  transition-colors duration-300" onClick={() => navigate("/host", {state})}>
+              <button className={`block inline-block ${current === t("host-functions") ? 'underline underline-offset-4 font-semibold' : ''} text-[#233c3b] hover:text-[#233c3b]/70 mr-6 text-xl font-serif transition-colors duration-300`} onClick={() => navigate("/host", {state})}>
                 {t("host-functions")}
               </button>
-              <button className="block inline-block text-[#233c3b] hover:text-[#233c3b]/70 mr-4 text-xl font-serif  transition-colors duration-300" onClick={() => navigate("/blog", {state})}>
+              <button className={`block inline-block ${current === "Blog" ? 'underline underline-offset-4 font-semibold' : ''} text-[#233c3b] hover:text-[#233c3b]/70 mr-6 text-xl font-serif transition-colors duration-300`} onClick={() => navigate("/blog", {state})}>
                 Blog
               </button>
-              <button className="block inline-block text-[#233c3b] hover:text-[#233c3b]/70 text-xl font-serif  transition-colors duration-300" onClick={() => navigate("/contact", {state})}>
+              <button className={`block inline-block ${current === "Contact" ? 'underline underline-offset-4 font-semibold' : ''} text-[#233c3b] hover:text-[#233c3b]/70 mr-6 text-xl font-serif transition-colors duration-300`} onClick={() => navigate("/contact", {state})}>
                 Contact
               </button>
             </div>
-            <div className='mr-4 flex flex-row items-center'>
-              <span className="font-semibold text-2xl tracking-tight text-[#233c3b] mr-6">{current}</span>
+            <div className='mr-8 flex flex-row items-center'>
               <ProfileDropdown user={state.user} />
               <LanguageSelector />
             </div>

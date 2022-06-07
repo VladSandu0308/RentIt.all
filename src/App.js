@@ -2,9 +2,11 @@ import { BrowserRouter, Route, Routes, Switch} from 'react-router-dom';
 import Blog from './components/Blog';
 import Contact from './components/Contact';
 import AddDescription from './components/Host/AddDescription';
+import AddFacilities from './components/Host/AddFacilities';
 import AddGuests from './components/Host/AddGuests';
 import AddLocation from './components/Host/AddLocation';
 import AddName from './components/Host/AddName';
+import AddRentBuy from './components/Host/AddRentBuy';
 import HostMain from './components/Host/HostMain';
 import Login from './components/Login';
 import PrivateRoute from './components/PrivateRoute';
@@ -46,6 +48,11 @@ function App() {
                   <AddLocation />
                 </PrivateRoute>
               }/>
+              <Route path="/host/add/mode" element={
+                <PrivateRoute>
+                  <AddRentBuy />
+                </PrivateRoute>
+              }/>
               <Route path="/host/add/title" element={
                 <PrivateRoute>
                   <AddName />
@@ -59,6 +66,11 @@ function App() {
               <Route path="/host/add/guests" element={
                 <PrivateRoute>
                   <AddGuests />
+                </PrivateRoute>
+              }/>
+              <Route path="/host/add/facilities" element={
+                <PrivateRoute>
+                  <AddFacilities />
                 </PrivateRoute>
               }/>
               <Route path="/blog" element={

@@ -26,6 +26,9 @@ module.exports = {
       },
       fontFamily: {
         'ultra': ['Ultra']
+      },
+      height: {
+        '128': '26rem',
       }
     },
   },

@@ -14,7 +14,7 @@ const ProfileDropdown = ({user}) => {
     
         <div class="dropdown relative">
           <button
-            class="dropdown-toggle px-3 py-1 hover:bg-gray-300 rounded-full text-[#233c3b] hover:text-[#233c3b]/70 flex items-center mr-2"
+            class="dropdown-toggle px-3 py-1 hover:bg-gray-300 rounded-full text-[#233c3b] hover:text-[#233c3b]/70 flex items-center mr-5"
             type="button"
             id="dropdownMenuButton1"
             data-bs-toggle="dropdown"

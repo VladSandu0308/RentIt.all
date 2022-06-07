@@ -15,8 +15,7 @@ const AddName = () => {
   const onSubmit = e => {
     e.preventDefault();
 
-    let body = {title: input}
-    state = {...state, body};
+    state.body = {...state.body,  title: input};
 
     navigate("/host/add/description", {state});
 

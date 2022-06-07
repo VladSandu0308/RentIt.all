@@ -10,15 +10,19 @@ const AddGuests = () => {
   let {state} = useLocation();
   const {t} = useTranslation();
 
-  const [input, setInput] = useState();
+  const [adults, setAdults] = useState(0);
+  const [kids, setKids] = useState(0);
+  const [rooms, setRooms] = useState(0);
+  const [baths, setBaths] = useState(0);
+  const [size, setSize] = useState(1);
 
   const onSubmit = e => {
     e.preventDefault();
 
-    state.body = {...state.body, description: input}
+    state.body = {...state.body, adults, kids, rooms, baths, size}
     console.log(state);
 
-    navigate("/host/add/location", {state});
+    navigate("/host/add/facilities", {state});
 
 
   }
@@ -48,20 +52,25 @@ const AddGuests = () => {
         <div className='ml-5 my-auto flex flex-col'>
           <div className='mb-8 relative flex'>
             <Icon icon="bi:person-fill" color="#233c3b" height="24" className='absolute ml-2 pb-0.5 top-3'/>
-            <input type="number" min="1" placeholder={t("adults-count")} className='search-text pr-3'/>
+            <input type="number" min="1" placeholder={t("adults-count")} className='search-text pr-3' onChange={e => setAdults(e.target.value)}/>
           </div>
           <div className='mb-8 relative flex'>
             <Icon icon="cil:child" color="#233c3b" height="24" className='absolute ml-2 pb-0.5 top-3'/>
-            <input type="number" min="1" placeholder={t("kids-count")} className='search-text pr-3'/>
+            <input type="number" min="1" placeholder={t("kids-count")} className='search-text pr-3' onChange={e => setKids(e.target.value)}/>
           </div>
           <div className='mb-8 relative flex'>
             <Icon icon="ic:baseline-bedroom-child" color="#233c3b" height="24" className='absolute ml-2 pb-0.5 top-3'/>
-            <input type="number" min="1" placeholder={t("rooms-count")} className='search-text pr-3'/>
+            <input type="number" min="1" placeholder={t("rooms-count")} className='search-text pr-3' onChange={e => setRooms(e.target.value)}/>
+          </div>
+          <div className='relative flex mb-8'>
+            <Icon icon="ic:baseline-bathroom" color="#233c3b" height="24" className='absolute ml-2 pb-0.5 top-3'/>
+            <input type="number" min="1" placeholder={t("bathrooms-count")} className='search-text pr-3' onChange={e => setBaths(e.target.value)}/>
           </div>
           <div className='relative flex'>
             <Icon icon="ic:baseline-bathroom" color="#233c3b" height="24" className='absolute ml-2 pb-0.5 top-3'/>
-            <input type="number" min="1" placeholder={t("bathrooms-count")} className='search-text pr-3'/>
+            <input type="number" step="0.1" min="10" placeholder={t("house-size")} className='search-text pr-3' onChange={e => setSize(e.target.value)}/>
           </div>
+
 
           
           
