@@ -10,19 +10,16 @@ const AddFacilities = () => {
   let {state} = useLocation();
   const {t} = useTranslation();
 
-  const [input, setInput] = useState({
-    "AC": 0,
-    "Pool": 0
-  });
+  const [input, setInput] = useState({});
   const [counter, setCounter] = useState(1);
 
   const onSubmit = e => {
     e.preventDefault();
 
-    state.body = {...state.body, description: input}
+    state.body = {...state.body, facilities: input}
     console.log(state);
 
-    //navigate("/host/add/location", {state});
+    navigate("/host/add/furnished", {state});
 
 
   }
@@ -52,7 +49,7 @@ const AddFacilities = () => {
           </button>
         </div>
 
-        <div className='h-128 ml-8 mt-32 mb-10 p-1 flex flex-col overflow-y-auto'>
+        <div className='h-128 2xl:h-256 ml-8 2xl:mx-auto mt-32 mb-10 p-1 flex flex-col overflow-y-auto'>
           <div className='flex flex-row mb-6'>
             <button onClick={() => {const body = {'AC': !input['AC']}; setInput({...input, ...body})}} class={`facilities-box ${input['AC'] ? 'bg-secondary ring-primary ring-4 outline-none' : 'bg-primary/70 bg-clip-padding border border-solid border-gray-300'}`}>
               <Icon icon="iconoir:air-conditioner" color="#233c3b" height="24"/>

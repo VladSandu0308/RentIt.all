@@ -3,9 +3,11 @@ import Blog from './components/Blog';
 import Contact from './components/Contact';
 import AddDescription from './components/Host/AddDescription';
 import AddFacilities from './components/Host/AddFacilities';
+import AddFurnished from './components/Host/AddFurnished';
 import AddGuests from './components/Host/AddGuests';
 import AddLocation from './components/Host/AddLocation';
 import AddName from './components/Host/AddName';
+import AddPictures from './components/Host/AddPictures';
 import AddRentBuy from './components/Host/AddRentBuy';
 import HostMain from './components/Host/HostMain';
 import Login from './components/Login';
@@ -71,6 +73,16 @@ function App() {
               <Route path="/host/add/facilities" element={
                 <PrivateRoute>
                   <AddFacilities />
+                </PrivateRoute>
+              }/>
+              <Route path="/host/add/furnished" element={
+                <PrivateRoute>
+                  <AddFurnished />
+                </PrivateRoute>
+              }/>
+              <Route path="/host/add/pictures" element={
+                <PrivateRoute>
+                  <AddPictures />
                 </PrivateRoute>
               }/>
               <Route path="/blog" element={
