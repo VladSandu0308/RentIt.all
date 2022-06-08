@@ -21,7 +21,8 @@ const AddPrice = () => {
 
 
   }
-
+  console.log("la Price")
+  console.log(state.body)
   return (
     <div className='min-w-screen min-h-screen grid grid-cols-2'>
       <div className='bg-gradient-to-b from-primary to-secondary flex relative'>

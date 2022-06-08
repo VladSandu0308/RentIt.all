@@ -17,6 +17,7 @@ module.exports = {
         'span-13': 'span 13 / span 13',
         'span-9': 'span 9 / span 9',
         'span-8': 'span 8 / span 8',
+        'span-7': 'span 7 / span 7',
       },
       boxShadow: {
         '3xl': '0 7px 5px  rgba(0, 0, 0, 0.25)',

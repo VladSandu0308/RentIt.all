@@ -27,9 +27,7 @@ const AddPictures = () => {
   const onSubmit = async (data) => {
     data.preventDefault();
 
-    
-
-
+    console.log(imageUpload);
     if(!imageUpload) {
       setError("No cover picture uploaded");
     }
@@ -42,7 +40,7 @@ const AddPictures = () => {
           try {
             setError('');
             state.body = {...state.body, cover: url}
-            console.log(state);
+            if (!imageUpload2) navigate("/host/add/price", {state});
           } catch (e) {
             setError(e.message);
           }
@@ -58,7 +56,7 @@ const AddPictures = () => {
           try {
             setError('');
             state.body = {...state.body, img2: url}
-            console.log(state);
+            if (!imageUpload3) navigate("/host/add/price", {state});
           } catch (e) {
             setError(e.message);
           }
@@ -74,7 +72,7 @@ const AddPictures = () => {
           try {
             setError('');
             state.body = {...state.body, img3: url}
-            console.log(state);
+            if (!imageUpload4) navigate("/host/add/price", {state});
           } catch (e) {
             setError(e.message);
           }
@@ -90,7 +88,7 @@ const AddPictures = () => {
           try {
             setError('');
             state.body = {...state.body, img4: url}
-            console.log(state);
+            if (!imageUpload5) navigate("/host/add/price", {state});
           } catch (e) {
             setError(e.message);
           }
@@ -106,15 +104,14 @@ const AddPictures = () => {
           try {
             setError('');
             state.body = {...state.body, img5: url}
-            console.log(state);
+            navigate("/host/add/price", {state});
           } catch (e) {
             setError(e.message);
           }
         })
       })
     }
-
-    navigate("/host/add/price", {state});
+    
   }
 
   console.log(input);
