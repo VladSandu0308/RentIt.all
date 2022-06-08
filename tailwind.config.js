@@ -29,15 +29,17 @@ module.exports = {
       },
       height: {
         '128': '26rem',
-        '256': '36rem'
+        '256': '36rem',
+        '164': '28rem'
       },
       width: {
         '128': '34rem',
-        '256': '36rem'
+        '256': '36rem',
       }
     },
   },
   plugins: [
-    require('tw-elements/dist/plugin')
+    require('tw-elements/dist/plugin'),
+    require('tailwind-scrollbar-hide')
   ],
 }

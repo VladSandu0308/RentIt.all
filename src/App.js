@@ -8,7 +8,9 @@ import AddGuests from './components/Host/AddGuests';
 import AddLocation from './components/Host/AddLocation';
 import AddName from './components/Host/AddName';
 import AddPictures from './components/Host/AddPictures';
+import AddPrice from './components/Host/AddPrice';
 import AddRentBuy from './components/Host/AddRentBuy';
+import AddReview from './components/Host/AddReview';
 import HostMain from './components/Host/HostMain';
 import Login from './components/Login';
 import PrivateRoute from './components/PrivateRoute';
@@ -83,6 +85,16 @@ function App() {
               <Route path="/host/add/pictures" element={
                 <PrivateRoute>
                   <AddPictures />
+                </PrivateRoute>
+              }/>
+              <Route path="/host/add/price" element={
+                <PrivateRoute>
+                  <AddPrice />
+                </PrivateRoute>
+              }/>
+              <Route path="/host/add/review" element={
+                <PrivateRoute>
+                  <AddReview />
                 </PrivateRoute>
               }/>
               <Route path="/blog" element={

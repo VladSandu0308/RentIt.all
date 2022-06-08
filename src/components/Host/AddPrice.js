@@ -5,19 +5,19 @@ import { Icon } from '@iconify/react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-const AddName = () => {
+const AddPrice = () => {
   const navigate = useNavigate();
   let {state} = useLocation();
   const {t} = useTranslation();
 
-  const [input, setInput] = useState();
+  const [input, setInput] = useState(50);
 
   const onSubmit = e => {
     e.preventDefault();
 
-    state.body = {...state.body,  title: input};
+    state.body = {...state.body,  price: input};
 
-    navigate("/host/add/description", {state});
+    navigate("/host/add/review", {state});
 
 
   }
@@ -28,8 +28,8 @@ const AddName = () => {
         <div className='absolute top-4 left-8'>
           <img className='w-16' src={logo} alt='logo'/>
         </div>
-        <div className='my-auto mx-8 text-5xl font-serif font-bold text-textMain'>
-          Add your location title
+        <div className='my-auto mx-8 text-5xl font-serif font-bold text-textMain select-none'>
+          Add your location price in RON (per night)
         </div>
       </div>
       <div className='bg-stone-100 flex flex-col relative'>
@@ -44,13 +44,21 @@ const AddName = () => {
             <span className='text-lg font-serif'>Exit</span>
           </button>
         </div>
-        <div className='ml-5 my-auto relative flex items-center'>
-          <Icon icon="bi:house-door-fill" color="#233c3b" height="24" className='absolute mb-24 ml-2 pb-0.5'/>
-          <textarea placeholder="Insert title" className='search-text' rows="5"  onChange={e => setInput(e.target.value)}/>
+        <div className='mx-auto my-auto relative flex items-center gap-20'>
+          <button onClick={() => setInput(Math.max(50,(input - 5)))} class="text-gray-700 bg-primary/70 hover:bg-secondary transition-colors duration-300 font-bold w-20 h-20 py-2 px-3 rounded-full z-50">
+            <Icon icon="bx:minus" color="#233c3b" height="54" className=''/>
+          </button>
+
+          <Icon icon="healthicons:money-bag" color="#233c3b" height="36" className='absolute ml-44 mb-1 select-none'/>
+          <input type="number" step="5" min="50" placeholder={t("price")} className='price-text pr-2' onChange={e => setInput(e.target.value)} value={input}/>
+
+          <button onClick={() => setInput(Number(input) + 5)} class=" text-gray-700 bg-primary/70 hover:bg-secondary transition-colors duration-300 font-bold w-20 h-20 py-2 px-3 rounded-full z-50">
+            <Icon icon="bx:plus" color="#233c3b" height="54" className=''/>
+          </button>
         </div>
 
         <div class="bg-gray-200 h-2 relative inset-x-0 bottom-20">
-          <div class="bg-primary h-2" style={{width: "20%"}}></div>
+          <div class="bg-primary h-2" style={{width: "90%"}}></div>
         </div>
         <button type="submit" onClick={onSubmit} className='absolute bottom-6 2xl:w-64 bg-[#3ea1a9] hover:bg-[#3ea1a9]/80 transition-colors duration-300 mt-8 w-28 text-white py-2 px-4 rounded-2xl self-end mr-10'>{t("next")}</button>
 
@@ -59,4 +67,4 @@ const AddName = () => {
   )
 }
 
-export default AddName
+export default AddPrice

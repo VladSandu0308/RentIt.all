@@ -67,7 +67,7 @@ const AddGuests = () => {
             <input type="number" min="1" placeholder={t("bathrooms-count")} className='search-text pr-3' onChange={e => setBaths(e.target.value)}/>
           </div>
           <div className='relative flex'>
-            <Icon icon="ic:baseline-bathroom" color="#233c3b" height="24" className='absolute ml-2 pb-0.5 top-3'/>
+          <Icon icon="ion:resize-outline" color="#233c3b" height="24" className='absolute ml-2 pb-0.5 top-3'/>
             <input type="number" step="0.1" min="10" placeholder={t("house-size")} className='search-text pr-3' onChange={e => setSize(e.target.value)}/>
           </div>
 
@@ -77,7 +77,7 @@ const AddGuests = () => {
         </div>
 
         <div class="bg-gray-200 h-2 relative inset-x-0 bottom-20">
-          <div class="bg-primary h-2" style={{width: "20%"}}></div>
+          <div class="bg-primary h-2" style={{width: "50%"}}></div>
         </div>
         <button type="submit" onClick={onSubmit} className='absolute bottom-6 2xl:w-64 bg-[#3ea1a9] hover:bg-[#3ea1a9]/80 transition-colors duration-300 mt-8 w-28 text-white py-2 px-4 rounded-2xl self-end mr-10'>{t("next")}</button>
 

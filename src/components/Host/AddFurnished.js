@@ -48,19 +48,19 @@ const AddFurnished = () => {
           </button>
         </div>
         <div className='my-auto relative flex flex-col gap-10'>
-          <button className='button-select flex flex-row place-content-center tracking-wide uppercase' onClick={e => setInput("Yes")}>
+          <button className='button-select flex flex-row place-content-center tracking-wide uppercase' onClick={e => setInput("yes")}>
             <Icon icon="dashicons:yes" color="#233c3b" height="27" className='mr-0.5' />
             Yes
           </button>
 
-          <button className='button-select flex flex-row place-content-center tracking-wide uppercase' onClick={e => setInput("No")}>
+          <button className='button-select flex flex-row place-content-center tracking-wide uppercase' onClick={e => setInput("no")}>
             <Icon icon="dashicons:no" color="#233c3b" height="27" className='mr-0.5'/>
             No
           </button>
         </div>
 
         <div class=" bg-gray-200 h-2 relative inset-x-0 bottom-20">
-          <div class="bg-primary h-2" style={{width: "20%"}}></div>
+          <div class="bg-primary h-2" style={{width: "70%"}}></div>
         </div>
         <button type="submit" onClick={onSubmit} className='absolute bottom-6 2xl:w-64 bg-[#3ea1a9] hover:bg-[#3ea1a9]/80 transition-colors duration-300 mt-8 w-28 text-white py-2 px-4 rounded-2xl self-end mr-10'>{t("next")}</button>
 

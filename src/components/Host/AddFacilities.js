@@ -10,7 +10,23 @@ const AddFacilities = () => {
   let {state} = useLocation();
   const {t} = useTranslation();
 
-  const [input, setInput] = useState({});
+  const [input, setInput] = useState({
+    'AC': false,
+    'heat': false,
+    'wifi': false,
+    'kitchen': false,
+    'wash': false,
+    'balcony': false,
+    'garden': false,
+    'pool': false,
+    'hot tub': false,
+    'bbq': false,
+    'sports': false,
+    'parking': false,
+    'pets': false,
+    'bedroom': false,
+    'bathroom': false,
+  });
   const [counter, setCounter] = useState(1);
 
   const onSubmit = e => {
@@ -49,7 +65,7 @@ const AddFacilities = () => {
           </button>
         </div>
 
-        <div className='h-128 2xl:h-256 ml-8 2xl:mx-auto mt-32 mb-10 p-1 flex flex-col overflow-y-auto'>
+        <div className='h-128 2xl:h-256 ml-8 2xl:mx-auto mt-32 mb-10 p-1 flex flex-col overflow-y-auto scrollbar-hide'>
           <div className='flex flex-row mb-6'>
             <button onClick={() => {const body = {'AC': !input['AC']}; setInput({...input, ...body})}} class={`facilities-box ${input['AC'] ? 'bg-secondary ring-primary ring-4 outline-none' : 'bg-primary/70 bg-clip-padding border border-solid border-gray-300'}`}>
               <Icon icon="iconoir:air-conditioner" color="#233c3b" height="24"/>
@@ -142,7 +158,7 @@ const AddFacilities = () => {
         </div>
 
         <div class=" bg-gray-200 h-2 inset-x-0">
-          <div class="bg-primary h-2" style={{width: "20%"}}></div>
+          <div class="bg-primary h-2" style={{width: "60%"}}></div>
 
         </div>
         <button type="submit" onClick={onSubmit} className=' 2xl:w-64 bg-[#3ea1a9] hover:bg-[#3ea1a9]/80 transition-colors duration-300 mt-8 w-28 text-white py-2 px-4 rounded-2xl self-end mr-10'>{t("next")}</button>

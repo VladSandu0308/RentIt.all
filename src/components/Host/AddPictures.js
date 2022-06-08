@@ -113,6 +113,8 @@ const AddPictures = () => {
         })
       })
     }
+
+    navigate("/host/add/price", {state});
   }
 
   console.log(input);
@@ -149,11 +151,11 @@ const AddPictures = () => {
               </div>
           }
 
-        <div className={`h-128 2xl:h-256 ml-8 2xl:mx-auto ${error ? 'nt-1': 'mt-32'} mb-10 p-1 flex flex-col overflow-y-auto 2xl:px-36`}>
+        <div className={`h-128 2xl:h-256 ml-8 2xl:mx-auto ${error ? 'nt-1': 'mt-32'} mb-10 p-1 flex flex-col overflow-y-auto scrollbar-hide 2xl:px-36`}>
           <div className='flex flex-row mx-auto mb-6'>
             { imageUpload ? (
               <div className='flex'>
-                <img src={URL.createObjectURL(imageUpload)} className='w-128 h-64 ml-10 mt-2'></img>
+                <img src={URL.createObjectURL(imageUpload)} className='w-128 min-h-64 ml-10 mt-2'></img>
                 <button onClick={() => setImageUpload(null)} class="relative top-4 right-16 text-gray-700 bg-primary/70 hover:bg-secondary transition-colors duration-300 font-bold w-10 h-10 py-2 px-2 rounded-full z-50">
                   <Icon icon="ant-design:delete-twotone" color="#233c3b" height="24" className=''/>
                 </button>
@@ -240,7 +242,7 @@ const AddPictures = () => {
         </div>
 
         <div class=" bg-gray-200 h-2 inset-x-0">
-          <div class="bg-primary h-2" style={{width: "20%"}}></div>
+          <div class="bg-primary h-2" style={{width: "80%"}}></div>
 
         </div>
         <button type="submit" onClick={onSubmit} className=' 2xl:w-64 bg-[#3ea1a9] hover:bg-[#3ea1a9]/80 transition-colors duration-300 mt-8 w-28 text-white py-2 px-4 rounded-2xl self-end mr-10'>{t("next")}</button>
