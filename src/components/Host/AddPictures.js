@@ -24,6 +24,7 @@ const AddPictures = () => {
   const [imageUpload5, setImageUpload5] = useState(null);
   const [error, setError] = useState('');
 
+
   const onSubmit = async (data) => {
     data.preventDefault();
 
@@ -35,82 +36,91 @@ const AddPictures = () => {
     if (imageUpload) {
       const storageRef = ref(storage, `/${state.body.title}/cover`);
       uploadBytes(storageRef, imageUpload).then((snapshot) => {
-        getDownloadURL(snapshot.ref).then(async (url) => {
+        getDownloadURL(snapshot.ref).then((url) => {
           console.log(url);
           try {
             setError('');
+            
             state.body = {...state.body, cover: url}
             if (!imageUpload2) navigate("/host/add/price", {state});
           } catch (e) {
             setError(e.message);
           }
-        })
-      })
-    }
-
-    if (imageUpload2) {
-      const storageRef = ref(storage, `/${state.body.title}/img2`);
-      uploadBytes(storageRef, imageUpload2).then((snapshot) => {
-        getDownloadURL(snapshot.ref).then(async (url) => {
-          console.log(url);
-          try {
-            setError('');
-            state.body = {...state.body, img2: url}
-            if (!imageUpload3) navigate("/host/add/price", {state});
-          } catch (e) {
-            setError(e.message);
+        }).then(() => {
+          if (imageUpload2) {
+            const storageRef = ref(storage, `/${state.body.title}/img2`);
+            uploadBytes(storageRef, imageUpload2).then((snapshot) => {
+              getDownloadURL(snapshot.ref).then((url) => {
+                console.log(url);
+                try {
+                  setError('');
+                  state.body = {...state.body, img2: url}
+                  if (!imageUpload3) navigate("/host/add/price", {state});
+                } catch (e) {
+                  setError(e.message);
+                }
+              })
+            }).then(() => {
+              if (imageUpload3) {
+                const storageRef = ref(storage, `/${state.body.title}/img3`);
+                uploadBytes(storageRef, imageUpload3).then((snapshot) => {
+                  getDownloadURL(snapshot.ref).then((url) => {
+                    console.log(url);
+                    try {
+                      setError('');
+                      state.body = {...state.body, img3: url}
+                      if (!imageUpload4) navigate("/host/add/price", {state});
+                    } catch (e) {
+                      setError(e.message);
+                    }
+                  })
+                }).then(() => {
+                  if (imageUpload4) {
+                    const storageRef = ref(storage, `/${state.body.title}/img4`);
+                    uploadBytes(storageRef, imageUpload4).then((snapshot) => {
+                      getDownloadURL(snapshot.ref).then((url) => {
+                        console.log(url);
+                        try {
+                          setError('');
+                          state.body = {...state.body, img4: url}
+                          if (!imageUpload5) navigate("/host/add/price", {state});
+                        } catch (e) {
+                          setError(e.message);
+                        }
+                      })
+                    }).then(() => {
+                      if (imageUpload5) {
+                        const storageRef = ref(storage, `/${state.body.title}/img5`);
+                        uploadBytes(storageRef, imageUpload5).then((snapshot) => {
+                          getDownloadURL(snapshot.ref).then((url) => {
+                            console.log(url);
+                            try {
+                              setError('');
+                              state.body = {...state.body, img5: url}
+                              navigate("/host/add/price", {state});
+                            } catch (e) {
+                              setError(e.message);
+                            }
+                          })
+                        })
+                      }
+                    })
+                  }
+                })
+              }
+            })
           }
         })
       })
     }
 
-    if (imageUpload3) {
-      const storageRef = ref(storage, `/${state.body.title}/img3`);
-      uploadBytes(storageRef, imageUpload3).then((snapshot) => {
-        getDownloadURL(snapshot.ref).then(async (url) => {
-          console.log(url);
-          try {
-            setError('');
-            state.body = {...state.body, img3: url}
-            if (!imageUpload4) navigate("/host/add/price", {state});
-          } catch (e) {
-            setError(e.message);
-          }
-        })
-      })
-    }
+    
 
-    if (imageUpload4) {
-      const storageRef = ref(storage, `/${state.body.title}/img4`);
-      uploadBytes(storageRef, imageUpload4).then((snapshot) => {
-        getDownloadURL(snapshot.ref).then(async (url) => {
-          console.log(url);
-          try {
-            setError('');
-            state.body = {...state.body, img4: url}
-            if (!imageUpload5) navigate("/host/add/price", {state});
-          } catch (e) {
-            setError(e.message);
-          }
-        })
-      })
-    }
+    
 
-    if (imageUpload5) {
-      const storageRef = ref(storage, `/${state.body.title}/img5`);
-      uploadBytes(storageRef, imageUpload5).then((snapshot) => {
-        getDownloadURL(snapshot.ref).then(async (url) => {
-          console.log(url);
-          try {
-            setError('');
-            state.body = {...state.body, img5: url}
-            navigate("/host/add/price", {state});
-          } catch (e) {
-            setError(e.message);
-          }
-        })
-      })
-    }
+    
+
+    
     
   }
 

@@ -4,6 +4,7 @@ import logo from '../../images/logo.png';
 import { Icon } from '@iconify/react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { server } from '../../services/axios';
 
 const AddName = () => {
   const navigate = useNavigate();
@@ -11,13 +12,33 @@ const AddName = () => {
   const {t} = useTranslation();
 
   const [input, setInput] = useState();
+  const [error, setError] = useState('');
 
-  const onSubmit = e => {
+  const onSubmit = async e => {
     e.preventDefault();
 
-    state.body = {...state.body,  title: input};
+    
 
-    navigate("/host/add/description", {state});
+    if (state.id && input) {
+      try {
+        setError('');
+        await server.put(`/location/${state.id}`, {title: input});
+        navigate("/host", {state: {user: state.user}});
+      } catch (e) {
+        setError(e.message);
+      }
+    } else {
+      if (!input) {
+        setError("Please insert title")
+      } else {
+        state.body = {...state.body,  title: input};
+
+        navigate("/host/add/description", {state});
+      }
+      
+    }
+
+    
 
 
   }
@@ -33,17 +54,25 @@ const AddName = () => {
         </div>
       </div>
       <div className='bg-stone-100 flex flex-col relative'>
-        <div className='absolute top-4 right-8 flex items-center gap-3'>
-          <button class="px-3 py-1 bg-gray-300 hover:bg-gray-200 rounded-full text-gray-500 hover:text-gray-500/70 flex items-center gap-1 mr-2" onClick={() => navigate(-1, {state})}>
+        <div className='relative top-4 right-8 flex items-center gap-3'>
+          <button class="absolute px-3 py-1 bg-gray-300 hover:bg-gray-200 rounded-full text-gray-500 hover:text-gray-500/70 flex items-center gap-1 right-24 top-0" onClick={() => navigate(-1, {state})}>
             <Icon icon="akar-icons:arrow-back-thick-fill" color="#777" />
             <span className='text-lg font-serif'>{t("go-back")}</span>
           </button>
           
-          <button class="px-3 py-1 bg-gray-300 hover:bg-gray-200 rounded-full text-gray-500 hover:text-gray-500/70 flex items-center gap-1 mr-2" onClick={() => navigate("/host", {state})}>
+          <button class="absolute px-3 py-1 bg-gray-300 hover:bg-gray-200 rounded-full text-gray-500 hover:text-gray-500/70 flex items-center gap-1 right-0 top-0" onClick={() => navigate("/host", {state})}>
             <Icon icon="akar-icons:arrow-back-thick-fill" color="#777" />
             <span className='text-lg font-serif'>Exit</span>
           </button>
+          { error && 
+              
+              <div class="mx-auto mt-14 bg-red-100 border-t-4 border-red-400 rounded-b text-red-900 px-4 py-3 shadow-md h-20 absolute inset-x-56 top-0" role="alert">
+                <p class="font-bold">{t("error")}</p>
+                <p class="text-sm">{error}</p>
+              </div>
+          }
         </div>
+        
         <div className='ml-5 my-auto relative flex items-center'>
           <Icon icon="bi:house-door-fill" color="#233c3b" height="24" className='absolute mb-24 ml-2 pb-0.5'/>
           <textarea placeholder="Insert title" className='search-text' rows="5"  onChange={e => setInput(e.target.value)}/>

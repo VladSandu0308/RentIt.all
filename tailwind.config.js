@@ -1,6 +1,6 @@
 module.exports = {
   content: [
-    "./src/**/*.{js,jsx,ts,tsx,html}", './node_modules/tw-elements/dist/js/**/*.js'
+    "./src/**/*.{js,jsx,ts,tsx,html}", './node_modules/tw-elements/dist/js/**/*.js', 'node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}'
   ],
   theme: {
     extend: {
@@ -41,6 +41,6 @@ module.exports = {
   },
   plugins: [
     require('tw-elements/dist/plugin'),
-    require('tailwind-scrollbar-hide')
+    require('tailwind-scrollbar-hide'),
   ],
 }

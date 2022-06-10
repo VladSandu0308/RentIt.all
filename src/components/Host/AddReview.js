@@ -5,6 +5,7 @@ import { Icon } from '@iconify/react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { server } from '../../services/axios';
+import CustomMap from '../CustomMap';
 
 const AddReview = () => {
   const navigate = useNavigate();
@@ -12,6 +13,8 @@ const AddReview = () => {
   const {t} = useTranslation();
 
   const [error, setError] = useState('');
+
+  console.log(state)
 
   const onSubmit = async e => {
     e.preventDefault();
@@ -77,9 +80,18 @@ const AddReview = () => {
           <hr class="h-0 border border-solid border-t-0 border-gray-400 opacity-25 mx-4" />
           <h1 className='my-8 ml-4 text-md first-letter:uppercase'>{state.body.description}</h1>
 
-          <hr class="h-0 border border-solid border-t-0 border-gray-400 opacity-25 mx-4" />
-          <h1 className=' mt-8 mx-4 text-md font-semibold first-letter:uppercase'>Location</h1>
-          <h1 className='mt-2 mb-8 mx-4 text-md first-letter:uppercase'>{state.body.location}</h1>
+          <div className='relative'>
+            <hr class="h-0 border border-solid border-t-0 border-gray-400 opacity-25 mx-4" />
+            <h1 className=' mt-8 mx-4 text-md font-semibold first-letter:uppercase'>Location</h1>
+            <h1 className='mt-2 mb-2 mx-4 text-md first-letter:uppercase'>{state.body.location}</h1>
+            <div className='mx-2 w-64 h-20 z-50 mb-10'>
+              <CustomMap coords={state.body.coords}/>
+            </div>
+          </div>
+
+          
+          
+          
 
           <hr class="h-0 border border-solid border-t-0 border-gray-400 opacity-25 mx-4" />
           <div className='my-8 flex justify-between'>

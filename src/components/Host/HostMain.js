@@ -7,6 +7,7 @@ import Footer from '../Footer'
 import Navbar from '../Navbar'
 import Pagination from '../Pagination';
 import OwnListing from './OwnListing';
+import Carousel from '../Carousel';
 
 const HostMain = () => {
   const {state} = useLocation();
@@ -16,14 +17,12 @@ const HostMain = () => {
 
   const [perPage, setPerPage] = useState(3);
   const [currentPage, setCurrentPage] = useState(1);
+  const [reload, setReload] = useState(0);
 
+  let currentLocations = [];
   const lastIndex = currentPage * perPage;
   const firstIndex = lastIndex - perPage;
-  const currentLocations = locations.slice(firstIndex, lastIndex);
-
-  console.log(locations);
-  console.log("brrrr")
-  console.log(currentLocations.length)
+  currentLocations = locations.slice(firstIndex, lastIndex);
 
   currentLocations.map((location) => console.log(location.title))
 
@@ -31,7 +30,7 @@ const HostMain = () => {
 
   useEffect(() => {
     server.get(`/getOwnLocations/${state.user.email}`).then(ret => {setLocations(ret.data.locations)}); 
-  }, []);
+  }, [reload]);
 
   return (
     <div className='min-w-screen min-h-screen grid grid-rows-9 z-0'>
@@ -44,15 +43,15 @@ const HostMain = () => {
             <p className='text-textMain text-xl font-semibold uppercase'>add new location</p>
           </button>
 
-        <div class="flex justify-around mt-4 mb-2">
+        <div class="flex justify-around mt-4">
           {
             currentLocations.map((location) => (
-              <OwnListing state={state} location={location} />
+              <OwnListing state={state} location={location} setReload={setReload} />
             ))
           }
         </div>
 
-        <div className='bg-secondary mx-auto'>
+        <div className='bg-secondary mx-auto absolute inset-x-0 bottom-16'>
 
           <Pagination perPage={perPage} totalPosts={locations.length} paginate={paginate} currentPage={currentPage}/>
         </div>

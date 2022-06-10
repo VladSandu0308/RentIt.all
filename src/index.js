@@ -6,6 +6,7 @@ import './services/i18next';
 import { BrowserRouter } from 'react-router-dom';
 
 import 'tw-elements';
+import '@mobiscroll/react/dist/css/mobiscroll.min.css';
 
 ReactDOM.render(
   <React.StrictMode>
