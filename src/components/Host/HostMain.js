@@ -22,9 +22,7 @@ const HostMain = () => {
   let currentLocations = [];
   const lastIndex = currentPage * perPage;
   const firstIndex = lastIndex - perPage;
-  currentLocations = locations.slice(firstIndex, lastIndex);
-
-  currentLocations.map((location) => console.log(location.title))
+  currentLocations = locations.length ? locations.slice(firstIndex, lastIndex) : [];
 
   const paginate = pageNumber => setCurrentPage(pageNumber);
 

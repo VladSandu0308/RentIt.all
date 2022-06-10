@@ -56,8 +56,27 @@ hover:border-[#233c3b] hover:border-solid transition-colors duration-300
   focus:text-gray-700 focus:bg-secondary focus:border-primary focus:outline-none 
 }
 
+.search-date {
+  @apply w-full mr-8 pl-10 py-2.5 2xl:py-5 text-base font-normal text-gray-700 bg-primary/70 bg-clip-padding border border-solid border-gray-300
+  rounded-xl
+  transition
+  ease-in-out
+  
+  m-0 placeholder-[#233c3b] hover:placeholder-[#233c3b]/80 transition-colors duration-300 
+}
+
 .price-text {
   @apply w-fit py-8 text-2xl text-center font-bold text-gray-700 bg-primary/70 bg-clip-padding border border-solid border-gray-300
+  rounded-xl
+  transition
+  ease-in-out
+  outline-none appearance-none
+  m-0 placeholder-[#233c3b] hover:placeholder-[#233c3b]/80 transition-colors duration-300 
+  focus:text-gray-700 focus:bg-secondary focus:border-primary focus:outline-none 
+}
+
+.price-range {
+  @apply py-8 text-base text-center font-bold text-gray-700 bg-primary/70 bg-clip-padding border border-solid border-gray-300
   rounded-xl
   transition
   ease-in-out

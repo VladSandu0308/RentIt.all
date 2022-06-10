@@ -18,6 +18,7 @@ import PrivateRoute from './components/PrivateRoute';
 import Register from './components/Register';
 import ResetPassword from './components/ResetPassword';
 import SearchHouse from './components/SearchHouse';
+import SearchResults from './components/SearchResults';
 import SetPhone from './components/SetPhone';
 import UpdateProfile from './components/UpdateProfile';
 import { AuthProvider } from './context/UserAuthContext';
@@ -111,6 +112,11 @@ function App() {
               <Route path="/contact" element={
                 <PrivateRoute>
                   <Contact />
+                </PrivateRoute>
+              }/>
+              <Route path="/searchResults" element={
+                <PrivateRoute>
+                  <SearchResults />
                 </PrivateRoute>
               }/>
             </Routes>

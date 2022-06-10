@@ -1,21 +1,39 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import Navbar from './Navbar';
 import { Icon } from '@iconify/react';
 import { useForm } from 'react-hook-form';
 import Footer from './Footer';
 
+import useInput from '../hooks/useInput';
+import { Datepicker } from '@mobiscroll/react';
+
 const SearchHouse = () => {
-  const {state} = useLocation();
+  let {state} = useLocation();
   const {t} = useTranslation();
-  const { register, handleSubmit } = useForm(); 
+  const { register, handleSubmit } = useForm();
+  const navigate = useNavigate();
 
   const [mode, setMode] = useState("Rent");
 
+  const [start, setStart] = useState();
+  const [end, setEnd] = useState();
+
+  const [location, setLocation] = useState();
+  const [coords, setCoords] = useState();
+
+  const address = useInput("");
+
   const onSubmit = data => {
-    console.log(data);
+    const startDate = new Date(start.getTime() - (start.getTimezoneOffset() * 60000)).toISOString().slice(0, 11).replace('T', ' ');
+    const endDate = new Date(end.getTime() - (end.getTimezoneOffset() * 60000)).toISOString().slice(0, 11).replace('T', ' ')
+    const body = {...data, startDate, endDate, location, coords}
+
+    state = {...state, body}
+    navigate('/searchResults', {state});
+
   }
   console.log(state);
 
@@ -43,8 +61,27 @@ const SearchHouse = () => {
               </div>
               <div className='basis-3/4 relative flex items-center'>
                 <Icon icon="entypo:location-pin" color="#233c3b" height="24" className='absolute ml-2 pb-0.5 z-0'/>
-                <input {...register("location")} placeholder={t("search-location")} className='search-text'>
-                </input>
+                <input value={location} autoComplete="off" placeholder={t("search-location")} className='search-text' onChange={e => {setLocation(e.target.value); address.onChange(e);}}/>
+                  {
+                      address.suggestions?.length > 0 && (
+                        <div className='bg-[#aad0d3] absolute top-12 w-128 py-2 px-1 z-10 rounded-2xl'>
+                          {
+                            address.suggestions.map((suggestion, index) => {
+                              return (
+                                <p className='cursor-pointer hover:bg-[#ecf0f0] max-w-96 py-1 text-xs' key={index} onClick={() => {
+                                  address.setValue(suggestion.place_name);
+                                  address.setSuggestions([]);
+                                  setLocation(suggestion.place_name);
+                                  setCoords(suggestion.center);
+                                }} >
+                                  {suggestion.place_name}
+                                </p>
+                              )
+                            })
+                          }
+                        </div>
+                      )
+                  }
               </div>
             </div>
             {
@@ -52,13 +89,11 @@ const SearchHouse = () => {
               <div className='flex flex-row mb-8'>
                 <div className='basis-1/2 relative flex items-center'>
                   <Icon icon="ant-design:calendar-twotone" color="#233c3b" height="24" className='absolute ml-2 pb-0.5'/>
-                  <input {...register("start")} placeholder='Check In' className='search-text'>
-                  </input>
+                  <Datepicker value={start} onChange={e => setStart(e.value)} controls={['calendar']} touchUi={true} display='anchored' min={new Date()} inputComponent="input" inputProps={{placeholder: 'Start Date', class: 'search-date'}}/>
                 </div>
                 <div className='basis-1/2 relative flex items-center'>
                   <Icon icon="ant-design:calendar-twotone" color="#233c3b" height="24" className='absolute ml-2 pb-0.5'/>
-                  <input {...register("end")} placeholder='Check Out' className='search-text'>
-                  </input>
+                  <Datepicker value={end} onChange={e => setEnd(e.value)}  controls={['calendar']} display='anchored' min={start} touchUi={true} inputComponent="input" inputProps={{placeholder: 'End Date', class: 'search-date'}} />
                 </div>
               </div>
             }

@@ -7,6 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import 'tw-elements';
 import '@mobiscroll/react/dist/css/mobiscroll.min.css';
+import "react-datepicker/dist/react-datepicker.css";
 
 ReactDOM.render(
   <React.StrictMode>

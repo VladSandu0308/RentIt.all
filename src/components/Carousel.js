@@ -4,11 +4,11 @@ const Carousel = ({location}) => {
   console.log(location.title + " " + location.cover)
   return (
     <div id={`id-${location._id}`} class="carousel slide relative" data-bs-ride="carousel">
-      <div class="carousel-inner relative w-full h-48 overflow-hidden">
+      <div class="carousel-inner relative w-full h-40 overflow-hidden">
         <div class="carousel-item active relative float-left w-full overflow-y-auto">
           <img
             src={location.cover}
-            class="block rounded-t-lg w-full h-48 object-contain"
+            class="block rounded-t-lg w-full h-40 object-contain"
             alt="Wild Landscape"
           />
         </div>
@@ -18,7 +18,7 @@ const Carousel = ({location}) => {
             <div class="carousel-item relative float-left w-full">
               <img
                 src={location.img2}
-                class="block rounded-t-lg w-full h-48 object-contain"
+                class="block rounded-t-lg w-full h-40 object-contain"
                 alt="Camera"
               />
             </div>
@@ -32,7 +32,7 @@ const Carousel = ({location}) => {
             <div class="carousel-item relative float-left w-full">
               <img
                 src={location.img3}
-                class="block rounded-t-lg w-full h-48 object-contain"
+                class="block rounded-t-lg w-full h-40 object-contain"
                 alt="Camera"
               />
             </div>
@@ -46,7 +46,7 @@ const Carousel = ({location}) => {
             <div class="carousel-item relative float-left w-full">
               <img
                 src={location.img4}
-                class="block rounded-t-lg w-full h-48 object-contain"
+                class="block rounded-t-lg w-full h-40 object-contain"
                 alt="Camera"
               />
             </div>
@@ -60,7 +60,7 @@ const Carousel = ({location}) => {
             <div class="carousel-item relative float-left w-full">
               <img
                 src={location.img5}
-                class="block rounded-t-lg w-full h-48 object-contain"
+                class="block rounded-t-lg w-full h-40 object-contain"
                 alt="Camera"
               />
             </div>

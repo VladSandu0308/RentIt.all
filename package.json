@@ -19,6 +19,7 @@
     "i18next-xhr-backend": "^3.2.2",
     "mapbox-gl": "^2.8.2",
     "react": "^17.0.2",
+    "react-datepicker": "^4.8.0",
     "react-dom": "^17.0.2",
     "react-firebase-hooks": "^5.0.3",
     "react-google-button": "^0.7.2",
