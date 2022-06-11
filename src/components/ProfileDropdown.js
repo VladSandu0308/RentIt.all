@@ -20,7 +20,7 @@ const ProfileDropdown = ({user}) => {
             data-bs-toggle="dropdown"
             aria-expanded="false"  
           >
-             <img class="w-8 h-8 rounded-full mr-1.5" src={user.profile} alt="dummy-image"></img>
+             <img class="w-10 h-10 object-contain rounded-full mr-1.5" src={user.profile} alt="dummy-image"></img>
              <span className='text-xl'>{user.first_name}</span>
              <Icon icon="gridicons:dropdown" color="black" height="18"/>
           </button>
@@ -31,7 +31,7 @@ const ProfileDropdown = ({user}) => {
               hidden
               bg-[#ead7ba]
               text-base
-              z-50
+              z-20
               float-left
               py-1.5
               list-none

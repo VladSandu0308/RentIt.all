@@ -27,15 +27,26 @@ const SearchHouse = () => {
   const address = useInput("");
 
   const onSubmit = data => {
-    const startDate = new Date(start.getTime() - (start.getTimezoneOffset() * 60000)).toISOString().slice(0, 11).replace('T', ' ');
-    const endDate = new Date(end.getTime() - (end.getTimezoneOffset() * 60000)).toISOString().slice(0, 11).replace('T', ' ')
-    const body = {...data, startDate, endDate, location, coords}
+    let body = {...data,  mode}
+
+    if (location) {
+      body = {...body, location, coords}
+    }
+
+    if (mode == "Rent") {
+      if (start && end) {
+        const startDate = new Date(start.getTime() - (start.getTimezoneOffset() * 60000)).toISOString().slice(0, 11).replace('T', ' ');
+        const endDate = new Date(end.getTime() - (end.getTimezoneOffset() * 60000)).toISOString().slice(0, 11).replace('T', ' ')
+        body = {...body, startDate, endDate}
+      }
+      
+    }
+    
 
     state = {...state, body}
     navigate('/searchResults', {state});
 
   }
-  console.log(state);
 
   return (
     <div className='min-w-screen min-h-screen grid grid-rows-9 z-0'>
@@ -61,7 +72,7 @@ const SearchHouse = () => {
               </div>
               <div className='basis-3/4 relative flex items-center'>
                 <Icon icon="entypo:location-pin" color="#233c3b" height="24" className='absolute ml-2 pb-0.5 z-0'/>
-                <input value={location} autoComplete="off" placeholder={t("search-location")} className='search-text' onChange={e => {setLocation(e.target.value); address.onChange(e);}}/>
+                <input value={location} autoComplete="off" placeholder={t("Anywhere")} className='search-text' onChange={e => {setLocation(e.target.value); address.onChange(e);}}/>
                   {
                       address.suggestions?.length > 0 && (
                         <div className='bg-[#aad0d3] absolute top-12 w-128 py-2 px-1 z-10 rounded-2xl'>
@@ -89,11 +100,11 @@ const SearchHouse = () => {
               <div className='flex flex-row mb-8'>
                 <div className='basis-1/2 relative flex items-center'>
                   <Icon icon="ant-design:calendar-twotone" color="#233c3b" height="24" className='absolute ml-2 pb-0.5'/>
-                  <Datepicker value={start} onChange={e => setStart(e.value)} controls={['calendar']} touchUi={true} display='anchored' min={new Date()} inputComponent="input" inputProps={{placeholder: 'Start Date', class: 'search-date'}}/>
+                  <Datepicker value={start} onChange={e => setStart(e.value)} controls={['calendar']} touchUi={true} display='anchored' min={new Date()} inputComponent="input" inputProps={{placeholder: 'Start Date: Anytime', class: 'search-date'}}/>
                 </div>
                 <div className='basis-1/2 relative flex items-center'>
                   <Icon icon="ant-design:calendar-twotone" color="#233c3b" height="24" className='absolute ml-2 pb-0.5'/>
-                  <Datepicker value={end} onChange={e => setEnd(e.value)}  controls={['calendar']} display='anchored' min={start} touchUi={true} inputComponent="input" inputProps={{placeholder: 'End Date', class: 'search-date'}} />
+                  <Datepicker value={end} onChange={e => setEnd(e.value)}  controls={['calendar']} display='anchored' min={start} touchUi={true} inputComponent="input" inputProps={{placeholder: 'End Date: Anytime', class: 'search-date'}} />
                 </div>
               </div>
             }

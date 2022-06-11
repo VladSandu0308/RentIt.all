@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next';
 import { Icon } from '@iconify/react';
 import { useNavigate } from 'react-router-dom';
@@ -7,9 +7,10 @@ import Carousel from './Carousel';
 import { server } from '../services/axios';
 
 const Listing = ({state, location, setReload}) => {
-  console.log(location)
   const { t } = useTranslation();
   const navigate = useNavigate();
+
+  const [host, setHost] = useState({});
 
   state = {...state, id: location._id};
 
@@ -23,8 +24,10 @@ const Listing = ({state, location, setReload}) => {
     }
   }
 
+  useEffect(() => {
+    server.get(`/user/${location.host_email}`).then(ret => {setHost(ret.data.user)}); 
+  }, []);
 
-  console.log(state)
 
   return (
     <div className='rounded-lg shadow-lg bg-white w-80 2xl:w-128 flex flex-col overflow-y-auto scrollbar-hide h-60 2xl:h-164 p-1'>
@@ -42,8 +45,8 @@ const Listing = ({state, location, setReload}) => {
           <div className=' pt-6 pb-6 flex justify-between relative'>
             <h1 className='mx-4 text-lg font-semibold first-letter:uppercase'>{location.mode} for {location.price} lei</h1>
             <div className='flex flex-row mr-2'>
-              <h1 className='mr-2 text-lg font-semibold first-letter:uppercase'> {state.user.first_name}</h1>
-              <img class="w-7 h-7 rounded-full mr-1.5" src={state.user.profile} alt="dummy-image"></img>
+              <h1 className='mr-2 text-lg font-semibold first-letter:uppercase'> {host[0]?.first_name}</h1>
+              <img class="w-7 h-7 rounded-full mr-1.5 object-contain" src={host[0]?.profile} alt="dummy-image"></img>
             </div>
           </div>
 

@@ -1,7 +1,6 @@
 import React from 'react'
 
 const Carousel = ({location}) => {
-  console.log(location.title + " " + location.cover)
   return (
     <div id={`id-${location._id}`} class="carousel slide relative" data-bs-ride="carousel">
       <div class="carousel-inner relative w-full h-40 overflow-hidden">

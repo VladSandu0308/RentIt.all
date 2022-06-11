@@ -85,6 +85,15 @@ hover:border-[#233c3b] hover:border-solid transition-colors duration-300
   focus:text-gray-700 focus:bg-secondary focus:border-primary focus:outline-none 
 }
 
+.date-range {
+  @apply py-8 text-base text-center font-bold text-gray-700 bg-primary/70 bg-clip-padding border border-solid border-gray-300
+  rounded-xl
+  transition
+  ease-in-out
+  outline-none appearance-none
+  m-0 placeholder-[#233c3b] hover:placeholder-[#233c3b]/80 transition-colors duration-300 
+}
+
 .select-text {
   @apply appearance-none
   block
@@ -100,4 +109,24 @@ hover:border-[#233c3b] hover:border-solid transition-colors duration-300
   ease-in-out
   m-0
   focus:text-gray-700 focus:bg-secondary focus:outline-none 
+}
+
+.select-furnished {
+  @apply appearance-none
+  block
+  mx-auto
+  pl-10 pr-3
+  text-base
+  font-normal
+  text-gray-700 bg-primary/70 bg-clip-padding bg-no-repeat
+  border border-solid border-gray-300
+  rounded-xl
+  transition
+  ease-in-out
+  m-0
+  focus:text-gray-700 focus:bg-secondary focus:outline-none 
+}
+
+.facilities-checkbox {
+  @apply appearance-none h-3 w-3 border border-gray-300 rounded-sm bg-secondary checked:bg-[#3ea1a9] checked:border-[#3ea1a9] focus:outline-none transition duration-200 mt-[0.15rem] bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer
 }
