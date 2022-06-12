@@ -17,6 +17,10 @@ select:-webkit-autofill:focus {
   transition: background-color 5000s ease-in-out 0s;
 }
 
+#__react-alert__ div div div {
+  width: auto !important;
+}
+
 
 .pagination {
   @apply relative block mt-4 px-3 rounded border-0 outline-none transition-all duration-300 rounded text-[#233c3b] hover:text-[#233c3b]/60 focus:shadow-none ;
@@ -24,6 +28,15 @@ select:-webkit-autofill:focus {
 
 .big-text {
   @apply w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-primary/70 bg-clip-padding border border-solid border-gray-300
+  rounded-xl
+  transition
+  ease-in-out
+  m-0
+  focus:text-gray-700 focus:bg-secondary focus:border-primary focus:outline-none 
+}
+
+.big-contact-text {
+  @apply w-full pl-10 px-3 py-1.5 text-base font-normal text-gray-700 bg-primary/70 bg-clip-padding border border-solid border-gray-300
   rounded-xl
   transition
   ease-in-out

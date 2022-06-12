@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes, Switch} from 'react-router-dom';
 import Blog from './components/Blog';
 import Contact from './components/Contact';
+import FullPageListing from './components/FullPageListing';
 import AddDescription from './components/Host/AddDescription';
 import AddFacilities from './components/Host/AddFacilities';
 import AddFurnished from './components/Host/AddFurnished';
@@ -102,6 +103,11 @@ function App() {
               <Route path="/bookings/:id" element={
                 <PrivateRoute>
                   <Bookings />
+                </PrivateRoute>
+              }/>
+              <Route path="/searchResults/:id" element={
+                <PrivateRoute>
+                  <FullPageListing />
                 </PrivateRoute>
               }/>
               <Route path="/blog" element={

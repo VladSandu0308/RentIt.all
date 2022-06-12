@@ -11,9 +11,11 @@ import Navbar from './Navbar';
 import Pagination from './Pagination';
 import { useForm } from 'react-hook-form';
 import { Datepicker } from '@mobiscroll/react';
+import useInput from '../hooks/useInput';
 
 const SearchResults = () => {
   let {state} = useLocation();
+  console.log(state);
   const {t} = useTranslation();
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
@@ -24,12 +26,18 @@ const SearchResults = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [furnished, setFurnished] = useState("Any");
   const [reload, setReload] = useState(state.body);
+  const [retMessage, setRetMessage] = useState("");
 
-  const [start, setStart] = useState();
-  const [end, setEnd] = useState();
+  const [adults, setAdults] = useState(state?.body?.adults);
+  const [kids, setKids] = useState(state?.body?.kids)
 
-  const [location, setLocation] = useState();
-  const [coords, setCoords] = useState();
+  const [start, setStart] = useState(state?.body?.startDate);
+  const [end, setEnd] = useState(state?.body?.endDate);
+
+  const [location, setLocation] = useState(state?.body?.location);
+  const [showLoc, setShowLoc] = useState(state?.body?.location)
+  const [coords, setCoords] = useState(state?.body?.coords);
+  const address = useInput("");
 
   let currentLocations = [];
   const lastIndex = currentPage * perPage;
@@ -39,22 +47,41 @@ const SearchResults = () => {
   const paginate = pageNumber => setCurrentPage(pageNumber);
 
   const onSubmit = async (data) => {
-    if (data.min_price) {
-      console.log("price")
+    
+    console.log(data);
+
+    if (location) {
+      data = {...data, location, coords}
+      setShowLoc(location);
     }
+
+    if (start && end) {
+      
+      data = {...data, start, end}
+    }
+
+    if (adults) {
+      data = {...data, adults}
+    }
+
+    if (kids) {
+      data = {...data, kids}
+    }
+
+    data = {...data, furnished, mode: state.body.mode};
+    console.log("data");
     console.log(data);
-    data = {...data, furnished, ...reload};
-    console.log(data);
-    setLocations([])
+    
+    setLocations([]);
+    setRetMessage("");
     setReload(data);
-    console.log("reload");
-    console.log(reload);
+    
   }
 
   
 
   useEffect(() => {
-    server.post(`/getLocations/${state.user.email}`, reload).then(ret => { setLocations(ret.data.locations)}); 
+    server.post(`/getLocations/${state.user.email}`, reload).then(ret => {setRetMessage(ret.data.message); setLocations(ret.data.locations)}); 
   }, [reload]);
 
   if (locations.length == 0) {
@@ -70,22 +97,29 @@ const SearchResults = () => {
       <div className='row-span-8 bg-secondary grid grid-cols-4'>
         {
           locations.length == 0 ? (
-            <div class="col-span-3 flex items-center justify-center">
-              <div class="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full" role="status">
-                <span class="visually-hidden">Loading...</span>
-              </div>
-            </div>
+            retMessage == "This user has no locations" ? (
+                <div class="col-span-3 flex items-center justify-center">
+                  <h1 className='text-[#3ea1a9] text-4xl font-ultra font-bold '>{t("no-results")}</h1>
+
+                </div>
+              ) : (
+                <div class="col-span-3 flex items-center justify-center">
+                  <div class="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+              )            
           ) : (
             <div class="col-span-3 ">
               <div className='flex items-center ml-4 mb-3'>
                 <Icon icon="cil:search" color="#3ea1a9" rotate={1} className="mr-2" height="30"/>
-                <h1 className='text-[#3ea1a9] text-4xl font-ultra font-bold '>{t("your-results")} {state.body.location?.split(',')[0]}</h1>
+                <h1 className='text-[#3ea1a9] text-4xl font-ultra font-bold '>{t("your-results")} {showLoc ? showLoc?.split(',')[0] : "Around Romania"}</h1>
               </div>
 
               <div className='grid grid-cols-3 mt-2 ml-4 gap-4'>
                 {
                   currentLocations.map((location) => (
-                    <Listing state={state} location={location} />
+                    <Listing state={state} location={location} body={reload} />
                   ))
                 }
                 <div className='bg-secondary absolute inset-x-0 left-96 bottom-3 w-80'>
@@ -98,13 +132,33 @@ const SearchResults = () => {
           )
         }
 
-        <form onSubmit={handleSubmit(onSubmit)} className='bg-primary flex flex-col overflow-y-auto scrollbar-hide py-8'>
+        <form onSubmit={handleSubmit(onSubmit)} className='bg-primary  border-t-2 border-solid border-gray-400 flex flex-col overflow-y-auto scrollbar-hide py-8'>
           <h1 className='ml-6 mb-16 font-bold text-[#233c3b]  mr-6 text-3xl font-serif transition-colors duration-300'>Select Filters</h1>
           
           <h1 className='ml-6 text-[#233c3b] mr-6 text-lg font-serif transition-colors duration-300'>Search Location</h1>
           <div className='my-3 mx-auto relative flex items-center gap-20'>
             <Icon icon="entypo:location-pin" color="#233c3b" height="36" className='absolute ml-2 mb-1 select-none'/>
-            <input value={reload.location} {...register("location")} placeholder={t("location")} className='price-range w-80 h-12 pl-10 pr-1'/>
+            <input value={location} autoComplete="off" placeholder={t("Anywhere")} className='price-range w-80 h-12 pl-10 pr-1' onChange={e => {setLocation(e.target.value); address.onChange(e);}}/>
+                  {
+                      address.suggestions?.length > 0 && (
+                        <div className='bg-[#aad0d3] absolute top-12 w-128 py-2 px-1 z-10 rounded-2xl'>
+                          {
+                            address.suggestions.map((suggestion, index) => {
+                              return (
+                                <p className='cursor-pointer hover:bg-[#ecf0f0] max-w-96 py-1 text-xs' key={index} onClick={() => {
+                                  address.setValue(suggestion.place_name);
+                                  address.setSuggestions([]);
+                                  setLocation(suggestion.place_name);
+                                  setCoords(suggestion.center);
+                                }} >
+                                  {suggestion.place_name}
+                                </p>
+                              )
+                            })
+                          }
+                        </div>
+                      )
+                  }
           </div>
 
           <hr class="h-0 border border-solid border-t-1 border-gray-400 opacity-80 mx-6 mb-3" />
@@ -142,12 +196,12 @@ const SearchResults = () => {
 
             <div className='mx-auto my-auto relative flex items-center'>
               <Icon icon="bi:person-fill" color="#233c3b" height="36" className='absolute ml-2 mb-1 select-none'/>
-              <input {...register("adults")} type="number" step="1" min="1" placeholder={t("adults")} className='price-range w-36 h-12 pr-1 pl-8'/>
+              <input onChange={e => setAdults(e.target.value)} type="number" step="1" min="1" placeholder={t("adults")} className='price-range w-36 h-12 pr-1 pl-8'/>
             </div>
 
             <div className='mx-auto my-auto relative flex items-center gap-20'>
               <Icon icon="bi:person-fill" color="#233c3b" height="36" className='absolute ml-2 mb-1 select-none'/>
-              <input {...register("kids")} type="number" step="1" min="1" placeholder={t("kids")} className='price-range w-36 h-12 pr-1 pl-8'/>
+              <input onChange={e => setKids(e.target.value)} type="number" step="1" min="1" placeholder={t("kids")} className='price-range w-36 h-12 pr-1 pl-8'/>
             </div>
           </div>
 

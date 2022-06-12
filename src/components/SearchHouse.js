@@ -12,6 +12,7 @@ import { Datepicker } from '@mobiscroll/react';
 
 const SearchHouse = () => {
   let {state} = useLocation();
+  
   const {t} = useTranslation();
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();

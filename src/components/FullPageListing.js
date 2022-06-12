@@ -1,44 +1,65 @@
-import React, { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next';
+import React, { useState } from 'react'
+import logo from '../images/logo.png';
+
 import { Icon } from '@iconify/react';
-import { useNavigate } from 'react-router-dom';
-import CustomMap from './CustomMap';
-import Carousel from './Carousel';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { server } from '../services/axios';
-import { useAlert } from 'react-alert';
+import CustomMap from './CustomMap';
+import Listing from './Listing';
 
-const Listing = ({state, location, body}) => {
-  const { t } = useTranslation();
+const FullPageListing = () => {
   const navigate = useNavigate();
+  let {state} = useLocation();
+  const {t} = useTranslation();
 
-  const alert = useAlert();
+  const [error, setError] = useState('');
 
-  const [host, setHost] = useState({});
+  console.log(state)
 
-  state = {...state, id: location._id};
-
-  const onReserve = e => {
-    alert.success(`You've made a succesful request for house ${location.title}`)
-  }
-
-  const handleDelete = async e => {
+  const onSubmit = async e => {
     e.preventDefault();
 
+    
+
+    state.body = {...state.body, grade: 0, 
+      review_count: 0, host_email: state.user.email}
+    console.log(state);
+
     try {
-      await server.delete(`/location/${location._id}`);
+      setError('');
+      await server.post("/addLocation", state.body);
+      navigate("/host", {state: {user: state.user}});
     } catch (e) {
-      console.log(e.message)
+      setError(e.message);
     }
+
+    
+
+    
   }
-
-  useEffect(() => {
-    server.get(`/user/${location.host_email}`).then(ret => {setHost(ret.data.user)}); 
-  }, []);
-
-
+  console.log(state.body);
   return (
-    <div className='rounded-lg shadow-lg bg-white w-80 2xl:w-128 flex flex-col overflow-y-auto scrollbar-hide h-60 2xl:h-164 p-1'>
-          
+    <div className='min-w-screen h-screen grid grid-cols-2'>
+      <div className='bg-gradient-to-b from-primary to-secondary flex relative'>
+        <div className='absolute top-4 left-8'>
+          <img className='w-16' src={logo} alt='logo'/>
+        </div>
+        <div className='ml-8 m-auto text-5xl font-serif font-bold text-textMain'>
+          Check out this listing :D
+        </div>
+      </div>
+      <div className='bg-stone-100 flex flex-col shadow-3xl'>
+        <div className='absolute top-4 right-8 flex items-center gap-3'>
+          <button class="px-3 py-1 bg-gray-300 hover:bg-gray-200 rounded-full text-gray-500 hover:text-gray-500/70 flex items-center gap-1 mr-2" onClick={() => navigate('/searchResults', {state})}>
+            <Icon icon="akar-icons:arrow-back-thick-fill" color="#777" />
+            <span className='text-lg font-serif'>{t("go-back")}</span>
+          </button>
+        </div>
+
+
+        <Listing state={state} location={state.location} body={state.body}/>
+        {/* <div className='h-164 w-72 2xl:w-96 2xl:h-256 mx-auto p-2 2xl:mx-auto mt-24 mb-10 p-1 flex flex-col overflow-y-auto scrollbar-hide border rounded-2xl border-1'>
           
           <Carousel location={location} />
 
@@ -171,16 +192,13 @@ const Listing = ({state, location, body}) => {
           </div>
 
           <div className='flex flex-row mx-auto mb-4 gap-2'>
-            <button onClick={onReserve} type="submit" className='uppercase inline-block w-fit  bg-[#3ea1a9] hover:bg-[#3ea1a9]/80 transition-colors text-sm 2xl:text-xl duration-300 mt-8 text-white py-1 px-4 2xl:px-12 2xl:py-3 rounded-2xl'>{t("reserve")}</button>
-            {/* <button onClick={() => navigate(`/searchResults/${location._id}`, {state: {location, body}})} type="submit" className='uppercase inline-block w-fit  bg-[#3ea1a9] hover:bg-[#3ea1a9]/80 transition-colors text-sm 2xl:text-xl duration-300 mt-8 text-white py-1 px-4 2xl:px-12 2xl:py-3 rounded-2xl'>{t("open full page")}</button> */}
+            <button type="submit" className='uppercase inline-block w-fit  bg-[#3ea1a9] hover:bg-[#3ea1a9]/80 transition-colors text-sm 2xl:text-xl duration-300 mt-8 text-white py-1 px-4 2xl:px-12 2xl:py-3 rounded-2xl'>{t("reserve")}</button>
 
           </div>
-
-          
-
-          
-        </div>
+        </div> */}
+      </div>
+    </div>
   )
 }
 
-export default Listing
+export default FullPageListing
