@@ -31,7 +31,8 @@ const ProfileDropdown = ({user}) => {
               hidden
               bg-[#ead7ba]
               text-base
-              z-20
+              z-50
+              relative
               float-left
               py-1.5
               list-none
@@ -70,6 +71,7 @@ const ProfileDropdown = ({user}) => {
             
             <li>
               <button
+              onClick={() => navigate(`/userRequests/${user._id}`, {state: {user: user}})}
                 class="
                   dropdown-item
                   text-sm

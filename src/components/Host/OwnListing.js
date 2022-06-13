@@ -9,6 +9,7 @@ import { server } from '../../services/axios';
 const OwnListing = ({state, location, setReload}) => {
   console.log(location)
   const { t } = useTranslation();
+  console.log(state)
   const navigate = useNavigate();
 
   state = {...state, id: location._id};
@@ -182,7 +183,7 @@ const OwnListing = ({state, location, setReload}) => {
 
           <div className='flex flex-row mx-auto mb-4 gap-2'>
             <button onClick={() => navigate(`/bookings/${location._id}`, {state})} type="submit" className='inline-block w-fit bg-[#3ea1a9] hover:bg-[#3ea1a9]/80 transition-colors text-sm duration-300 mt-8 text-white py-1 px-4 rounded-2xl'>{t("current-bookings")}</button>
-            <button type="submit" className='inline-block w-fit  bg-[#3ea1a9] hover:bg-[#3ea1a9]/80 transition-colors text-sm duration-300 mt-8 text-white py-1 px-4 rounded-2xl'>{t("requests")}</button>
+            <button onClick={() => navigate(`/locationRequests/${location._id}`, {state: {user: state.user, location:location}})} type="submit" className='inline-block w-fit  bg-[#3ea1a9] hover:bg-[#3ea1a9]/80 transition-colors text-sm duration-300 mt-8 text-white py-1 px-4 rounded-2xl'>{t("requests")}</button>
             <button onClick={handleDelete} type="submit" className='inline-block w-fit bg-[#3ea1a9] hover:bg-[#3ea1a9]/80 transition-colors text-sm duration-300 mt-8 text-white py-1 px-4 rounded-2xl'>{t("delete-residence")}</button>
 
           </div>

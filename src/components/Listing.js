@@ -6,6 +6,7 @@ import CustomMap from './CustomMap';
 import Carousel from './Carousel';
 import { server } from '../services/axios';
 import { useAlert } from 'react-alert';
+import { reload } from 'firebase/auth';
 
 const Listing = ({state, location, body}) => {
   const { t } = useTranslation();
@@ -17,8 +18,27 @@ const Listing = ({state, location, body}) => {
 
   state = {...state, id: location._id};
 
-  const onReserve = e => {
-    alert.success(`You've made a succesful request for house ${location.title}`)
+  console.log(body)
+
+  const onReserve = async e => {
+    
+    const reserveBody = {
+      location_id: location._id,
+      user_id: state.user._id,
+      from: body.start,
+      to: body.end,
+      status: "Client request",
+      completed: false
+    }
+
+    try {
+      await server.post(`/createConnection`, reserveBody);
+      alert.success(`You've made a succesful request for house ${location.title}`);
+    } catch (e) {
+      console.log(e.message) 
+    }
+
+
   }
 
   const handleDelete = async e => {

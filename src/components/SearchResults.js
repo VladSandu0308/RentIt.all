@@ -31,8 +31,8 @@ const SearchResults = () => {
   const [adults, setAdults] = useState(state?.body?.adults);
   const [kids, setKids] = useState(state?.body?.kids)
 
-  const [start, setStart] = useState(state?.body?.startDate);
-  const [end, setEnd] = useState(state?.body?.endDate);
+  const [start, setStart] = useState(state?.body?.start);
+  const [end, setEnd] = useState(state?.body?.end);
 
   const [location, setLocation] = useState(state?.body?.location);
   const [showLoc, setShowLoc] = useState(state?.body?.location)
@@ -56,8 +56,9 @@ const SearchResults = () => {
     }
 
     if (start && end) {
-      
-      data = {...data, start, end}
+      const startDate = new Date(start.getTime() - (start.getTimezoneOffset() * 60000)).toISOString();
+      const endDate = new Date(end.getTime() - (end.getTimezoneOffset() * 60000)).toISOString();
+      data = {...data, start: startDate, end: endDate}
     }
 
     if (adults) {

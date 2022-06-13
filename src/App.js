@@ -14,6 +14,7 @@ import AddRentBuy from './components/Host/AddRentBuy';
 import AddReview from './components/Host/AddReview';
 import Bookings from './components/Host/Bookings';
 import HostMain from './components/Host/HostMain';
+import LocationRequests from './components/Host/LocationRequests';
 import Login from './components/Login';
 import PrivateRoute from './components/PrivateRoute';
 import Register from './components/Register';
@@ -22,6 +23,7 @@ import SearchHouse from './components/SearchHouse';
 import SearchResults from './components/SearchResults';
 import SetPhone from './components/SetPhone';
 import UpdateProfile from './components/UpdateProfile';
+import UserRequests from './components/UserRequests';
 import { AuthProvider } from './context/UserAuthContext';
 
 function App() {
@@ -108,6 +110,16 @@ function App() {
               <Route path="/searchResults/:id" element={
                 <PrivateRoute>
                   <FullPageListing />
+                </PrivateRoute>
+              }/>
+              <Route path="/userRequests/:id" element={
+                <PrivateRoute>
+                  <UserRequests />
+                </PrivateRoute>
+              }/>
+              <Route path="/locationRequests/:id" element={
+                <PrivateRoute>
+                  <LocationRequests />
                 </PrivateRoute>
               }/>
               <Route path="/blog" element={

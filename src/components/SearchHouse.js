@@ -6,6 +6,7 @@ import Navbar from './Navbar';
 import { Icon } from '@iconify/react';
 import { useForm } from 'react-hook-form';
 import Footer from './Footer';
+import { useAlert } from 'react-alert';
 
 import useInput from '../hooks/useInput';
 import { Datepicker } from '@mobiscroll/react';
@@ -25,6 +26,8 @@ const SearchHouse = () => {
   const [location, setLocation] = useState();
   const [coords, setCoords] = useState();
 
+  const alert = useAlert();
+
   const address = useInput("");
 
   const onSubmit = data => {
@@ -36,16 +39,30 @@ const SearchHouse = () => {
 
     if (mode == "Rent") {
       if (start && end) {
-        const startDate = new Date(start.getTime() - (start.getTimezoneOffset() * 60000)).toISOString().slice(0, 11).replace('T', ' ');
-        const endDate = new Date(end.getTime() - (end.getTimezoneOffset() * 60000)).toISOString().slice(0, 11).replace('T', ' ')
-        body = {...body, startDate, endDate}
+        const startDate = new Date(start.getTime() - (start.getTimezoneOffset() * 60000)).toISOString();
+        const endDate = new Date(end.getTime() - (end.getTimezoneOffset() * 60000)).toISOString();
+        body = {...body, start: startDate, end: endDate}
+      } else {
+        
       }
       
     }
     
 
     state = {...state, body}
-    navigate('/searchResults', {state});
+
+    if (mode == "Rent") {
+      if (start && end) {
+        navigate('/searchResults', {state});
+      } else {
+        alert.error(`Please insert start date and end date`)
+      }
+      
+    } else {
+      navigate('/searchResults', {state});
+    }
+
+    
 
   }
 

@@ -10,7 +10,7 @@ const Navbar = ({current, state}) => {
   const navigate = useNavigate();
 
   return (
-    <nav className="basis-full flex items-center flex-wrap h-full sticky top-0">
+    <nav className="basis-full flex items-center flex-wrap h-full sticky top-0 relative">
       <div className="flex items-center flex-shrink-0 text-white mr-8 ml-4">
         <img className='w-16' src={logo} alt='logo'/>
       </div>
@@ -29,7 +29,7 @@ const Navbar = ({current, state}) => {
                 Contact
               </button>
             </div>
-            <div className='mr-8 flex flex-row items-center'>
+            <div className='mr-8 flex flex-row items-center relative'>
               <ProfileDropdown user={state.user} />
               <LanguageSelector />
             </div>
