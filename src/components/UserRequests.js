@@ -15,8 +15,9 @@ const UserRequests = () => {
   const [requests, setRequests] = useState([]);
   const [locations, setLocations] = useState({});
 
-  const [perPage, setPerPage] = useState(5);
+  const [perPage, setPerPage] = useState(4);
   const [currentPage, setCurrentPage] = useState(1);
+  const [reload, setReload] = useState(0);
   
   let currentRequests = [];
   const lastIndex = currentPage * perPage;
@@ -45,16 +46,20 @@ const UserRequests = () => {
         })
       } 
     }); 
-  }, []);
+  }, [reload]);
 
-  // useEffect(() => {
-  //   for(let i = 0; i < currentRequests.length; ++i) {
-  //     server.get(`/getLocation/${currentRequests[i].location_id}`).then(ret => {
-  //       locations = {...locations, [currentRequests[i].location_id]: ret.data.location}
-  //     })
-  //   }
-  //   console.log(locations)
-  // }, [requests])
+  const handleDelete = async id => {
+    
+
+    try {
+      await server.delete(`/deleteRequest/${id}`);
+      window.location.reload();
+
+    } catch (e) {
+      console.log(e.message)
+    }
+  }
+
 
   return (
     <div className='min-w-screen min-h-screen grid grid-rows-9 z-0'>
@@ -77,7 +82,7 @@ const UserRequests = () => {
                 </div>
             )
           }
-          <div className='accordion' id="accordionRequests">
+          <div className='accordion w-512 h-80' id="accordionRequests">
             {
               currentRequests.map((request) => (
                 <div class="accordion-item bg-white border border-gray-200">
@@ -89,7 +94,31 @@ const UserRequests = () => {
                     </button>
                   </h2>
                   <div id={`id${request._id}`}class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionRequests">
-                    LALALA
+                    <div class="accordion-body py-2 px-5 text-sm flex justify-between">
+        
+                      <div className='flex flex-col mx-4 my-auto gap-1'>
+                          <h5>Address: {locations[request.location_id].location.match(/[^,]+,[^,]+/g)[0]}</h5>
+                          <h5>Start Date: {request.from.split('T')[0]} </h5>
+                          <h5>End Date: {request.to.split('T')[0]}</h5>
+                      </div>
+                      <div className='flex flex-col mx-4 my-auto gap-1'>
+                          <h5>Bedrooms: {locations[request.location_id].rooms}</h5>
+                          <h5>Adults: {locations[request.location_id].adults} </h5>
+                          <h5>Kids: {locations[request.location_id].kids}</h5>
+                      </div>
+                      
+                      <div className='flex ml-4 mr-16 flex-col my-auto gap-1'>
+                          <h5>Price per night: {locations[request.location_id].price} RON </h5>
+                          <h5>Host email: {locations[request.location_id].host_email} </h5>
+                          <h5>Rating:  {locations[request.location_id].grade}/10 ({locations[request.location_id].review_count} ratings)</h5>
+                      </div>
+                      <div className='flex flex-row gap-4 my-auto mr-4'>
+                        <button className='w-9 h-9 m-auto rounded-full bg-primary hover:bg-secondary transition-colors duration-300 px-1.5' 
+                          onClick={() => {handleDelete(request._id)}}>
+                          <Icon icon="ant-design:delete-twotone" color="#233c3b" height="24" className=''/>
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               ))

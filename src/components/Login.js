@@ -8,12 +8,15 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useAuth } from '../context/UserAuthContext';
 import { server } from '../services/axios';
+import useUser from '../hooks/useUser';
 
 const Login = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
   const { signup, google, login, currentUser } = useAuth();
+
+  const { setUser } = useUser();
 
   const [error, setError] = React.useState('');
 
@@ -23,6 +26,7 @@ const Login = () => {
       setError('');
       await login(data.email, data.password);
       server.post("login", {email: data.email}).then(ret => {
+        setUser(ret.data.user[0])
         navigate("/search", {state: {user: ret.data.user[0]}});
       })
       
@@ -35,6 +39,7 @@ const Login = () => {
   const handleGoogle = async (data) => {
     google().then(async e => {
       server.post("/login", {email: e.user.email}).then(ret => {
+        setUser(ret.data.user[0])
         if (ret.data.path != "/setPhone") {
           navigate(ret.data.path, {state: {user: ret.data.user[0]}})
         } else {

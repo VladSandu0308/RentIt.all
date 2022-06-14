@@ -84,7 +84,7 @@ const AddReview = () => {
             <hr class="h-0 border border-solid border-t-0 border-gray-400 opacity-25 mx-4" />
             <h1 className=' mt-8 mx-4 text-md font-semibold first-letter:uppercase'>Location</h1>
             <h1 className='mt-2 mb-2 mx-4 text-md first-letter:uppercase'>{state.body.location}</h1>
-            <div className='mx-2 w-64 h-20 z-50 mb-10'>
+            <div className='mx-auto w-64 h-20 z-50 mb-10'>
               <CustomMap coords={state.body.coords}/>
             </div>
           </div>

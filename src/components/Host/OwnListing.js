@@ -29,7 +29,7 @@ const OwnListing = ({state, location, setReload}) => {
   console.log(state)
 
   return (
-    <div className='rounded-lg shadow-lg bg-white w-96 flex flex-col overflow-y-auto scrollbar-hide h-128 p-1'>
+    <div className='rounded-lg shadow-lg bg-white w-96 flex flex-col overflow-y-auto scrollbar-hide h-128 2xl:h-256 p-1'>
           
           {/* <img class="rounded-t-lg w-full h-48 object-cover" src={location.cover} alt="cover"></img> */}
           <Carousel location={location} />

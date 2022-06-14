@@ -29,7 +29,7 @@ import { AuthProvider } from './context/UserAuthContext';
 function App() {
   return (
     <div className="App">
-      <div className='container-fluid homepage-bgimage'>
+      <div className=''>
         <BrowserRouter>
           <AuthProvider>
             <Routes>

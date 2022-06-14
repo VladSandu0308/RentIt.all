@@ -19,7 +19,7 @@ const Pagination = ({ perPage, totalPosts, paginate, currentPage }) => {
           {pageNumbers.map(number => (
             <li key={number} className='page-item'>
               { currentPage === number ? (
-                <button onClick={() => paginate(number)} className='page-link pagination bg-primary'>
+                <button onClick={() => paginate(number)} className='page-link pagination bg-[#f8f8f8]'>
                   {number}
                 </button>
               ) : (

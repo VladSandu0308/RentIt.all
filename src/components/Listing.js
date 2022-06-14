@@ -18,7 +18,6 @@ const Listing = ({state, location, body}) => {
 
   state = {...state, id: location._id};
 
-  console.log(body)
 
   const onReserve = async e => {
     
@@ -57,7 +56,7 @@ const Listing = ({state, location, body}) => {
 
 
   return (
-    <div className='rounded-lg shadow-lg bg-white w-80 2xl:w-128 flex flex-col overflow-y-auto scrollbar-hide h-60 2xl:h-164 p-1'>
+    <div className='rounded-lg shadow-lg bg-white w-80 2xl:w-96 flex flex-col overflow-y-auto scrollbar-hide h-60 2xl:h-80 p-1'>
           
           
           <Carousel location={location} />
@@ -192,7 +191,7 @@ const Listing = ({state, location, body}) => {
 
           <div className='flex flex-row mx-auto mb-4 gap-2'>
             <button onClick={onReserve} type="submit" className='uppercase inline-block w-fit  bg-[#3ea1a9] hover:bg-[#3ea1a9]/80 transition-colors text-sm 2xl:text-xl duration-300 mt-8 text-white py-1 px-4 2xl:px-12 2xl:py-3 rounded-2xl'>{t("reserve")}</button>
-            {/* <button onClick={() => navigate(`/searchResults/${location._id}`, {state: {location, body}})} type="submit" className='uppercase inline-block w-fit  bg-[#3ea1a9] hover:bg-[#3ea1a9]/80 transition-colors text-sm 2xl:text-xl duration-300 mt-8 text-white py-1 px-4 2xl:px-12 2xl:py-3 rounded-2xl'>{t("open full page")}</button> */}
+            <button onClick={() => navigate(`/searchResults/${location._id}`, {state: {location, body, host, user: state.user}})} type="submit" className='uppercase inline-block w-fit  bg-[#3ea1a9] hover:bg-[#3ea1a9]/80 transition-colors text-sm 2xl:text-xl duration-300 mt-8 text-white py-1 px-4 2xl:px-12 2xl:py-3 rounded-2xl'>{t("open full page")}</button>
 
           </div>
 

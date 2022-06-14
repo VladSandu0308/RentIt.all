@@ -39,8 +39,8 @@ const SearchHouse = () => {
 
     if (mode == "Rent") {
       if (start && end) {
-        const startDate = new Date(start.getTime() - (start.getTimezoneOffset() * 60000)).toISOString();
-        const endDate = new Date(end.getTime() - (end.getTimezoneOffset() * 60000)).toISOString();
+        const startDate = new Date(start.getTime() - (start.getTimezoneOffset() * 60000));
+        const endDate = new Date(end.getTime() - (end.getTimezoneOffset() * 60000));
         body = {...body, start: startDate, end: endDate}
       } else {
         

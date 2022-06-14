@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { server } from '../services/axios';
 import CustomMap from './CustomMap';
 import Listing from './Listing';
+import Carousel from './Carousel';
 
 const FullPageListing = () => {
   const navigate = useNavigate();
@@ -17,28 +18,30 @@ const FullPageListing = () => {
 
   console.log(state)
 
-  const onSubmit = async e => {
-    e.preventDefault();
-
+  const onReserve = async e => {
     
-
-    state.body = {...state.body, grade: 0, 
-      review_count: 0, host_email: state.user.email}
-    console.log(state);
-
-    try {
-      setError('');
-      await server.post("/addLocation", state.body);
-      navigate("/host", {state: {user: state.user}});
-    } catch (e) {
-      setError(e.message);
+    const reserveBody = {
+      location_id: location._id,
+      user_id: state.user._id,
+      from: state.body.start,
+      to: state.body.end,
+      status: "Client request",
+      completed: false
     }
 
-    
+    try {
+      await server.post(`/createConnection`, reserveBody);
+      alert.success(`You've made a succesful request for house ${location.title}`);
+      navigate('/searchResults', {state});
+    } catch (e) {
+      console.log(e.message) 
+    }
 
-    
+
   }
-  console.log(state.body);
+
+  const [location, setLocation] = useState(state.location)
+
   return (
     <div className='min-w-screen h-screen grid grid-cols-2'>
       <div className='bg-gradient-to-b from-primary to-secondary flex relative'>
@@ -56,10 +59,7 @@ const FullPageListing = () => {
             <span className='text-lg font-serif'>{t("go-back")}</span>
           </button>
         </div>
-
-
-        <Listing state={state} location={state.location} body={state.body}/>
-        {/* <div className='h-164 w-72 2xl:w-96 2xl:h-256 mx-auto p-2 2xl:mx-auto mt-24 mb-10 p-1 flex flex-col overflow-y-auto scrollbar-hide border rounded-2xl border-1'>
+        <div className='h-164 w-96 2xl:h-256 mx-auto p-2 2xl:mx-auto mt-24 mb-10 p-1 flex flex-col overflow-y-auto scrollbar-hide border rounded-2xl border-1'>
           
           <Carousel location={location} />
 
@@ -73,8 +73,8 @@ const FullPageListing = () => {
           <div className=' pt-6 pb-6 flex justify-between relative'>
             <h1 className='mx-4 text-lg font-semibold first-letter:uppercase'>{location.mode} for {location.price} lei</h1>
             <div className='flex flex-row mr-2'>
-              <h1 className='mr-2 text-lg font-semibold first-letter:uppercase'> {host[0]?.first_name}</h1>
-              <img class="w-7 h-7 rounded-full mr-1.5 object-contain" src={host[0]?.profile} alt="dummy-image"></img>
+              <h1 className='mr-2 text-lg font-semibold first-letter:uppercase'> {state.host[0]?.first_name}</h1>
+              <img class="w-7 h-7 rounded-full mr-1.5 object-contain" src={state.host[0]?.profile} alt="dummy-image"></img>
             </div>
           </div>
 
@@ -192,10 +192,11 @@ const FullPageListing = () => {
           </div>
 
           <div className='flex flex-row mx-auto mb-4 gap-2'>
-            <button type="submit" className='uppercase inline-block w-fit  bg-[#3ea1a9] hover:bg-[#3ea1a9]/80 transition-colors text-sm 2xl:text-xl duration-300 mt-8 text-white py-1 px-4 2xl:px-12 2xl:py-3 rounded-2xl'>{t("reserve")}</button>
+            
+            <button onClick={onReserve} type="submit" className='uppercase inline-block w-fit  bg-[#3ea1a9] hover:bg-[#3ea1a9]/80 transition-colors text-sm 2xl:text-xl duration-300 mt-8 text-white py-1 px-4 2xl:px-12 2xl:py-3 rounded-2xl'>{t("reserve")}</button>
 
           </div>
-        </div> */}
+        </div>
       </div>
     </div>
   )
