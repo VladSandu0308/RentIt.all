@@ -4,11 +4,14 @@ import i18next from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/UserAuthContext';
 import { useNavigate } from 'react-router-dom';
+import useUser from '../hooks/useUser';
 
 const ProfileDropdown = ({user}) => {
   const {t} = useTranslation();
   const {currentUser, logout} = useAuth();
   const navigate = useNavigate();
+
+  const { setUser } = useUser();
 
   return (
     
@@ -48,7 +51,7 @@ const ProfileDropdown = ({user}) => {
             aria-labelledby="dropdownMenuButton1"
           >
             <li className='flex items-center mx-6'>
-              <p className='text-md font-bold mx-auto'>Grade: 9.34</p>
+              <p className='text-md font-bold mx-auto'>Grade: {user.grade}</p>
             </li>
             <hr class="h-0 my-2 border border-solid border-t-0 border-gray-700 opacity-25" />
             <li>
@@ -120,7 +123,7 @@ const ProfileDropdown = ({user}) => {
                   bg-transparent
                   text-gray-700
                   hover:bg-gray-100
-                " onClick={() => logout().then(navigate("/login"))}
+                " onClick={() => {logout(); setUser(null); navigate("/login")}}
                 >{t("logout")}</button>
             </li>
           </ul>

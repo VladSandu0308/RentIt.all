@@ -10,6 +10,7 @@ import { useForm } from 'react-hook-form';
 import { storage } from '../services/firebase';
 import { server } from '../services/axios';
 import {getDownloadURL, ref, uploadBytes} from "firebase/storage"
+import useUser from '../hooks/useUser';
 
 const UpdateProfile = () => {
   const {currentUser, logout} = useAuth();
@@ -17,6 +18,7 @@ const UpdateProfile = () => {
   const { t } = useTranslation();
   const { register, handleSubmit } = useForm();
   const {state} = useLocation();
+  const { setUser } = useUser();
 
 
   const [imageUpload, setImageUpload] = useState(null);
@@ -41,7 +43,10 @@ const UpdateProfile = () => {
             setError('');
             console.log(body);
             await server.post("/register", body);
-            navigate('/search', {state: {user: body}});
+            await server.post("/login", {email: body.email}).then(ret => {
+              setUser(ret.data.user[0])
+              navigate("/search", {state: {user: ret.data.user[0]}});
+            })
           } catch (e) {
             setError(e.message);
           }
@@ -63,7 +68,7 @@ const UpdateProfile = () => {
     <div className='w-screen h-screen grid grid-rows-12'>
       <div className='bg-primary flex justify-between'>
         <img className='mx-2 p-1' src={logo} alt='logo'/>
-        <button className='text-md mr-2 bg-inherit text-secondary font-bold rounded-xl px-4 py-0.5 rounded-full hover:text-secondary/80  transition-colors duration-300' onClick={() => logout().then(navigate("/login"))}>{t("logout")}</button>
+        <button className='text-md mr-2 bg-inherit text-secondary font-bold rounded-xl px-4 py-0.5 rounded-full hover:text-secondary/80  transition-colors duration-300' onClick={() =>{logout(); setUser(null); navigate("/login")}}>{t("logout")}</button>
       </div>
       <div className='row-span-2 bg-secondary flex justify-between'>
         <div>

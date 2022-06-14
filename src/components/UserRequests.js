@@ -18,6 +18,7 @@ const UserRequests = () => {
   const [perPage, setPerPage] = useState(4);
   const [currentPage, setCurrentPage] = useState(1);
   const [reload, setReload] = useState(0);
+  const [retMessage, setRetMessage] = useState("");
   
   let currentRequests = [];
   const lastIndex = currentPage * perPage;
@@ -30,6 +31,7 @@ const UserRequests = () => {
     server.get(`/getUserRequests/${state.user._id}`).then(ret => {
       
       let tempLocations = {}
+      setRetMessage(ret.data.message);
       
       for(let i = 0; i < ret.data.requests.length; ++i) {
         server.get(`/getLocation/${ret.data.requests[i].location_id}`).then(ret2 => {
@@ -40,8 +42,9 @@ const UserRequests = () => {
           
 
           if(i == ret.data.requests.length - 1) {
-            setLocations(tempLocations)
-            setRequests(ret.data.requests)
+            setLocations(tempLocations);
+            setRequests(ret.data.requests);
+            setRetMessage(ret.data.message);
           }
         })
       } 
@@ -60,6 +63,8 @@ const UserRequests = () => {
     }
   }
 
+  
+
 
   return (
     <div className='min-w-screen min-h-screen grid grid-rows-9 z-0'>
@@ -73,13 +78,24 @@ const UserRequests = () => {
             <Icon icon="cil:search" color="#233c3b" rotate={1} className="mr-2" height="30"/>
             <h1 className='text-[#233c3b] text-4xl font-ultra font-bold '>{t("your-requests")}</h1>
           </div>
+          
           {
             requests.length == 0 && (
-              <div class="col-span-3 flex items-center justify-center">
-                  <div class="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full" role="status">
-                    <span class="visually-hidden">Loading...</span>
+              
+                retMessage == "This user has no requests" ? (
+                  <div class="col-span-3 flex items-center justify-center">
+                    <h1 className='text-[#3ea1a9] text-4xl font-ultra font-bold '>{t("no-results")}</h1>
+
                   </div>
-                </div>
+                ) : (
+                  <div class="col-span-3 flex items-center justify-center">
+                    <div class="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full" role="status">
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+                  </div>
+                )
+              
+              
             )
           }
           <div className='accordion w-512 h-80' id="accordionRequests">
@@ -97,9 +113,9 @@ const UserRequests = () => {
                     <div class="accordion-body py-2 px-5 text-sm flex justify-between">
         
                       <div className='flex flex-col mx-4 my-auto gap-1'>
-                          <h5>Address: {locations[request.location_id].location.match(/[^,]+,[^,]+/g)[0]}</h5>
-                          <h5>Start Date: {request.from.split('T')[0]} </h5>
-                          <h5>End Date: {request.to.split('T')[0]}</h5>
+                          <h5>Address: {locations[request.location_id].location?.match(/[^,]+,[^,]+/g)[0]}</h5>
+                          <h5>Start Date: {request.from?.split('T')[0]} </h5>
+                          <h5>End Date: {request.to?.split('T')[0]}</h5>
                       </div>
                       <div className='flex flex-col mx-4 my-auto gap-1'>
                           <h5>Bedrooms: {locations[request.location_id].rooms}</h5>

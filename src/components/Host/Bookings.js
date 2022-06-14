@@ -1,57 +1,61 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '@mobiscroll/react/dist/css/mobiscroll.min.css';
-import { Datepicker, Page, getJson, setOptions } from '@mobiscroll/react';
-import { useLocation } from 'react-router-dom';
+import { Datepicker, Page, getJson, setOptions, formatDate } from '@mobiscroll/react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Navbar from '../Navbar';
 import Footer from '../Footer';
+import { useAlert } from 'react-alert';
+import { server } from '../../services/axios';
 
 setOptions({
     theme: 'ios',
     themeVariant: 'light'
 });
 
+const now = new Date();
+
 function Bookings() {
-    const min = '2022-06-09T00:00';
-    const [singleLabels, setSingleLabels] = React.useState([]);
-    const [singleInvalid, setSingleInvalid] = React.useState([]);
-    
-    const onPageLoadingSingle = React.useCallback((event, inst) => {
-        getPrices(event.firstDay, (bookings) => {
-            setSingleLabels(bookings.labels);
-            setSingleInvalid(bookings.invalid);
-        	
-        });
+  const {state} = useLocation();
+  console.log(state);
+  const {t} = useTranslation();
+  const navigate = useNavigate();
+  const alert = useAlert();
+
+  const [requests, setRequests] = useState([]);
+  const [users, setUsers] = useState({});
+  const [retMessage, setRetMessage] = useState("");
+  const [colors, setColors] = useState([]);
+
+    useEffect(() => {
+      server.get(`/getLocationBookings/${state.location._id}`).then(ret => {
+        
+        let tempUsers = {}
+        let tempColors = []
+        console.log(ret)
+        setRetMessage(ret.data.message);
+        
+        for(let i = 0; i < ret?.data?.bookings?.length; ++i) {
+          server.get(`/getUserById/${ret.data.bookings[i].user_id}`).then(ret2 => {
+            
+            tempUsers = {...tempUsers, [ret.data.bookings[i].user_id]: ret2.data.user}
+            tempColors = [...tempColors, {
+              start: ret.data.bookings[i].from,
+              end: ret.data.bookings[i].to,
+              background: '#ffbaba80'
+            }]
+  
+            if(i == ret.data.bookings.length - 1) {
+              setUsers(tempUsers)
+              setRequests(ret.data.bookings)
+              setColors(tempColors);
+            }
+          })
+        } 
+      }); 
     }, []);
 
-    const getPrices = (d, callback) => {
-        let invalid = [];
-        let labels = [];
-
-        getJson('https://trial.mobiscroll.com/getprices/?year=' + d.getFullYear() + '&month=' + d.getMonth(), (bookings) => {
-            for (let i = 0; i < bookings.length; ++i) {
-                const booking = bookings[i];
-                const d = new Date(booking.d);
-
-                if (booking.price > 0) {
-                    labels.push({
-                        start: d,
-                        title: '$' + booking.price,
-                        textColor: '#e1528f'
-                    });
-                } else {
-                    invalid.push(d);
-                }
-            }
-            callback({ labels: labels, invalid: invalid });
-        }, 'jsonp');
-    }
-    
-    const {state} = useLocation();
-
-    console.log(state);
-    const {t} = useTranslation();
-
+    console.log(colors)
     return (
       <div className='min-w-screen min-h-screen grid grid-rows-9 z-0'>
         <div className='bg-primary flex-flex-row sticky top-0'>
@@ -63,13 +67,7 @@ function Bookings() {
               <Datepicker 
                 display="inline"
                 controls={['calendar']}
-                colors={[
-                  {
-                    start: new Date(2022, 0, 10),
-                    end: new Date(2022, 7, 15),
-                    background: '#ffbaba80'
-                  }
-                ]}
+                colors={colors}
                 pages="2"
               />
             </div>

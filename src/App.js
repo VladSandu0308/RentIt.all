@@ -37,11 +37,7 @@ function App() {
               <Route path="/" element={<Register />}/>
               <Route path="/setPhone" element={<SetPhone />}/>
               <Route path="/reset" element={<ResetPassword />}/>
-              <Route path="/updateProfile" element={
-                <PrivateRoute>
-                  <UpdateProfile />
-                </PrivateRoute>
-              }/>
+              <Route path="/updateProfile" element={<UpdateProfile />}/>
               <Route path="/search" element={
                 <PrivateRoute>
                   <SearchHouse />
