@@ -15,6 +15,7 @@ import AddReview from './components/Host/AddReview';
 import Bookings from './components/Host/Bookings';
 import HostMain from './components/Host/HostMain';
 import LocationRequests from './components/Host/LocationRequests';
+import UserBookings from './components/UserBookings';
 import Login from './components/Login';
 import PrivateRoute from './components/PrivateRoute';
 import Register from './components/Register';
@@ -111,6 +112,11 @@ function App() {
               <Route path="/userRequests/:id" element={
                 <PrivateRoute>
                   <UserRequests />
+                </PrivateRoute>
+              }/>
+              <Route path="/userBookings/:id" element={
+                <PrivateRoute>
+                  <UserBookings />
                 </PrivateRoute>
               }/>
               <Route path="/locationRequests/:id" element={

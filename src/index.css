@@ -98,6 +98,16 @@ hover:border-[#233c3b] hover:border-solid transition-colors duration-300
   focus:text-gray-700 focus:bg-secondary focus:border-primary focus:outline-none 
 }
 
+.rating-range {
+  @apply py-1 text-base text-center font-bold text-gray-700 bg-primary/70 bg-clip-padding border border-solid border-gray-300
+  rounded-xl
+  transition
+  ease-in-out
+  outline-none appearance-none
+  m-0 placeholder-[#233c3b] hover:placeholder-[#233c3b]/80 transition-colors duration-300 
+  focus:text-gray-700 focus:bg-secondary focus:border-primary focus:outline-none 
+}
+
 .date-range {
   @apply py-8 text-base text-center font-bold text-gray-700 bg-primary/70 bg-clip-padding border border-solid border-gray-300
   rounded-xl

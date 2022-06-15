@@ -82,7 +82,7 @@ const LocationRequests = () => {
   return (
     <div className='min-w-screen min-h-screen grid grid-rows-9 z-0'>
       <div className='bg-primary flex-flex-row sticky top-0'>
-        <Navbar current={t("")} state={state} className="z-20"/>
+        <Navbar current={t("host-functions")} state={state} className="z-20"/>
       </div>
       <div className='row-span-8 bg-secondary flex'>
         
@@ -157,8 +157,11 @@ const LocationRequests = () => {
               ))
             }
           </div>
-          <Pagination perPage={perPage} totalPosts={requests.length} paginate={paginate} currentPage={currentPage}/>
-        </div>
+            {
+              requests.length != 0 &&
+                <Pagination perPage={perPage} totalPosts={requests.length} paginate={paginate} currentPage={currentPage}/>
+
+            }        </div>
       </div>
         
       <div className='bottom-0'>

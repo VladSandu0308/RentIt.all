@@ -93,6 +93,7 @@ const ProfileDropdown = ({user}) => {
 
             <li>
               <button
+                onClick={() => navigate(`/userBookings/${user._id}`, {state: {user: user}})}
                 class="
                   dropdown-item
                   text-sm
@@ -106,7 +107,7 @@ const ProfileDropdown = ({user}) => {
                   text-gray-700
                   hover:bg-gray-100
                 "
-                >{t("history")}</button>
+                >Bookings</button>
             </li>
 
             <li>
