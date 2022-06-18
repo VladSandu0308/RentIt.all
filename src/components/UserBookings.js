@@ -148,7 +148,7 @@ const UserBookings = () => {
                       </div>
                       <div className='flex flex-row my-auto '>
                           {
-                            new Date(request.to) >= now && (
+                            new Date(request.to) <= now && (
                               
                                 request.reviewed_user ? (
                                   <p className='text-sm flex items-center mr-1'>
@@ -167,7 +167,7 @@ const UserBookings = () => {
 
                           {
                             !request.reviewed_user && (
-                              <button className={`w-9 h-9 m-auto rounded-full bg-primary  px-1.5 ${(new Date(request.to) < now || request.reviewed_user) ? 'cursor-not-allowed opacity-50' : 'hover:bg-secondary transition-colors duration-300'}`} 
+                              <button className={`w-9 h-9 m-auto rounded-full bg-primary  px-1.5 ${(new Date(request.to) > now || request.reviewed_user) ? 'cursor-not-allowed opacity-50' : 'hover:bg-secondary transition-colors duration-300'}`} 
                                 onClick={() => handleReview(request.location_id, request._id)}>
                                 <Icon icon="ic:baseline-grade" color="#233c3b" height="24" className=''/>
                               </button>

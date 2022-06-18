@@ -18,7 +18,7 @@ const UpdateProfile = () => {
   const { t } = useTranslation();
   const { register, handleSubmit } = useForm();
   const {state} = useLocation();
-  const { setUser } = useUser();
+  const { user, setUser } = useUser();
 
 
   const [imageUpload, setImageUpload] = useState(null);
@@ -28,7 +28,7 @@ const UpdateProfile = () => {
     let body = {...data, ...state.profile}
     console.log(body);
 
-    if(!imageUpload) {
+    if(!imageUpload && !user) {
       setError("No picture uploaded");
     }
 
@@ -42,17 +42,32 @@ const UpdateProfile = () => {
           try {
             setError('');
             console.log(body);
-            await server.post("/register", body);
-            await server.post("/login", {email: body.email}).then(ret => {
-              setUser(ret.data.user[0])
-              navigate("/search", {state: {user: ret.data.user[0]}});
-            })
+            if (user) {
+              await server.put(`/user/${user._id}`, body).then(ret => setUser(ret.data.user));
+              navigate("/search", {state});
+            } else {
+              await server.post("/register", body);
+              await server.post("/login", {email: body.email}).then(ret => {
+                setUser(ret.data.user[0])
+                navigate("/search", {state: {user: ret.data.user[0]}});
+              })
+            }
+            
           } catch (e) {
             setError(e.message);
           }
           
         })
       })
+    } 
+
+    if(user && !imageUpload) {
+      try {
+        await server.put(`/user/${user._id}`, body).then(ret => setUser(ret.data.user));
+        navigate("/search", {state});
+      } catch (e) {
+        setError(e.message)
+      }
     }
 
     

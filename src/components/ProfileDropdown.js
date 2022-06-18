@@ -6,12 +6,12 @@ import { useAuth } from '../context/UserAuthContext';
 import { useNavigate } from 'react-router-dom';
 import useUser from '../hooks/useUser';
 
-const ProfileDropdown = ({user}) => {
+const ProfileDropdown = ({}) => {
   const {t} = useTranslation();
   const {currentUser, logout} = useAuth();
   const navigate = useNavigate();
 
-  const { setUser } = useUser();
+  const { user, setUser } = useUser();
 
   return (
     
@@ -56,6 +56,7 @@ const ProfileDropdown = ({user}) => {
             <hr class="h-0 my-2 border border-solid border-t-0 border-gray-700 opacity-25" />
             <li>
               <button
+              onClick={() => navigate(`/updateProfile`, {state: {user: user}})}
                 class="
                   dropdown-item
                   text-sm

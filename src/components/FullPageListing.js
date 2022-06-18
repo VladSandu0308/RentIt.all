@@ -9,6 +9,8 @@ import CustomMap from './CustomMap';
 import Listing from './Listing';
 import Carousel from './Carousel';
 
+import { useAlert } from 'react-alert';
+
 const FullPageListing = () => {
   const navigate = useNavigate();
   let {state} = useLocation();
@@ -16,7 +18,7 @@ const FullPageListing = () => {
 
   const [error, setError] = useState('');
 
-  console.log(state)
+  const alert = useAlert();
 
   const onReserve = async e => {
     
@@ -32,7 +34,7 @@ const FullPageListing = () => {
     try {
       await server.post(`/createConnection`, reserveBody);
       alert.success(`You've made a succesful request for house ${location.title}`);
-      navigate('/searchResults', {state});
+      navigate(`/userRequests/${state.user._id}`, {state});
     } catch (e) {
       console.log(e.message) 
     }

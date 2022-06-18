@@ -130,7 +130,12 @@ function Bookings() {
           <Navbar current={t("host-functions")} state={state} className="z-20"/>
         </div>
         <div className='row-span-8 bg-secondary grid grid-cols-2'>
+            <button class=" absolute mt-4 left-5 px-3 py-1 bg-gray-300 hover:bg-gray-200 rounded-full text-gray-500 hover:text-gray-500/70 flex items-center gap-1 mr-2" onClick={() => navigate(-1, {state})}>
+              <Icon icon="akar-icons:arrow-back-thick-fill" color="#777" />
+              <span className='text-lg font-serif'>{t("go-back")}</span>
+            </button>
           <div className=" bg-secondary h-fit w-256 mx-auto my-16 flex flex-col">
+            
             <div className="mbsc-form-group-title font-semibold">Bookings for {state.location.title}</div>
               <Datepicker 
                 display="inline"

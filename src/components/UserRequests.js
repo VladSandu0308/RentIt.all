@@ -106,27 +106,27 @@ const UserRequests = () => {
                     <button class="accordion-button collapsed relative flex items-center w-full py-4 px-5 text-base text-[#233c3b]text-left bg-white border-0 rounded-none transition focus:outline-none;"
                     type="button" data-bs-toggle="collapse" data-bs-target={`#id${request._id}`} aria-expanded="false"
                     aria-controls="collapseOne">
-                      Request for location {locations[request.location_id].title}
+                      Request for location {locations[request.location_id]?.title}
                     </button>
                   </h2>
                   <div id={`id${request._id}`}class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionRequests">
                     <div class="accordion-body py-2 px-5 text-sm flex justify-between">
         
                       <div className='flex flex-col mx-4 my-auto gap-1'>
-                          <h5>Address: {locations[request.location_id].location?.match(/[^,]+,[^,]+/g)[0]}</h5>
+                          <h5>Address: {locations[request.location_id]?.location?.match(/[^,]+,[^,]+/g)[0]}</h5>
                           <h5>Start Date: {request.from?.split('T')[0]} </h5>
                           <h5>End Date: {request.to?.split('T')[0]}</h5>
                       </div>
                       <div className='flex flex-col mx-4 my-auto gap-1'>
-                          <h5>Bedrooms: {locations[request.location_id].rooms}</h5>
-                          <h5>Adults: {locations[request.location_id].adults} </h5>
-                          <h5>Kids: {locations[request.location_id].kids}</h5>
+                          <h5>Bedrooms: {locations[request.location_id]?.rooms}</h5>
+                          <h5>Adults: {locations[request.location_id]?.adults} </h5>
+                          <h5>Kids: {locations[request.location_id]?.kids}</h5>
                       </div>
                       
                       <div className='flex ml-4 mr-16 flex-col my-auto gap-1'>
-                          <h5>Price per night: {locations[request.location_id].price} RON </h5>
-                          <h5>Host email: {locations[request.location_id].host_email} </h5>
-                          <h5>Rating:  {locations[request.location_id].grade}/10 ({locations[request.location_id].review_count} ratings)</h5>
+                          <h5>Price per night: {locations[request.location_id]?.price} RON </h5>
+                          <h5>Host email: {locations[request.location_id]?.host_email} </h5>
+                          <h5>Rating:  {locations[request.location_id]?.grade}/10 ({locations[request.location_id]?.review_count} ratings)</h5>
                       </div>
                       <div className='flex flex-row gap-4 my-auto mr-4'>
                         <button className='w-9 h-9 m-auto rounded-full bg-primary hover:bg-secondary transition-colors duration-300 px-1.5' 

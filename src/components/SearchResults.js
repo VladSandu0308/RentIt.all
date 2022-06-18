@@ -56,8 +56,8 @@ const SearchResults = () => {
     }
 
     if (start && end) {
-      const startDate = new Date(start.getTime() - (start.getTimezoneOffset() * 60000)).toISOString();
-      const endDate = new Date(end.getTime() - (end.getTimezoneOffset() * 60000)).toISOString();
+      const startDate = new Date(start.getTime() - (start.getTimezoneOffset() * 60000));
+      const endDate = new Date(end.getTime() - (end.getTimezoneOffset() * 60000));
       data = {...data, start: startDate, end: endDate}
     }
 
@@ -229,6 +229,14 @@ const SearchResults = () => {
           <div className='my-3 mx-auto relative flex items-center gap-20'>
             <Icon icon="icon-park-solid:map-distance" color="#233c3b" height="36" className='absolute ml-2 mb-1 select-none'/>
             <input {...register("max_dist")} type="number" min="1" max="20000000" placeholder={t("max-distance")} className='price-range w-56 h-12 pr-1'/>
+          </div>
+
+          <hr class="h-0 border border-solid border-t-1 border-gray-400 opacity-80 mx-6 mb-3" />
+
+          <h1 className='ml-6 text-[#233c3b] mr-6 text-lg font-serif transition-colors duration-300'>Search for key words</h1>
+          <div className='my-3 mx-auto relative flex items-center gap-20'>
+            <Icon icon="bi:file-earmark-word-fill" color="#233c3b" height="36" className='absolute ml-2 mb-1 select-none'/>
+            <input autoComplete='off' {...register("search")} placeholder={t("insert-key-words")} className='price-range w-56 h-12 pr-1'/>
           </div>
 
           <hr class="h-0 border border-solid border-t-1 border-gray-400 opacity-80 mx-6 mb-3" />

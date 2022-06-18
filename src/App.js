@@ -26,6 +26,9 @@ import SetPhone from './components/SetPhone';
 import UpdateProfile from './components/UpdateProfile';
 import UserRequests from './components/UserRequests';
 import { AuthProvider } from './context/UserAuthContext';
+import AdminLogin from './components/Admin/AdminLogin';
+import AdminPanel from './components/Admin/AdminPanel';
+import AdminPrivateRoute from './components/Admin/AdminPrivateRoute';
 
 function App() {
   return (
@@ -39,6 +42,12 @@ function App() {
               <Route path="/setPhone" element={<SetPhone />}/>
               <Route path="/reset" element={<ResetPassword />}/>
               <Route path="/updateProfile" element={<UpdateProfile />}/>
+              <Route path="/admin" element={<AdminLogin />}/>
+              <Route path="/admin/panel" element={
+                <AdminPrivateRoute>
+                  <AdminPanel />
+                </AdminPrivateRoute>
+              }/>
               <Route path="/search" element={
                 <PrivateRoute>
                   <SearchHouse />

@@ -85,7 +85,10 @@ const LocationRequests = () => {
         <Navbar current={t("host-functions")} state={state} className="z-20"/>
       </div>
       <div className='row-span-8 bg-secondary flex'>
-        
+          <button class="absolute mt-4 left-5 px-3 py-1 bg-gray-300 hover:bg-gray-200 rounded-full text-gray-500 hover:text-gray-500/70 flex items-center gap-1 mr-2" onClick={() => navigate(-1, {state})}>
+            <Icon icon="akar-icons:arrow-back-thick-fill" color="#777" />
+            <span className='text-lg font-serif'>{t("go-back")}</span>
+          </button>
         <div className='m-auto bg-primary pt-12 p-6 pb-4 flex flex-col'>
           <div className="m-auto text-white relative bottom-6 flex items-center">
             <Icon icon="cil:search" color="#233c3b" rotate={1} className="mr-2" height="30"/>
@@ -161,7 +164,8 @@ const LocationRequests = () => {
               requests.length != 0 &&
                 <Pagination perPage={perPage} totalPosts={requests.length} paginate={paginate} currentPage={currentPage}/>
 
-            }        </div>
+            }        
+        </div>
       </div>
         
       <div className='bottom-0'>

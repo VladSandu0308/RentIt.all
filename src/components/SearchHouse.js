@@ -118,11 +118,11 @@ const SearchHouse = () => {
               <div className='flex flex-row mb-8'>
                 <div className='basis-1/2 relative flex items-center'>
                   <Icon icon="ant-design:calendar-twotone" color="#233c3b" height="24" className='absolute ml-2 pb-0.5'/>
-                  <Datepicker value={start} onChange={e => setStart(e.value)} controls={['calendar']} touchUi={true} display='anchored' min={new Date()} inputComponent="input" inputProps={{placeholder: 'Start Date: Anytime', class: 'search-date'}}/>
+                  <Datepicker value={start} onChange={e => setStart(e.value)} controls={['calendar']} touchUi={true} display='anchored' min={new Date()} inputComponent="input" inputProps={{placeholder: 'Start Date:', class: 'search-date'}}/>
                 </div>
                 <div className='basis-1/2 relative flex items-center'>
                   <Icon icon="ant-design:calendar-twotone" color="#233c3b" height="24" className='absolute ml-2 pb-0.5'/>
-                  <Datepicker value={end} onChange={e => setEnd(e.value)}  controls={['calendar']} display='anchored' min={start} touchUi={true} inputComponent="input" inputProps={{placeholder: 'End Date: Anytime', class: 'search-date'}} />
+                  <Datepicker value={end} onChange={e => setEnd(e.value)}  controls={['calendar']} display='anchored' min={start} touchUi={true} inputComponent="input" inputProps={{placeholder: 'End Date', class: 'search-date'}} />
                 </div>
               </div>
             }
