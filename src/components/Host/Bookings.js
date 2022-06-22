@@ -136,30 +136,22 @@ function Bookings() {
             </button>
           <div className=" bg-secondary h-fit w-256 mx-auto my-16 flex flex-col">
             
-            <div className="mbsc-form-group-title font-semibold">Bookings for {state.location.title}</div>
-              <Datepicker 
-                display="inline"
-                controls={['calendar']}
-                colors={colors}
-                pages="2"
-              />
-
+            <div className="mbsc-form-group-title font-semibold">{t("boogins-for")} {state.location.title}</div>
+              <Datepicker display="inline" controls={['calendar']} colors={colors} pages="2"/>
             <div className='flex justify-around gap-6 mx-auto mt-3'>
               <div className='relative flex items-center'>
                 <Icon icon="ant-design:calendar-twotone" color="#233c3b" height="24" className='absolute ml-2 pb-0.5'/>
-                <Datepicker value={start} onChange={e => setStart(e.value)} controls={['calendar']} touchUi={true} display='anchored' min={new Date()} inputComponent="input" inputProps={{placeholder: 'Start Date', class: 'date-range w-48 h-12 pr-1 pl-8'}}/>
+                <Datepicker value={start} onChange={e => setStart(e.value)} controls={['calendar']} touchUi={true} display='anchored' min={new Date()} inputComponent="input" inputProps={{placeholder: t("start-date"), class: 'date-range w-48 h-12 pr-1 pl-8'}}/>
               </div>
               <div className=' relative flex items-center'>
                 <Icon icon="ant-design:calendar-twotone" color="#233c3b" height="24" className='absolute ml-2 pb-0.5'/>
-                <Datepicker value={end} onChange={e => setEnd(e.value)}  controls={['calendar']} display='anchored' min={start} touchUi={true} inputComponent="input" inputProps={{placeholder: 'End Date', class: 'date-range w-48 h-12 pr-1 pl-8'}} />
+                <Datepicker value={end} onChange={e => setEnd(e.value)}  controls={['calendar']} display='anchored' min={start} touchUi={true} inputComponent="input" inputProps={{placeholder: t("end-date"), class: 'date-range w-48 h-12 pr-1 pl-8'}} />
               </div>
             </div>
 
             <div className='flex flex-row mx-auto mb-4 gap-2'>
-              <button onClick={addUnavailability} type="submit" className='uppercase inline-block w-fit  bg-[#3ea1a9] hover:bg-[#3ea1a9]/80 transition-colors text-lg 2xl:text-xl duration-300 mt-8 text-white py-1 px-4 2xl:px-12 2xl:py-3 rounded-2xl'>Add unavailability</button>
+              <button onClick={addUnavailability} type="submit" className='uppercase inline-block w-fit  bg-[#3ea1a9] hover:bg-[#3ea1a9]/80 transition-colors text-lg 2xl:text-xl duration-300 mt-8 text-white py-1 px-4 2xl:px-12 2xl:py-3 rounded-2xl'>{t("add-unavaiablity")}</button>
             </div>
-
-
           </div>
 
           <div className='my-16 mx-auto bg-primary pt-12 p-6 pb-4 flex flex-col'>
@@ -194,35 +186,35 @@ function Bookings() {
                       <button class="accordion-button collapsed relative flex items-center w-full py-4 px-5 text-base text-[#233c3b]text-left bg-white border-0 rounded-none transition focus:outline-none;"
                       type="button" data-bs-toggle="collapse" data-bs-target={`#id${request._id}`} aria-expanded="false"
                       aria-controls="collapseOne">
-                        Booking from {users[request.user_id]?.first_name}
+                        {t("booking-from")} {users[request.user_id]?.first_name}
                       </button>
                     </h2>
                     <div id={`id${request._id}`}class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionRequests">
                       <div class="accordion-body py-2 px-2 text-sm flex justify-between">
             
                         <div className='flex flex-col mr-2 my-auto gap-1'>
-                            <h5>Full Name: {users[request.user_id]?.first_name} {users[request.user_id]?.last_name}</h5>
-                            <h5>Start Date: {request.from?.split('T')[0]} </h5>
-                            <h5>End Date: {request.to?.split('T')[0]}</h5>
+                            <h5>{t("full-name")}: {users[request.user_id]?.first_name} {users[request.user_id]?.last_name}</h5>
+                            <h5>{t("start-date")}: {request.from?.split('T')[0]} </h5>
+                            <h5>{t("end-date")}: {request.to?.split('T')[0]}</h5>
                         </div>
                         <div className='flex flex-col mx-2 my-auto gap-1'>
-                            <h5>Rating:  {users[request.user_id]?.grade}/10 ({users[request.user_id]?.review_count} ratings)</h5>
+                            <h5>{t("nota")}:  {users[request.user_id]?.grade}/10 ({users[request.user_id]?.review_count} {t("note")})</h5>
                             <h5>Email: {users[request.user_id]?.email} </h5>
-                            <h5>Phone: {users[request.user_id]?.phone}</h5>
+                            <h5>{t("phone")}: {users[request.user_id]?.phone}</h5>
                         </div>
                         
                         <div className='flex ml-2 flex-col my-auto gap-1'>
-                            <h5>Personal Info: {users[request.user_id]?.personal_info} </h5>
-                            <h5>Purpose: {users[request.user_id]?.purpose} </h5>
-                            <h5>Interests:  {users[request.user_id]?.interests}</h5>
+                            <h5>{t("personal-info")}: {users[request.user_id]?.personal_info} </h5>
+                            <h5>{t("purpose")}: {users[request.user_id]?.purpose} </h5>
+                            <h5>{t("interests")}:  {users[request.user_id]?.interests}</h5>
                         </div>
 
                         <div className='flex flex-row my-auto '>
                           {
-                            new Date(request.to) >= now && (
+                            new Date(request.to) <= now && (
                               request.reviewed_location ? (
                                 <p className='text-sm flex items-center mr-1'>
-                                  Reviewed
+                                  {t("reviewed")}
                                 </p> 
                               ) : (
                                 <div className=' relative flex items-center mr-2'>
@@ -235,7 +227,7 @@ function Bookings() {
                                                    
                           {
                             !request.reviewed_location && (
-                              <button className={`w-9 h-9 m-auto rounded-full bg-primary  px-1.5 ${(new Date(request.to) < now || request.reviewed_location) ? 'cursor-not-allowed opacity-50' : 'hover:bg-secondary transition-colors duration-300'}`} 
+                              <button className={`w-9 h-9 m-auto rounded-full bg-primary  px-1.5 ${(new Date(request.to) > now || request.reviewed_location) ? 'cursor-not-allowed opacity-50' : 'hover:bg-secondary transition-colors duration-300'}`} 
                                 onClick={() => handleReview(request.user_id, request._id)}>
                                 <Icon icon="ic:baseline-grade" color="#233c3b" height="24" className=''/>
                               </button>

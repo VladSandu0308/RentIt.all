@@ -22,8 +22,7 @@ const SearchResults = () => {
 
   const [locations, setLocations] = useState([]);
 
-  const [perPage, setPerPage] = useState(6);
-  const [currentPage, setCurrentPage] = useState(1);
+  
   const [furnished, setFurnished] = useState("Any");
   const [reload, setReload] = useState(state.body);
   const [retMessage, setRetMessage] = useState("");
@@ -39,6 +38,9 @@ const SearchResults = () => {
   const [coords, setCoords] = useState(state?.body?.coords);
   const address = useInput("");
 
+
+  const [perPage, setPerPage] = useState(6);
+  const [currentPage, setCurrentPage] = useState(1);
   let currentLocations = [];
   const lastIndex = currentPage * perPage;
   const firstIndex = lastIndex - perPage;
@@ -114,7 +116,7 @@ const SearchResults = () => {
             <div class="col-span-3 ">
               <div className='flex items-center ml-4 mb-3'>
                 <Icon icon="cil:search" color="#3ea1a9" rotate={1} className="mr-2" height="30"/>
-                <h1 className='text-[#3ea1a9] text-4xl font-ultra font-bold '>{t("your-results")} {showLoc ? showLoc?.split(',')[0] : "Around Romania"}</h1>
+                <h1 className='text-[#3ea1a9] text-4xl font-ultra font-bold '>{t("your-results")} {showLoc ? showLoc?.split(',')[0] : t("around-romania")}</h1>
               </div>
 
               <div className='grid grid-cols-3 mt-2 ml-4 gap-4'>
@@ -134,9 +136,9 @@ const SearchResults = () => {
         }
 
         <form onSubmit={handleSubmit(onSubmit)} className='bg-primary  border-t-2 border-solid border-gray-400 flex flex-col overflow-y-auto scrollbar-hide py-8'>
-          <h1 className='ml-6 mb-16 font-bold text-[#233c3b]  mr-6 text-3xl font-serif transition-colors duration-300'>Select Filters</h1>
+          <h1 className='ml-6 mb-16 font-bold text-[#233c3b]  mr-6 text-3xl font-serif transition-colors duration-300'>{t("select-filters")}</h1>
           
-          <h1 className='ml-6 text-[#233c3b] mr-6 text-lg font-serif transition-colors duration-300'>Search Location</h1>
+          <h1 className='ml-6 text-[#233c3b] mr-6 text-lg font-serif transition-colors duration-300'>{t("search-location")}</h1>
           <div className='my-3 mx-auto relative flex items-center gap-20'>
             <Icon icon="entypo:location-pin" color="#233c3b" height="36" className='absolute ml-2 mb-1 select-none'/>
             <input value={location} autoComplete="off" placeholder={t("Anywhere")} className='price-range w-80 h-12 pl-10 pr-1' onChange={e => {setLocation(e.target.value); address.onChange(e);}}/>
@@ -166,7 +168,7 @@ const SearchResults = () => {
 
           {
             reload.mode == "Rent" && 
-            <h1 className='ml-6 text-[#233c3b]  mr-6 text-lg font-serif transition-colors duration-300'>Available dates</h1>
+            <h1 className='ml-6 text-[#233c3b]  mr-6 text-lg font-serif transition-colors duration-300'>{t("available-dates")}</h1>
           }
 
           
@@ -175,11 +177,11 @@ const SearchResults = () => {
               <div className='flex justify-around mb-3 mx-auto gap-6 mt-3'>
                 <div className='basis-1/2 relative flex items-center'>
                   <Icon icon="ant-design:calendar-twotone" color="#233c3b" height="24" className='absolute ml-2 pb-0.5'/>
-                  <Datepicker value={start} onChange={e => setStart(e.value)} controls={['calendar']} touchUi={true} display='anchored' min={new Date()} inputComponent="input" inputProps={{placeholder: 'Start Date', class: 'date-range w-36 h-12 pr-1 pl-8'}}/>
+                  <Datepicker value={start} onChange={e => setStart(e.value)} controls={['calendar']} touchUi={true} display='anchored' min={new Date()} inputComponent="input" inputProps={{placeholder: t("start-date"), class: 'date-range w-36 h-12 pr-1 pl-8'}}/>
                 </div>
                 <div className='basis-1/2 relative flex items-center'>
                   <Icon icon="ant-design:calendar-twotone" color="#233c3b" height="24" className='absolute ml-2 pb-0.5'/>
-                  <Datepicker value={end} onChange={e => setEnd(e.value)}  controls={['calendar']} display='anchored' min={start} touchUi={true} inputComponent="input" inputProps={{placeholder: 'End Date', class: 'date-range  w-36 h-12 pr-1 pl-8'}} />
+                  <Datepicker value={end} onChange={e => setEnd(e.value)}  controls={['calendar']} display='anchored' min={start} touchUi={true} inputComponent="input" inputProps={{placeholder: t("end-date"), class: 'date-range  w-36 h-12 pr-1 pl-8'}} />
                 </div>
               </div>
             }
@@ -191,7 +193,7 @@ const SearchResults = () => {
 
           
 
-          <h1 className='ml-6 text-[#233c3b]  mr-6 text-lg font-serif transition-colors duration-300'>Minimum persons</h1>
+          <h1 className='ml-6 text-[#233c3b]  mr-6 text-lg font-serif transition-colors duration-300'>{t("minimum-persons")}</h1>
 
           <div className='flex justify-around mb-3 mx-auto gap-6 mt-3'>
 
@@ -208,69 +210,69 @@ const SearchResults = () => {
 
           <hr class="h-0 border border-solid border-t-1 border-gray-400 opacity-80 mx-6 mb-3" />
           
-          <h1 className='ml-6 text-[#233c3b]  mr-6 text-lg font-serif transition-colors duration-300'>Price Range (/night)</h1>
+          <h1 className='ml-6 text-[#233c3b]  mr-6 text-lg font-serif transition-colors duration-300'>{t("price-range")}</h1>
 
           <div className='flex justify-around mb-3 mx-auto gap-6 mt-3'>
 
             <div className='mx-auto my-auto relative flex items-center'>
               <Icon icon="healthicons:money-bag" color="#233c3b" height="36" className='absolute ml-2 mb-1 select-none'/>
-              <input {...register("min_price")} type="number" step="5" min="50" placeholder={t("min-price")} className='price-range w-36 h-12 pr-1 pl-8'/>
+              <input {...register("min_price")} type="number" step="5" min="50" placeholder={t("min-price")} className='price-range w-36 h-12 pr-1 pl-10'/>
             </div>
 
             <div className='mx-auto my-auto relative flex items-center gap-20'>
               <Icon icon="healthicons:money-bag" color="#233c3b" height="36" className='absolute ml-2 mb-1 select-none'/>
-              <input {...register("max_price")} type="number" step="5" min="50" placeholder={t("max-price")} className='price-range w-36 h-12 pr-1 pl-8'/>
+              <input {...register("max_price")} type="number" step="5" min="50" placeholder={t("max-price")} className='price-range w-36 h-12 pr-1 pl-10'/>
             </div>
           </div>
 
           <hr class="h-0 border border-solid border-t-1 border-gray-400 opacity-80 mx-6 mb-3" />
 
-          <h1 className='ml-6 text-[#233c3b] mr-6 text-lg font-serif transition-colors duration-300'>Max distance from search point (km)</h1>
+          <h1 className='ml-6 text-[#233c3b] mr-6 text-lg font-serif transition-colors duration-300'>{t("max-dist")} (km)</h1>
           <div className='my-3 mx-auto relative flex items-center gap-20'>
             <Icon icon="icon-park-solid:map-distance" color="#233c3b" height="36" className='absolute ml-2 mb-1 select-none'/>
-            <input {...register("max_dist")} type="number" min="1" max="20000000" placeholder={t("max-distance")} className='price-range w-56 h-12 pr-1'/>
+            <input {...register("max_dist")} type="number" min="1" max="20000000" placeholder={t("type-here")} className='price-range w-56 h-12 pr-1'/>
           </div>
 
           <hr class="h-0 border border-solid border-t-1 border-gray-400 opacity-80 mx-6 mb-3" />
 
-          <h1 className='ml-6 text-[#233c3b] mr-6 text-lg font-serif transition-colors duration-300'>Search for key words</h1>
+          <h1 className='ml-6 text-[#233c3b] mr-6 text-lg font-serif transition-colors duration-300'>{t("key-words")}</h1>
           <div className='my-3 mx-auto relative flex items-center gap-20'>
             <Icon icon="bi:file-earmark-word-fill" color="#233c3b" height="36" className='absolute ml-2 mb-1 select-none'/>
-            <input autoComplete='off' {...register("search")} placeholder={t("insert-key-words")} className='price-range w-56 h-12 pr-1'/>
+            <input autoComplete='off' {...register("search")} placeholder={t("type-here")} className='price-range w-56 h-12 pr-1'/>
           </div>
 
           <hr class="h-0 border border-solid border-t-1 border-gray-400 opacity-80 mx-6 mb-3" />
 
-          <h1 className='ml-6 text-[#233c3b] mr-6 text-lg font-serif transition-colors duration-300'>Min bedrooms</h1>
+          <h1 className='ml-6 text-[#233c3b] mr-6 text-lg font-serif transition-colors duration-300'>{t("min-rooms")}</h1>
           <div className='my-3 mx-auto relative flex items-center gap-20'>
             <Icon icon="ic:baseline-bedroom-child" color="#233c3b" height="36" className='absolute ml-2 mb-1 select-none'/>
-            <input {...register("min_rooms")} type="number" step="1" min="1" max="200" placeholder={t("min-bedrooms")} className='price-range w-56 h-12 pr-1'/>
+            <input {...register("min_rooms")} type="number" step="1" min="1" max="200" placeholder={t("min-rooms")} className='price-range w-56 h-12 pr-1'/>
           </div>
 
           <hr class="h-0 border border-solid border-t-1 border-gray-400 opacity-80 mx-6 mb-3" />
 
-          <h1 className='ml-6 text-[#233c3b] mr-6 text-lg font-serif transition-colors duration-300'>Min bathrooms</h1>
+          <h1 className='ml-6 text-[#233c3b] mr-6 text-lg font-serif transition-colors duration-300'>{t("min-baths")}</h1>
           <div className='my-3 mx-auto relative flex items-center gap-20'>
             <Icon icon="ic:baseline-bathroom" color="#233c3b" height="36" className='absolute ml-2 mb-1 select-none'/>
-            <input {...register("min_baths")} type="number" step="1" min="1" max="200" placeholder={t("min-bathrooms")} className='price-range w-56 h-12 pr-1'/>
+            <input {...register("min_baths")} type="number" step="1" min="1" max="200" placeholder={t("min-baths")} className='price-range w-56 h-12 pr-1'/>
           </div>
 
           <hr class="h-0 border border-solid border-t-1 border-gray-400 opacity-80 mx-6 mb-3" />
 
-          <h1 className='ml-6 text-[#233c3b] mr-6 text-lg font-serif transition-colors duration-300'>Furnished</h1>
+          <h1 className='ml-6 text-[#233c3b] mr-6 text-lg font-serif transition-colors duration-300'>{t("furnished")} </h1>
           <div className='basis-1/4 relative flex items-center my-3'>
                 <Icon icon="bi:house-door-fill" color="#233c3b" height="36" className='absolute ml-16 pb-0.5'/>
                 <select onChange={e => setFurnished(e.target.value)} className='select-furnished w-56 h-16 py-2.5'>
-                  <option selected value="Any">{t("Any")}</option>
-                  <option value="Yes">{t("Yes")}</option>
-                  <option className='' value="No">{t("No")}</option>
+                  <option selected value="Any">{t("any")}</option>
+                  <option value="Yes">{t("yes")}</option>
+                  <option className='' value="No">{t("no")}</option>
                 </select>
                 <Icon icon="gridicons:dropdown" color="black" height="24" className='right-16 absolute'/>
           </div>
 
             
           <hr class="h-0 border border-solid border-t-1 border-gray-400 opacity-80 mx-6 mb-3" />
-          <h1 className='ml-6 text-[#233c3b] mr-6 text-lg font-serif transition-colors duration-300'>Facilities</h1>
+          <h1 className='ml-6 text-[#233c3b] mr-6 text-lg font-serif transition-colors duration-300'>{t("facilities")} </h1>
 
 
           <div className='flex flex-col py-6 pb-10 relative mx-auto'>
@@ -281,7 +283,7 @@ const SearchResults = () => {
               </h1>
               <h1 className='mr-4 ml-10 text-sm first-letter:uppercase flex items-center'>
                 <input {...register("facilities.heat")} class="form-check-input facilities-checkbox" type="checkbox" value=""/>
-                 Heat
+                {t("heat")} 
               </h1>
               
             </div>
@@ -293,7 +295,7 @@ const SearchResults = () => {
               </h1>
               <h1 className='mr-4 ml-10 text-sm first-letter:uppercase flex items-center'>
                 <input {...register("facilities.kitchen")} class="form-check-input facilities-checkbox" type="checkbox" value=""  />
-                 Kitchen
+                {t("kitchen")} 
               </h1>
               
             </div>
@@ -302,11 +304,11 @@ const SearchResults = () => {
               
               <h1 className='ml-3 text-sm first-letter:uppercase flex items-center'>
                 <input {...register("facilities.parking")} class="form-check-input facilities-checkbox" type="checkbox" value=""  />
-                 Free Parking
+                {t("parking")} 
               </h1>
               <h1 className='mr-4 ml-10 text-sm first-letter:uppercase flex items-center'>
                 <input {...register("facilities.balcony")} class="form-check-input facilities-checkbox" type="checkbox" value=""  />
-                 Balcony 
+                {t("balcony")} 
               </h1>
             </div>
 
@@ -314,11 +316,11 @@ const SearchResults = () => {
               
               <h1 className='ml-3 text-sm first-letter:uppercase flex items-center'>
                 <input {...register("facilities.garden")} class="form-check-input facilities-checkbox" type="checkbox" value=""  />
-                 Garden
+                {t("garden")}
               </h1>
               <h1 className='mr-4 ml-10 text-sm first-letter:uppercase flex items-center'>
                 <input {...register("facilities.pool")} class="form-check-input facilities-checkbox" type="checkbox" value=""  />
-                 Pool 
+                {t("pool")} 
               </h1>
             </div>
 
@@ -326,11 +328,11 @@ const SearchResults = () => {
               
               <h1 className='ml-3 text-sm first-letter:uppercase flex items-center'>
                 <input {...register("facilities.hot tub")} class="form-check-input facilities-checkbox" type="checkbox" value=""  />
-                 Hot Tub
+                {t("hot-tub")}
               </h1>
               <h1 className='mr-4 ml-10 text-sm first-letter:uppercase flex items-center'>
                 <input {...register("facilities.bbq")} class="form-check-input facilities-checkbox" type="checkbox" value=""  />
-                 BBQ Grill
+                {t("bbq-grill")}
               </h1>
             </div>
 
@@ -338,30 +340,30 @@ const SearchResults = () => {
               
               <h1 className='ml-3 text-sm first-letter:uppercase flex items-center'>
                 <input {...register("facilities.bedroom")} class="form-check-input facilities-checkbox" type="checkbox" value=""  />
-                 Bedroom Stuff
+                {t("room-stuff")}
               </h1>
               <h1 className='mr-4 ml-10 text-sm first-letter:uppercase flex items-center'>
                 <input {...register("facilities.sports")} class="form-check-input facilities-checkbox" type="checkbox" value=""  />
-                 Sport Field
+                {t("sports")}
               </h1>
             </div>
 
             <div className='grid grid-cols-2'>
               <h1 className='ml-3 text-sm first-letter:uppercase flex items-center'>
                 <input {...register("facilities.bathroom")} class="form-check-input facilities-checkbox" type="checkbox" value=""  />
-                 Bathroom Stuff
+                {t("bath-stuff")}
               </h1>
               
               <h1 className='mr-4 ml-10 text-sm first-letter:uppercase flex items-center'>
                 <input {...register("facilities.pets")} class="form-check-input facilities-checkbox" type="checkbox" value=""  />
-                 Pets Allowed
+                {t("pets")}
               </h1>
             </div>
             <div className='grid grid-cols-1'>
 
               <h1 className='ml-3 text-sm first-letter:uppercase flex items-center'>
                 <input {...register("facilities.wash")} class="form-check-input facilities-checkbox" type="checkbox" value=""  />
-                 Washing Machine
+                 {t("wash")}
               </h1>
             </div>
           </div>

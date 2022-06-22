@@ -133,7 +133,7 @@ const AddPictures = () => {
           <img className='w-16' src={logo} alt='logo'/>
         </div>
         <div className='ml-8 m-auto text-5xl font-serif font-bold text-textMain'>
-          Add some pictures of your location
+        {t("add-pictures")}
         </div>
       </div>
       <div className='bg-stone-100 flex flex-col'>
@@ -146,7 +146,7 @@ const AddPictures = () => {
           
           <button class="px-3 py-1 bg-gray-300 hover:bg-gray-200 rounded-full text-gray-500 hover:text-gray-500/70 flex items-center gap-1 mr-2" onClick={() => navigate("/host", {state})}>
             <Icon icon="akar-icons:arrow-back-thick-fill" color="#777" />
-            <span className='text-lg font-serif'>Exit</span>
+            <span className='text-lg font-serif'>{t("exit")}</span>
           </button>
         </div>
 

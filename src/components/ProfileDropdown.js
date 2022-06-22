@@ -108,7 +108,7 @@ const ProfileDropdown = ({}) => {
                   text-gray-700
                   hover:bg-gray-100
                 "
-                >Bookings</button>
+                >{t("your-bookings")}</button>
             </li>
 
             <li>

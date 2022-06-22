@@ -43,7 +43,7 @@ const AddFurnished = () => {
           <img className='w-16' src={logo} alt='logo'/>
         </div>
         <div className='my-auto mx-8 text-5xl font-serif font-bold text-textMain'>
-          Is your accomodation furnished?
+        {t("is-furnished")}
         </div>
       </div>
       <div className='bg-stone-100 flex flex-col relative'>
@@ -55,7 +55,7 @@ const AddFurnished = () => {
           
           <button class="absolute px-3 py-1 bg-gray-300 hover:bg-gray-200 rounded-full text-gray-500 hover:text-gray-500/70 flex items-center gap-1 right-0 top-0" onClick={() => navigate("/host", {state})}>
             <Icon icon="akar-icons:arrow-back-thick-fill" color="#777" />
-            <span className='text-lg font-serif'>Exit</span>
+            <span className='text-lg font-serif'>{t("exit")}</span>
           </button>
           { error && 
               
@@ -68,12 +68,12 @@ const AddFurnished = () => {
         <div className='my-auto relative flex flex-col gap-10'>
           <button className='button-select flex flex-row place-content-center tracking-wide uppercase' onClick={e => setInput("yes")}>
             <Icon icon="dashicons:yes" color="#233c3b" height="27" className='mr-0.5' />
-            Yes
+            {t("yes")}
           </button>
 
           <button className='button-select flex flex-row place-content-center tracking-wide uppercase' onClick={e => setInput("no")}>
             <Icon icon="dashicons:no" color="#233c3b" height="27" className='mr-0.5'/>
-            No
+            {t("no")}
           </button>
         </div>
 

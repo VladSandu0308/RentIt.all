@@ -29,6 +29,7 @@ import { AuthProvider } from './context/UserAuthContext';
 import AdminLogin from './components/Admin/AdminLogin';
 import AdminPanel from './components/Admin/AdminPanel';
 import AdminPrivateRoute from './components/Admin/AdminPrivateRoute';
+import AddBlogPost from './components/Admin/AddBlogPost';
 
 function App() {
   return (
@@ -46,6 +47,11 @@ function App() {
               <Route path="/admin/panel" element={
                 <AdminPrivateRoute>
                   <AdminPanel />
+                </AdminPrivateRoute>
+              }/>
+              <Route path="/admin/blog" element={
+                <AdminPrivateRoute>
+                  <AddBlogPost />
                 </AdminPrivateRoute>
               }/>
               <Route path="/search" element={

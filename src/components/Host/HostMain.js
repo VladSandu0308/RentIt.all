@@ -38,7 +38,7 @@ const HostMain = () => {
       <div className='row-span-8 bg-secondary flex flex-col'>
           <button onClick={() => navigate("/host/add/mode", {state})} class="w-68 mx-auto mt-2 px-3 py-2 bg-gray-300 hover:bg-gray-200 rounded-full text-gray-500 hover:text-gray-500/70 flex items-center">
             <Icon icon="bi:house-door-fill" color="#233c3b" height="20" className='mr-2 mb-0.5'/>
-            <p className='text-textMain text-xl font-semibold uppercase'>add new location</p>
+            <p className='text-textMain text-xl font-semibold uppercase'>{t("add-new-location")}</p>
           </button>
 
         <div class="flex justify-around mt-4">

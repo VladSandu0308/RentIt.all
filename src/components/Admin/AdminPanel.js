@@ -45,9 +45,9 @@ const AdminPanel = () => {
       </div>
 
       <div className='row-span-8 bg-secondary flex flex-col'>
-        <button onClick={() => navigate("/host/add/mode", {state})} class="w-68 mx-auto mt-2 px-3 py-2 bg-gray-300 hover:bg-gray-200 rounded-full text-gray-500 hover:text-gray-500/70 flex items-center">
+        <button onClick={() => navigate("/admin/blog", {state})} class="w-68 mx-auto mt-2 px-3 py-2 bg-gray-300 hover:bg-gray-200 rounded-full text-gray-500 hover:text-gray-500/70 flex items-center">
           <Icon icon="dashicons:welcome-write-blog" color="#233c3b" height="22" className='mr-2 mb-0.5'/>
-          <p className='text-textMain text-xl font-semibold uppercase'>add new blog post</p>
+          <p className='text-textMain text-xl font-semibold uppercase'>{t("add-blog-post")}</p>
         </button>
 
         <div className='m-auto bg-primary pt-12 p-6 pb-4 flex flex-col'>
@@ -84,26 +84,26 @@ const AdminPanel = () => {
                     <button class="accordion-button collapsed relative flex items-center w-full py-4 px-5 text-base text-[#233c3b]text-left bg-white border-0 rounded-none transition focus:outline-none;"
                     type="button" data-bs-toggle="collapse" data-bs-target={`#id${user._id}`} aria-expanded="false"
                     aria-controls="collapseOne">
-                      user from {user.first_name}
+                      {t("user")} {user.first_name}
                     </button>
                   </h2>
                   <div id={`id${user._id}`}class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionusers">
                     <div class="accordion-body py-2 px-5 text-sm flex justify-between">
           
                       <div className='flex flex-col mx-4 my-auto gap-1'>
-                          <h5>Full Name: {user.first_name} {user.last_name}</h5>
+                          <h5>{t("full-name")}: {user.first_name} {user.last_name}</h5>
               
                       </div>
                       <div className='flex flex-col mx-4 my-auto gap-1'>
-                          <h5>Rating:  {user.grade}/10 ({user.review_count} ratings)</h5>
+                          <h5>{t("nota")}:  {user.grade}/10 ({user.review_count} {t("note")})</h5>
                           <h5>Email: {user.email} </h5>
-                          <h5>Phone: {user.phone}</h5>
+                          <h5>{t("phone")}: {user.phone}</h5>
                       </div>
                       
                       <div className='flex ml-4 mr-16 flex-col my-auto gap-1'>
-                          <h5>Personal Info: {user.personal_info} </h5>
-                          <h5>Purpose: {user.purpose} </h5>
-                          <h5>Interests:  {user.interests}</h5>
+                          <h5>{t("personal-info")}: {user.personal_info} </h5>
+                          <h5>{t("purpose")}: {user.purpose} </h5>
+                          <h5>{t("interests")}:  {user.interests}</h5>
                       </div>
                       <div className='flex flex-row gap-4 my-auto mr-4'>
                         <button className='w-9 h-9 m-auto rounded-full bg-primary hover:bg-secondary transition-colors duration-300 px-1.5' 

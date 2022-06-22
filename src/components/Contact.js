@@ -27,9 +27,9 @@ const Contact = () => {
       <div className='row-span-8 bg-secondary'>
         <div className='flex items-center ml-10 mb-1.5 mt-4'>
             <Icon icon="bxs:contact" color="#3ea1a9" className="mr-2" height="36"/>
-            <h1 className='text-[#3ea1a9] text-4xl font-ultra font-bold '>Contact an administrator</h1>
+            <h1 className='text-[#3ea1a9] text-4xl font-ultra font-bold '>{t("contact")}</h1>
           </div>
-          <h4 className='text-black text-lg ml-10 mb-16'>Do you have anything to tell us?</h4>
+          <h4 className='text-black text-lg ml-10 mb-16'>{t("anything-to-tell")}</h4>
           <form className='ml-10 flex flex-col' onSubmit={handleSubmit(onSubmit)}>
             <div className='flex flex-row gap-4 mb-8'>
               <div className='basis-1/2 relative flex items-center'>
@@ -62,7 +62,7 @@ const Contact = () => {
                         class="block big-contact-text pl-10"
                         id="exampleFormControlTextarea1"
                         rows="3"
-                        placeholder={t("type-your-message")}
+                        placeholder={t("type-here")}
                       ></textarea>
                   </div>
                   

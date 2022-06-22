@@ -17,8 +17,6 @@ const AddName = () => {
   const onSubmit = async e => {
     e.preventDefault();
 
-    
-
     if (state.id && input) {
       try {
         setError('');
@@ -35,12 +33,8 @@ const AddName = () => {
 
         navigate("/host/add/description", {state});
       }
-      
+     
     }
-
-    
-
-
   }
 
   return (
@@ -50,7 +44,7 @@ const AddName = () => {
           <img className='w-16' src={logo} alt='logo'/>
         </div>
         <div className='my-auto mx-8 text-5xl font-serif font-bold text-textMain'>
-          Add your location title
+        {t("add-title")}
         </div>
       </div>
       <div className='bg-stone-100 flex flex-col relative'>
@@ -62,7 +56,7 @@ const AddName = () => {
           
           <button class="absolute px-3 py-1 bg-gray-300 hover:bg-gray-200 rounded-full text-gray-500 hover:text-gray-500/70 flex items-center gap-1 right-0 top-0" onClick={() => navigate("/host", {state})}>
             <Icon icon="akar-icons:arrow-back-thick-fill" color="#777" />
-            <span className='text-lg font-serif'>Exit</span>
+            <span className='text-lg font-serif'>{t("exit")}</span>
           </button>
           { error && 
               
@@ -75,7 +69,7 @@ const AddName = () => {
         
         <div className='ml-5 my-auto relative flex items-center'>
           <Icon icon="bi:house-door-fill" color="#233c3b" height="24" className='absolute mb-24 ml-2 pb-0.5'/>
-          <textarea placeholder="Insert title" className='search-text' rows="5"  onChange={e => setInput(e.target.value)}/>
+          <textarea placeholder={t("type-here")} className='search-text' rows="5"  onChange={e => setInput(e.target.value)}/>
         </div>
 
         <div class="bg-gray-200 h-2 relative inset-x-0 bottom-20">

@@ -44,8 +44,9 @@ const Login = () => {
   const handleGoogle = async (data) => {
     google().then(async e => {
       server.post("/login", {email: e.user.email}).then(ret => {
-        setUser(ret.data.user[0])
+        
         if (ret.data.path != "/setPhone") {
+          setUser(ret.data.user[0])
           navigate(ret.data.path, {state: {user: ret.data.user[0]}})
         } else {
           navigate(ret.data.path, {state: {email: ret.data.email}})

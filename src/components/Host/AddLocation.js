@@ -49,7 +49,7 @@ const AddLocation = () => {
           <img className='w-16' src={logo} alt='logo'/>
         </div>
         <div className='my-auto mx-8 text-5xl font-serif font-bold text-textMain'>
-          Add your location
+        {t("add-location")}
         </div>
       </div>
       <div className='bg-stone-100 flex flex-col relative'>
@@ -61,7 +61,7 @@ const AddLocation = () => {
           
           <button class="absolute px-3 py-1 bg-gray-300 hover:bg-gray-200 rounded-full text-gray-500 hover:text-gray-500/70 flex items-center gap-1 right-0 top-0" onClick={() => navigate("/host", {state})}>
             <Icon icon="akar-icons:arrow-back-thick-fill" color="#777" />
-            <span className='text-lg font-serif'>Exit</span>
+            <span className='text-lg font-serif'>{t("exit")}</span>
           </button>
           { error && 
               
@@ -75,7 +75,7 @@ const AddLocation = () => {
           <CustomMap coords={coords}/>
           <div className='absolute top-3 left-4'>
             <Icon icon="entypo:location-pin" color="#233c3b" height="24" className='absolute ml-2 top-3 pb-0.5 z-0'/>
-            <input value={location} autoComplete="off" class="search-text" id="name" placeholder='Location' onChange={e => {setLocation(e.target.value); address.onChange(e);}}/>
+            <input value={location} autoComplete="off" class="search-text" id="name" placeholder={t("add-location")} onChange={e => {setLocation(e.target.value); address.onChange(e);}}/>
                   {
                       address.suggestions?.length > 0 && (
                         <div className='bg-white absolute w-96 py-4 px-1 z-10'>

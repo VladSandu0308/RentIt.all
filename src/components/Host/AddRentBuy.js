@@ -44,7 +44,7 @@ const AddRentBuy = () => {
           <img className='w-16' src={logo} alt='logo'/>
         </div>
         <div className='my-auto mx-8 text-5xl font-serif font-bold text-textMain'>
-          Set your announce type
+          {t("set-announce-type")}
         </div>
       </div>
       <div className='bg-stone-100 flex flex-col relative'>
@@ -56,7 +56,7 @@ const AddRentBuy = () => {
           
           <button class="absolute px-3 py-1 bg-gray-300 hover:bg-gray-200 rounded-full text-gray-500 hover:text-gray-500/70 flex items-center gap-1 right-0 top-0" onClick={() => navigate("/host", {state})}>
             <Icon icon="akar-icons:arrow-back-thick-fill" color="#777" />
-            <span className='text-lg font-serif'>Exit</span>
+            <span className='text-lg font-serif'>{t("exit")}</span>
           </button>
           { error && 
               

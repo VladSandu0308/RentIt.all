@@ -11,6 +11,7 @@ import { useAlert } from 'react-alert';
 
 const LocationRequests = () => {
   const {state} = useLocation();
+  console.log(state);
   const {t} = useTranslation();
   const navigate = useNavigate();
   const alert = useAlert();
@@ -54,9 +55,9 @@ const LocationRequests = () => {
     }); 
   }, []);
 
-  const handleAccept = async (id, name, from, to) => {
+  const handleAccept = async (id, email, name, from, to) => {
     try {
-      await server.put(`/acceptConnection/${id}`);
+      await server.put(`/acceptConnection/${id}`, {email, location_title: state.location.title});
       alert.success(`Succesfully accepted request for user ${name} starting from ${from} to ${to}`);
       navigate('/host', {state});
 
@@ -121,31 +122,41 @@ const LocationRequests = () => {
                     <button class="accordion-button collapsed relative flex items-center w-full py-4 px-5 text-base text-[#233c3b]text-left bg-white border-0 rounded-none transition focus:outline-none;"
                     type="button" data-bs-toggle="collapse" data-bs-target={`#id${request._id}`} aria-expanded="false"
                     aria-controls="collapseOne">
-                      Request from {users[request.user_id].first_name}
+                      Request from {users[request.user_id]?.first_name}
                     </button>
                   </h2>
                   <div id={`id${request._id}`}class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionRequests">
                     <div class="accordion-body py-2 px-5 text-sm flex justify-between">
           
                       <div className='flex flex-col mx-4 my-auto gap-1'>
-                          <h5>Full Name: {users[request.user_id].first_name} {users[request.user_id].last_name}</h5>
-                          <h5>Start Date: {request.from?.split('T')[0]} </h5>
-                          <h5>End Date: {request.to?.split('T')[0]}</h5>
+                          <h5>{t("full-name")}: {users[request.user_id].first_name} {users[request.user_id].last_name}</h5>
+                          {
+                            state.location.mode == "Rent" && (
+                              <h5>{t("start-date")}: {request.from?.split('T')[0]} </h5>
+                            )
+                          }
+                          {
+                            state.location.mode == "Rent" && (
+                              <h5>{t("end-daet")}: {request.to?.split('T')[0]} </h5>
+                            )
+                          }
+                          
+                         
                       </div>
                       <div className='flex flex-col mx-4 my-auto gap-1'>
-                          <h5>Rating:  {users[request.user_id].grade}/10 ({users[request.user_id].review_count} ratings)</h5>
+                          <h5>{t("nota")}:  {users[request.user_id].grade}/10 ({users[request.user_id].review_count} {t("note")})</h5>
                           <h5>Email: {users[request.user_id].email} </h5>
-                          <h5>Phone: {users[request.user_id].phone}</h5>
+                          <h5>{t("phone")}: {users[request.user_id].phone}</h5>
                       </div>
                       
                       <div className='flex ml-4 mr-16 flex-col my-auto gap-1'>
-                          <h5>Personal Info: {users[request.user_id].personal_info} </h5>
-                          <h5>Purpose: {users[request.user_id].purpose} </h5>
-                          <h5>Interests:  {users[request.user_id].interests}</h5>
+                          <h5>{t("personal-info")}: {users[request.user_id].personal_info} </h5>
+                          <h5>{t("purpsoe")}: {users[request.user_id].purpose} </h5>
+                          <h5>{t("interests")}:  {users[request.user_id].interests}</h5>
                       </div>
                       <div className='flex flex-row gap-4 my-auto mr-4'>
                         <button className='w-9 h-9 m-auto rounded-full bg-primary hover:bg-secondary transition-colors duration-300 px-1.5' 
-                          onClick={() => {handleAccept(request._id, users[request.user_id].first_name, request.from?.split('T')[0], request.to?.split('T')[0])}}>
+                          onClick={() => {handleAccept(request._id, users[request.user_id].email, users[request.user_id].first_name, request.from?.split('T')[0], request.to?.split('T')[0])}}>
                           <Icon icon="dashicons:yes" color="#233c3b" height="24" className=''/>
                         </button>
 

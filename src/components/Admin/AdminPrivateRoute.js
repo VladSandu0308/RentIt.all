@@ -7,7 +7,7 @@ export default function AdminPrivateRoute({ children, ...rest }) {
   const { currentUser } = useAuth();
   const {user} = useUser();
 
-  if (!user || user?.email != 'rentit.all.oficial@gmail.com') {
+  if (!user || user?.email != 'admin@rentit.all') {
     return (
       <Navigate to="/admin" />
     )

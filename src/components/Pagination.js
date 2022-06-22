@@ -1,3 +1,4 @@
+import { t } from 'i18next';
 import React from 'react';
 
 const Pagination = ({ perPage, totalPosts, paginate, currentPage }) => {
@@ -13,7 +14,7 @@ const Pagination = ({ perPage, totalPosts, paginate, currentPage }) => {
         <ul className='flex list-style-none'>
             <li key="001" className='page-item'>
               <button onClick={() => paginate(Math.max(currentPage - 1, 1))} className='page-link pagination'>
-                Previous
+              {t("previous")}
               </button>
             </li>
           {pageNumbers.map(number => (
@@ -34,7 +35,7 @@ const Pagination = ({ perPage, totalPosts, paginate, currentPage }) => {
 
             <li key="000" className='page-item'>
               <button onClick={() => paginate(Math.min(currentPage + 1, Math.ceil(totalPosts/perPage)))} className='page-link pagination'>
-                Next
+                {t("next-page")}
               </button>
             </li>
         </ul>

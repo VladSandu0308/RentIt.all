@@ -45,7 +45,7 @@ const AddReview = () => {
           <img className='w-16' src={logo} alt='logo'/>
         </div>
         <div className='ml-8 m-auto text-5xl font-serif font-bold text-textMain'>
-          Check out your listing
+          {t("check-listing")}
         </div>
       </div>
       <div className='bg-stone-100 flex flex-col shadow-3xl'>
@@ -57,7 +57,7 @@ const AddReview = () => {
           
           <button class="px-3 py-1 bg-gray-300 hover:bg-gray-200 rounded-full text-gray-500 hover:text-gray-500/70 flex items-center gap-1 mr-2" onClick={() => navigate("/host", {state})}>
             <Icon icon="akar-icons:arrow-back-thick-fill" color="#777" />
-            <span className='text-lg font-serif'>Exit</span>
+            <span className='text-lg font-serif'>{t("exit")}</span>
           </button>
         </div>
 
@@ -70,7 +70,7 @@ const AddReview = () => {
           <hr class="h-0 border border-solid border-t-0 border-gray-400 opacity-25 mx-4" />
 
           <div className='my-8 flex justify-between'>
-            <h1 className='mx-4 text-lg font-semibold first-letter:uppercase'>{state.body.mode} for {state.body.price} lei</h1>
+            <h1 className='mx-4 text-lg font-semibold first-letter:uppercase'>{t(state.body?.mode?.toLowerCase())} {t("for")} {state.body.price} RON</h1>
             <div className='flex flex-row mr-2'>
               <h1 className='mr-2 text-lg font-semibold first-letter:uppercase'> {state.user.first_name}</h1>
               <img class="w-7 h-7 rounded-full mr-1.5" src={state.user.profile} alt="dummy-image"></img>
@@ -82,7 +82,7 @@ const AddReview = () => {
 
           <div className='relative'>
             <hr class="h-0 border border-solid border-t-0 border-gray-400 opacity-25 mx-4" />
-            <h1 className=' mt-8 mx-4 text-md font-semibold first-letter:uppercase'>Location</h1>
+            <h1 className=' mt-8 mx-4 text-md font-semibold first-letter:uppercase'>{t("address")}</h1>
             <h1 className='mt-2 mb-2 mx-4 text-md first-letter:uppercase'>{state.body.location}</h1>
             <div className='mx-auto w-64 h-20 z-50 mb-10'>
               <CustomMap coords={state.body.coords}/>
@@ -96,15 +96,15 @@ const AddReview = () => {
           <hr class="h-0 border border-solid border-t-0 border-gray-400 opacity-25 mx-4" />
           <div className='my-8 flex justify-between'>
             <div className='grid grid-rows-3 gap-1'>
-              <h1 className='ml-4 text-md first-letter:uppercase'>{state.body.rooms} bedrooms </h1>
-              <h1 className='ml-4 text-md first-letter:uppercase'>{state.body.baths} bathrooms </h1>
+              <h1 className='ml-4 text-md first-letter:uppercase'>{state.body.rooms} {t("min-rooms")} </h1>
+              <h1 className='ml-4 text-md first-letter:uppercase'>{state.body.baths} {t("min-baths")} </h1>
               <h1 className='ml-4 text-md first-letter:uppercase'>{state.body.size} m<sup>2</sup> </h1>
             </div>
             <div className=' mr-7 grid grid-rows-3 gap-1'>
-              <h1 className='ml-2 text-md first-letter:uppercase'>{state.body.adults} adults </h1>
-              <h1 className='ml-2 text-md first-letter:uppercase'>{state.body.baths} children </h1>
+              <h1 className='ml-2 text-md first-letter:uppercase'>{state.body.adults} {t("adults")} </h1>
+              <h1 className='ml-2 text-md first-letter:uppercase'>{state.body.baths} {t("kids")} </h1>
               <h1 className='text-md first-letter:uppercase flex items-end'>
-                <Icon icon={`dashicons:${state.body.furnished}`} color="black" height="24" /> furnished 
+                <Icon icon={`dashicons:${state.body.furnished}`} color="black" height="24" /> {t("furnished")} 
               </h1>
             </div>
           </div>
@@ -113,10 +113,10 @@ const AddReview = () => {
           <div className='flex flex-col my-8'>
             <div className='grid grid-cols-2'>
               <h1 className='ml-3 text-sm first-letter:uppercase flex items-center'>
-                <Icon icon={`dashicons:${state.body.facilities.AC ? 'yes': 'no'}`} color="black" height="18" /> Air Conditioning
+                <Icon icon={`dashicons:${state.body.facilities.AC ? 'yes': 'no'}`} color="black" height="18" /> AC
               </h1>
               <h1 className='mr-4 ml-5 text-sm first-letter:uppercase flex items-center'>
-                <Icon icon={`dashicons:${state.body.facilities.heat ? 'yes': 'no'}`} color="black" height="18" /> Heat
+                <Icon icon={`dashicons:${state.body.facilities.heat ? 'yes': 'no'}`} color="black" height="18" /> {t("heat")}
               </h1>
               
             </div>
@@ -126,7 +126,7 @@ const AddReview = () => {
                 <Icon icon={`dashicons:${state.body.facilities.wifi ? 'yes': 'no'}`} color="black" height="18" /> WiFi 
               </h1>
               <h1 className='mr-4 ml-5 text-sm first-letter:uppercase flex items-center'>
-                <Icon icon={`dashicons:${state.body.facilities.kitchen ? 'yes': 'no'}`} color="black" height="18" /> Kitchen
+                <Icon icon={`dashicons:${state.body.facilities.kitchen ? 'yes': 'no'}`} color="black" height="18" /> {t("kitchen")}
               </h1>
               
             </div>
@@ -134,56 +134,56 @@ const AddReview = () => {
             <div className='grid grid-cols-2'>
               
               <h1 className='ml-3 text-sm first-letter:uppercase flex items-center'>
-                <Icon icon={`dashicons:${state.body.facilities['parking'] ? 'yes': 'no'}`} color="black" height="18" /> Free Parking
+                <Icon icon={`dashicons:${state.body.facilities['parking'] ? 'yes': 'no'}`} color="black" height="18" /> {t("parking")}
               </h1>
               <h1 className='mr-4 ml-5 text-sm first-letter:uppercase flex items-center'>
-                <Icon icon={`dashicons:${state.body.facilities.balcony ? 'yes': 'no'}`} color="black" height="18" /> Balcony 
+                <Icon icon={`dashicons:${state.body.facilities.balcony ? 'yes': 'no'}`} color="black" height="18" /> {t("balcony")}
               </h1>
             </div>
 
             <div className='grid grid-cols-2'>
               
               <h1 className='ml-3 text-sm first-letter:uppercase flex items-center'>
-                <Icon icon={`dashicons:${state.body.facilities.garden ? 'yes': 'no'}`} color="black" height="18" /> Garden
+                <Icon icon={`dashicons:${state.body.facilities.garden ? 'yes': 'no'}`} color="black" height="18" /> {t("garden")}
               </h1>
               <h1 className='mr-4 ml-5 text-sm first-letter:uppercase flex items-center'>
-                <Icon icon={`dashicons:${state.body.facilities.pool ? 'yes': 'no'}`} color="black" height="18" /> Pool 
+                <Icon icon={`dashicons:${state.body.facilities.pool ? 'yes': 'no'}`} color="black" height="18" /> {t("pool")}
               </h1>
             </div>
 
             <div className='grid grid-cols-2'>
               
               <h1 className='ml-3 text-sm first-letter:uppercase flex items-center'>
-                <Icon icon={`dashicons:${state.body.facilities['hot tub'] ? 'yes': 'no'}`} color="black" height="18" /> Hot Tub
+                <Icon icon={`dashicons:${state.body.facilities['hot tub'] ? 'yes': 'no'}`} color="black" height="18" /> {t("hot-tub")}
               </h1>
               <h1 className='mr-4 ml-5 text-sm first-letter:uppercase flex items-center'>
-                <Icon icon={`dashicons:${state.body.facilities.bbq ? 'yes': 'no'}`} color="black" height="18" /> BBQ Grill
+                <Icon icon={`dashicons:${state.body.facilities.bbq ? 'yes': 'no'}`} color="black" height="18" /> {t("bbq-grill")}
               </h1>
             </div>
 
             <div className='grid grid-cols-2'>
               
               <h1 className='ml-3 text-sm first-letter:uppercase flex items-center'>
-                <Icon icon={`dashicons:${state.body.facilities['bedroom'] ? 'yes': 'no'}`} color="black" height="18" /> Bedroom Stuff
+                <Icon icon={`dashicons:${state.body.facilities['bedroom'] ? 'yes': 'no'}`} color="black" height="18" /> {t("room-stuff")}
               </h1>
               <h1 className='mr-4 ml-5 text-sm first-letter:uppercase flex items-center'>
-                <Icon icon={`dashicons:${state.body.facilities['sports'] ? 'yes': 'no'}`} color="black" height="18" /> Sport Field
+                <Icon icon={`dashicons:${state.body.facilities['sports'] ? 'yes': 'no'}`} color="black" height="18" /> {t("sports")}
               </h1>
             </div>
 
             <div className='grid grid-cols-2'>
               <h1 className='ml-3 text-sm first-letter:uppercase flex items-center'>
-                <Icon icon={`dashicons:${state.body.facilities.bathroom ? 'yes': 'no'}`} color="black" height="18" /> Bathroom Stuff
+                <Icon icon={`dashicons:${state.body.facilities.bathroom ? 'yes': 'no'}`} color="black" height="18" /> {t("bath-stuff")}
               </h1>
               
               <h1 className='mr-4 ml-5 text-sm first-letter:uppercase flex items-center'>
-                <Icon icon={`dashicons:${state.body.facilities.pets ? 'yes': 'no'}`} color="black" height="18" /> Pets Allowed
+                <Icon icon={`dashicons:${state.body.facilities.pets ? 'yes': 'no'}`} color="black" height="18" /> {t("pets")}
               </h1>
             </div>
             <div className='grid grid-cols-1'>
 
               <h1 className='ml-3 text-sm first-letter:uppercase flex items-center'>
-                <Icon icon={`dashicons:${state.body.facilities.wash ? 'yes': 'no'}`} color="black" height="18" /> Washing Machine
+                <Icon icon={`dashicons:${state.body.facilities.wash ? 'yes': 'no'}`} color="black" height="18" /> {t("wash")}
               </h1>
             </div>
 
