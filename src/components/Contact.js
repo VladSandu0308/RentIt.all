@@ -6,6 +6,7 @@ import Navbar from './Navbar'
 
 import { Icon } from '@iconify/react';
 import { useForm } from 'react-hook-form';
+import { server } from '../services/axios';
 
 const Contact = () => {
   const {state} = useLocation();
@@ -14,8 +15,15 @@ const Contact = () => {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
 
-  const onSubmit = data => {
+  const onSubmit = async data => {
     console.log(data)
+
+    try {
+      await server.post("/contact", data);
+      navigate("/search", {state});
+    } catch (e) {
+      console.log(e.message);
+    }
 
   }
 

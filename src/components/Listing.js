@@ -63,8 +63,8 @@ const Listing = ({state, location, body}) => {
           <Carousel location={location} />
 
           <div className=' pt-6 pb-6 flex justify-between relative'>
-            <h1 className='ml-4 text-2xl font-bold first-letter:uppercase'>{location.title}</h1>
-            <h1 className='mr-4 mt-1 text-xl font-bold first-letter:uppercase'>{t("nota")}: {location.grade}/10</h1>
+            <h1 className='ml-4 text-xl font-bold first-letter:uppercase'>{location.title}</h1>
+            <h1 className='mr-4 text-xl font-bold first-letter:uppercase'>{t("nota")}: {location.grade}/10</h1>
             
           </div>
           <hr class="h-0 border border-solid border-t-0 border-gray-400 opacity-25 mx-4" />
