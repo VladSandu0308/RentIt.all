@@ -31,7 +31,7 @@ const AddPrice = () => {
       } else {
         state.body = {...state.body,  price: input};
 
-        navigate("/host/add/review", {state});
+        navigate("/host/add/cerere", {state});
       }
      
     }

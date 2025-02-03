@@ -30,6 +30,7 @@ import AdminLogin from './components/Admin/AdminLogin';
 import AdminPanel from './components/Admin/AdminPanel';
 import AdminPrivateRoute from './components/Admin/AdminPrivateRoute';
 import AddBlogPost from './components/Admin/AddBlogPost';
+import AddCerere from './components/Host/AddCerere';
 
 function App() {
   return (
@@ -107,6 +108,11 @@ function App() {
               <Route path="/host/add/price" element={
                 <PrivateRoute>
                   <AddPrice />
+                </PrivateRoute>
+              }/>
+              <Route path="/host/add/cerere" element={
+                <PrivateRoute>
+                  <AddCerere />
                 </PrivateRoute>
               }/>
               <Route path="/host/add/review" element={

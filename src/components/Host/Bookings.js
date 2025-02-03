@@ -136,7 +136,7 @@ function Bookings() {
             </button>
           <div className=" bg-secondary h-fit w-256 mx-auto my-16 flex flex-col">
             
-            <div className="mbsc-form-group-title font-semibold">{t("boogins-for")} {state.location.title}</div>
+            <div className="mbsc-form-group-title font-semibold">{t("bookings-for")} {state.location.title}</div>
               <Datepicker display="inline" controls={['calendar']} colors={colors} pages="2"/>
             <div className='flex justify-around gap-6 mx-auto mt-3'>
               <div className='relative flex items-center'>
