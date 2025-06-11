@@ -31,6 +31,9 @@ import AdminPanel from './components/Admin/AdminPanel';
 import AdminPrivateRoute from './components/Admin/AdminPrivateRoute';
 import AddBlogPost from './components/Admin/AddBlogPost';
 import AddCerere from './components/Host/AddCerere';
+import MinisterLogin from './components/Minister/MinisterLogin';
+import MinisterPrivateRoute from './components/Minister/MinisterPrivateRoute';
+import MinisterPanel from './components/Minister/MinisterPanel';
 
 function App() {
   return (
@@ -54,6 +57,12 @@ function App() {
                 <AdminPrivateRoute>
                   <AddBlogPost />
                 </AdminPrivateRoute>
+              }/>
+              <Route path="/minister" element={<MinisterLogin />}/>
+              <Route path="/minister/panel" element={
+                <MinisterPrivateRoute>
+                  <MinisterPanel />
+                </MinisterPrivateRoute>
               }/>
               <Route path="/search" element={
                 <PrivateRoute>

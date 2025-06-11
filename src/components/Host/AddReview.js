@@ -19,10 +19,8 @@ const AddReview = () => {
   const onSubmit = async e => {
     e.preventDefault();
 
-    
-
     state.body = {...state.body, grade: 0, 
-      review_count: 0, host_email: state.user.email}
+      review_count: 0, host_email: state.user.email, activated: false}
     console.log(state);
 
     try {
@@ -31,11 +29,7 @@ const AddReview = () => {
       navigate("/host", {state: {user: state.user}});
     } catch (e) {
       setError(e.message);
-    }
-
-    
-
-    
+    }    
   }
   console.log(state.body);
   return (

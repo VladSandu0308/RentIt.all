@@ -127,5 +127,8 @@
   "post-body": "Textul postarii",
   "Users": "Utilizatori",
   "apply-filters": "aplica filtrele",
+  "enable": "Aprobă",
+  "disable": "Dezaprobă",
+  "add-cerere": "Atașați documentele necesare",
   "user": "utilizatorul"
 }
