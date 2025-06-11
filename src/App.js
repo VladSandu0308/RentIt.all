@@ -54,9 +54,9 @@ function App() {
                 </AdminPrivateRoute>
               }/>
               <Route path="/admin/blog" element={
-                <AdminPrivateRoute>
+                <MinisterPrivateRoute>
                   <AddBlogPost />
-                </AdminPrivateRoute>
+                </MinisterPrivateRoute>
               }/>
               <Route path="/minister" element={<MinisterLogin />}/>
               <Route path="/minister/panel" element={
