@@ -293,17 +293,10 @@ const AddCerere = () => {
               <p className="text-sm">{error}</p>
             </div>
           }
-          
-          {isUpdatingPermits && (
-            <div className="mx-auto mt-14 bg-blue-100 border-t-4 border-blue-400 rounded-b text-blue-900 px-4 py-3 shadow-md absolute inset-x-32 top-0">
-              <p className="font-bold">Actualizare permise</p>
-              <p className="text-sm">Încărcați doar permisele respinse sau lipsă</p>
-            </div>
-          )}
         </div>
 
         {requiredPermits.length > 0 && (
-          <div className={`h-128 2xl:h-256 ml-8 2xl:mx-auto ${error || isUpdatingPermits ? 'mt-1': 'mt-20'} mb-40 flex flex-col overflow-y-auto scrollbar-hide 2xl:px-36`}>
+          <div className={`h-128 2xl:h-256 ml-8 2xl:mx-auto ${error ? 'mt-1': 'mt-20'} mb-40 flex flex-col overflow-y-auto scrollbar-hide 2xl:px-36`}>
             
             {/* Progress indicator */}
             <div className='mb-6 bg-white rounded-lg p-4 shadow-sm'>

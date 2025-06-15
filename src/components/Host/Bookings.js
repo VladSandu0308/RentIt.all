@@ -9,6 +9,7 @@ import Pagination from '../Pagination';
 import { useAlert } from 'react-alert';
 import { server } from '../../services/axios';
 import { Icon } from '@iconify/react';
+import SimpleInvoiceGenerationModal from '../invoicing/SimpleInvoiceGenerationModal';
 
 setOptions({
     theme: 'ios',
@@ -19,7 +20,6 @@ const now = Date.now();
 
 function Bookings() {
   const {state} = useLocation();
-  console.log(state);
   const {t} = useTranslation();
   const navigate = useNavigate();
   const alert = useAlert();
@@ -28,8 +28,11 @@ function Bookings() {
   const [users, setUsers] = useState({});
   const [retMessage, setRetMessage] = useState("");
   const [colors, setColors] = useState([]);
+  const [showInvoiceModal, setShowInvoiceModal] = useState(false);
+  const [selectedBookingForInvoice, setSelectedBookingForInvoice] = useState(null);
+  const [invoiceRequests, setInvoiceRequests] = useState([]);
 
-  const [perPage, setPerPage] = useState(4);
+  const [perPage, setPerPage] = useState(2);
   const [currentPage, setCurrentPage] = useState(1);
 
   const [start, setStart] = useState();
@@ -41,7 +44,7 @@ function Bookings() {
   const firstIndex = lastIndex - perPage;
   currentRequests = requests?.slice(firstIndex, lastIndex);
 
-  // Calculate quick stats
+  // Calculate quick stats including invoice data
   const calculateStats = () => {
     const confirmedBookings = requests.filter(r => 
       r.status === 'Payment completed - Booking confirmed' || 
@@ -52,6 +55,10 @@ function Bookings() {
       r.status === 'Request accepted by host - Awaiting payment' ||
       r.status === 'Accepted - Payment in progress'
     );
+    
+    const pendingInvoices = requests.filter(r => 
+      r.invoice_status === 'requested' || r.invoice_status === 'processing'
+    ).length;
     
     const totalRevenue = confirmedBookings.reduce((sum, r) => sum + (r.total_amount || 0), 0);
     
@@ -64,7 +71,8 @@ function Bookings() {
       totalRevenue, 
       totalBookings: confirmedBookings.length, 
       occupancyDays,
-      pendingPayments: pendingPayments.length
+      pendingPayments: pendingPayments.length,
+      pendingInvoices
     };
   };
 
@@ -72,7 +80,6 @@ function Bookings() {
   const generateCalendarColors = () => {
     let tempColors = [];
     
-    // Add booking colors based on status
     requests.forEach(request => {
       let backgroundColor = '#94a3b880'; // default gray
       
@@ -134,6 +141,19 @@ function Bookings() {
     return null;
   };
 
+  const getInvoiceStatusBadge = (invoiceStatus) => {
+    if (invoiceStatus === 'requested') {
+      return <span className="bg-orange-100 text-orange-800 px-2 py-1 rounded-full text-xs font-semibold ml-2">Invoice Requested</span>;
+    }
+    if (invoiceStatus === 'processing') {
+      return <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-semibold ml-2">Processing Invoice</span>;
+    }
+    if (invoiceStatus === 'generated') {
+      return <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-semibold ml-2">Invoice Ready</span>;
+    }
+    return null;
+  };
+
   const handleReview = async (id, conn_id) => {
     try {
       await server.put(`/addRating/${id}/${conn_id}`, {grade: rating})
@@ -145,6 +165,70 @@ function Bookings() {
       console.log(e.message)
     }
   }
+
+  const handleGenerateInvoice = (request) => {
+    setSelectedBookingForInvoice(request);
+    setShowInvoiceModal(true);
+  };
+
+  const handleInvoiceGenerated = async (invoiceData) => {
+    try {
+      await server.post(`/generateInvoice/${selectedBookingForInvoice._id}`, {
+        ...invoiceData,
+        booking_id: selectedBookingForInvoice._id,
+        user_id: selectedBookingForInvoice.user_id,
+        location_id: state.location._id,
+        host_id: state.user._id
+      });
+      
+      alert.success('Factură generată cu succes!');
+      setShowInvoiceModal(false);
+      setSelectedBookingForInvoice(null);
+      
+      // Refresh to show updated status
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    } catch (e) {
+      alert.error('Eroare la generarea facturii');
+      console.log(e.message);
+    }
+  };
+
+  const downloadGeneratedInvoice = async (bookingId) => {
+    try {
+      const response = await server.get(`/downloadInvoice/${bookingId}`, {
+        responseType: 'blob'
+      });
+      
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `invoice_${bookingId}.pdf`);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (e) {
+      alert.error('Eroare la descărcarea facturii');
+      console.log(e.message);
+    }
+  };
+
+  const markInvoiceAsProcessing = async (bookingId) => {
+    try {
+      await server.put(`/updateInvoiceStatus/${bookingId}`, {
+        status: 'processing'
+      });
+      alert.success('Status factură actualizat');
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    } catch (e) {
+      alert.error('Eroare la actualizarea statusului');
+      console.log(e.message);
+    }
+  };
 
   const addUnavailability = async e => {
     e.preventDefault();
@@ -158,7 +242,6 @@ function Bookings() {
         
         alert.success("Unavailable dates added successfully!");
         
-        // Refresh colors with new unavailable dates
         setTimeout(() => {
           window.location.reload();
         }, 1000);
@@ -195,6 +278,13 @@ function Bookings() {
         })
       }
     });
+
+    // Fetch invoice requests for this location
+    server.get(`/getInvoiceRequests/${state.location._id}`).then(ret => {
+      setInvoiceRequests(ret.data.requests || []);
+    }).catch(e => {
+      console.log('No invoice requests found');
+    });
   }, []);
 
   // Update calendar colors when requests change
@@ -217,10 +307,11 @@ function Bookings() {
           <Icon icon="akar-icons:arrow-back-thick-fill" color="#777" />
           <span className='text-lg font-serif'>{t("go-back")}</span>
         </button>
-       {/* Left Column - Scrollable Calendar */}
-        <div className="bg-secondary mt-16 h-164 overflow-y-auto">
+       
+        {/* Left Column - Scrollable Calendar */}
+        <div className="bg-secondary mt-4 h-164 overflow-y-auto">
           <div className="w-256 mx-auto pt-16 pb-8 px-4">
-            {/* Quick Stats - Added */}
+            {/* Enhanced Stats with Invoice Info */}
             <div className="bg-white rounded-lg shadow-lg p-4 mb-4">
               <h3 className="text-base font-semibold text-gray-800 mb-3 flex items-center">
                 <Icon icon="material-symbols:analytics" className="mr-2" height="18" color="#233c3b" />
@@ -244,9 +335,24 @@ function Bookings() {
                   <div className="text-xs text-gray-600">Pending</div>
                 </div>
               </div>
+              
+              {/* Invoice Stats */}
+              {stats.pendingInvoices > 0 && (
+                <div className="mt-3 pt-3 border-t border-gray-200">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center">
+                      <Icon icon="material-symbols:receipt-long" className="mr-2" height="16" color="#f59e0b" />
+                      <span className="text-sm text-gray-700">Facturi solicitate:</span>
+                    </div>
+                    <span className="bg-orange-100 text-orange-800 px-2 py-1 rounded-full text-xs font-semibold">
+                      {stats.pendingInvoices}
+                    </span>
+                  </div>
+                </div>
+              )}
             </div>
 
-            {/* Calendar Legend - Added */}
+            {/* Calendar Legend - Enhanced */}
             <div className="bg-white rounded-lg shadow p-3 mb-3">
               <h4 className="font-semibold mb-2 text-gray-800 text-sm">Calendar Legend</h4>
               <div className="grid grid-cols-2 gap-1 text-xs">
@@ -283,16 +389,18 @@ function Bookings() {
             </div>
 
             <div className='flex flex-row mx-auto mb-4 gap-2'>
-              <button onClick={addUnavailability} type="submit" className='uppercase inline-block w-fit  bg-[#3ea1a9] hover:bg-[#3ea1a9]/80 transition-colors text-lg 2xl:text-xl duration-300 mt-8 text-white py-1 px-4 2xl:px-12 2xl:py-3 rounded-2xl'>{t("add-unavaiablity")}</button>
+              <button onClick={addUnavailability} type="submit" className='uppercase inline-block w-fit bg-[#3ea1a9] hover:bg-[#3ea1a9]/80 transition-colors text-lg 2xl:text-xl duration-300 mt-8 text-white py-1 px-4 2xl:px-12 2xl:py-3 rounded-2xl'>{t("add-unavaiablity")}</button>
             </div>
           </div>
         </div>
 
-        <div className='my-16 mx-auto bg-primary pt-12 p-6 pb-4 flex flex-col'>
+        {/* Right Column - Bookings List */}
+        <div className='my-2 mx-auto bg-primary pt-12 p-6 pb-4 flex flex-col'>
           <div className="m-auto my-2 text-white relative bottom-6 flex items-center">
             <Icon icon="cil:search" color="#233c3b" rotate={1} className="mr-2" height="30"/>
             <h1 className='text-[#233c3b] text-4xl font-ultra font-bold '>{t("Location-bookings")}</h1>
           </div>
+          
           {
             (users.length == 0 || requests.length == 0) && (
               retMessage == "This location has no bookings" ? (
@@ -308,7 +416,8 @@ function Bookings() {
               )
             )
           }
-          <div className='accordion w-300 h-80 ' id="accordionRequests">
+          
+          <div className='accordion w-300' id="accordionRequests">
             {
               currentRequests.map((request) => (
                 <div key={request._id} className="accordion-item bg-white border border-gray-200">
@@ -318,64 +427,139 @@ function Bookings() {
                     aria-controls="collapseOne">
                       <div className="flex items-center justify-between w-full">
                         <span>{t("booking-from")} {users[request.user_id]?.first_name}</span>
-                        {getBookingStatusBadge(request.status)}
+                        <div className="flex items-center">
+                          {getBookingStatusBadge(request.status)}
+                          {getInvoiceStatusBadge(request.invoice_status)}
+                        </div>
                       </div>
                     </button>
                   </h2>
                   <div id={`id${request._id}`} className="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionRequests">
-                    <div className="accordion-body py-2 px-2 text-sm flex justify-between">
-          
-                      <div className='flex flex-col mr-2 my-auto gap-1'>
-                          <h5>{t("full-name")}: {users[request.user_id]?.first_name} {users[request.user_id]?.last_name}</h5>
-                          <h5>{t("start-date")}: {request.from?.split('T')[0]} </h5>
-                          <h5>{t("end-date")}: {request.to?.split('T')[0]}</h5>
-                          {request.status && (
-                            <h5 className={getBookingStatusColor(request.status)}>
-                              <strong>Status:</strong> {request.status}
-                            </h5>
-                          )}
-                      </div>
-                      <div className='flex flex-col mx-2 my-auto gap-1'>
-                          <h5>{t("nota")}:  {users[request.user_id]?.grade}/10 ({users[request.user_id]?.review_count} {t("note")})</h5>
-                          <h5>Email: {users[request.user_id]?.email} </h5>
-                          <h5>{t("phone")}: {users[request.user_id]?.phone}</h5>
-                          {request.total_amount && (
-                            <h5><strong>Total:</strong> {request.total_amount} RON</h5>
-                          )}
-                      </div>
-                      
-                      <div className='flex ml-2 flex-col my-auto gap-1'>
-                          <h5>{t("personal-info")}: {users[request.user_id]?.personal_info} </h5>
-                          <h5>{t("purpose")}: {users[request.user_id]?.purpose} </h5>
-                          <h5>{t("interests")}:  {users[request.user_id]?.interests}</h5>
+                    <div className="accordion-body py-2 px-2 text-sm">
+                      <div className="flex justify-between">
+                        <div className='flex flex-col mr-2 my-auto gap-1'>
+                            <h5>{t("full-name")}: {users[request.user_id]?.first_name} {users[request.user_id]?.last_name}</h5>
+                            <h5>{t("start-date")}: {request.from?.split('T')[0]} </h5>
+                            <h5>{t("end-date")}: {request.to?.split('T')[0]}</h5>
+                            {request.status && (
+                              <h5 className={getBookingStatusColor(request.status)}>
+                                <strong>Status:</strong> {request.status}
+                              </h5>
+                            )}
+                        </div>
+                        <div className='flex flex-col mx-2 my-auto gap-1'>
+                            <h5>{t("nota")}:  {users[request.user_id]?.grade}/10 ({users[request.user_id]?.review_count} {t("note")})</h5>
+                            <h5>Email: {users[request.user_id]?.email} </h5>
+                            <h5>{t("phone")}: {users[request.user_id]?.phone}</h5>
+                            {request.total_amount && (
+                              <h5><strong>Total:</strong> {request.total_amount} RON</h5>
+                            )}
+                        </div>
+                        
+                        <div className='flex ml-2 flex-col my-auto gap-1'>
+                            <h5>{t("personal-info")}: {users[request.user_id]?.personal_info} </h5>
+                            <h5>{t("purpose")}: {users[request.user_id]?.purpose} </h5>
+                            <h5>{t("interests")}:  {users[request.user_id]?.interests}</h5>
+                        </div>
+
+                        <div className='flex flex-col my-auto gap-2'>
+                          {/* Review Section */}
+                          {
+                            new Date(request.to) <= now && (
+                              request.reviewed_location ? (
+                                <p className='text-sm flex items-center mr-1 text-green-600'>
+                                  <Icon icon="material-symbols:check-circle" className="mr-1" height="16" />
+                                  {t("reviewed")}
+                                </p> 
+                              ) : (
+                                <div className='flex items-center gap-2'>
+                                  <div className='relative flex items-center'>
+                                    <Icon icon="akar-icons:star" color="#233c3b" height="16" className='absolute ml-1 select-none'/>
+                                    <input onChange={e => setRating(e.target.value)} type="number" min="1" max="10" className='rating-range w-14 pl-5' placeholder="Rate"/>
+                                  </div>
+                                  <button 
+                                    className={`w-8 h-8 rounded-full bg-primary px-1.5 ${(new Date(request.to) > now || request.reviewed_location) ? 'cursor-not-allowed opacity-50' : 'hover:bg-secondary transition-colors duration-300'}`} 
+                                    onClick={() => handleReview(request.user_id, request._id)}
+                                    disabled={new Date(request.to) > now || request.reviewed_location}
+                                  >
+                                    <Icon icon="ic:baseline-grade" color="#233c3b" height="16"/>
+                                  </button>
+                                </div>
+                              )
+                            )
+                          }
+                        </div>
                       </div>
 
-                      <div className='flex flex-row my-auto '>
-                        {
-                          new Date(request.to) <= now && (
-                            request.reviewed_location ? (
-                              <p className='text-sm flex items-center mr-1'>
-                                {t("reviewed")}
-                              </p> 
-                            ) : (
-                              <div className=' relative flex items-center mr-2'>
-                                <Icon icon="akar-icons:star" color="#233c3b" height="16" className='absolute ml-1 select-none'/>
-                                <input onChange={e => setRating(e.target.value)} type="number" min="1" max="10" className=' rating-range w-14 pl-5'/>
-                              </div> 
-                            )
-                          )
-                        }
-                                                 
-                        {
-                          !request.reviewed_location && (
-                            <button className={`w-9 h-9 m-auto rounded-full bg-primary  px-1.5 ${(new Date(request.to) > now || request.reviewed_location) ? 'cursor-not-allowed opacity-50' : 'hover:bg-secondary transition-colors duration-300'}`} 
-                              onClick={() => handleReview(request.user_id, request._id)}>
-                              <Icon icon="ic:baseline-grade" color="#233c3b" height="24" className=''/>
-                            </button>
-                          )
-                        }
-                    </div>
-                      
+                      {/* Invoice Management Section */}
+                      {(request.status === 'Payment completed - Booking confirmed' || 
+                        (request.completed && request.status?.includes('Payment completed'))) && (
+                        <div className="mt-4 pt-4 border-t border-gray-200">
+                          <div className="flex items-center justify-between">
+                            <h6 className="font-semibold text-gray-700 flex items-center">
+                              <Icon icon="material-symbols:receipt-long" className="mr-2" height="18" />
+                              Documente & Facturare:
+                            </h6>
+                            
+                            <div className="flex items-center space-x-2">
+                              {request.invoice_status === 'requested' && (
+                                <>
+                                  <button
+                                    onClick={() => handleGenerateInvoice(request)}
+                                    className="flex items-center px-3 py-1 bg-green-100 hover:bg-green-200 text-green-700 rounded-lg text-xs transition-colors duration-300"
+                                  >
+                                    <Icon icon="material-symbols:receipt-long-add" className="mr-1" height="14" />
+                                    Generează factură
+                                  </button>
+                                  <button
+                                    onClick={() => markInvoiceAsProcessing(request._id)}
+                                    className="flex items-center px-3 py-1 bg-blue-100 hover:bg-blue-200 text-blue-700 rounded-lg text-xs transition-colors duration-300"
+                                  >
+                                    <Icon icon="material-symbols:sync" className="mr-1" height="14" />
+                                    Procesez manual
+                                  </button>
+                                </>
+                              )}
+                              
+                              {request.invoice_status === 'processing' && (
+                                <button
+                                  onClick={() => handleGenerateInvoice(request)}
+                                  className="flex items-center px-3 py-1 bg-green-100 hover:bg-green-200 text-green-700 rounded-lg text-xs transition-colors duration-300"
+                                >
+                                  <Icon icon="material-symbols:upload" className="mr-1" height="14" />
+                                  Încarcă factură
+                                </button>
+                              )}
+                              
+                              {request.invoice_status === 'generated' && (
+                                <button
+                                  onClick={() => downloadGeneratedInvoice(request._id)}
+                                  className="flex items-center px-3 py-1 bg-green-100 hover:bg-green-200 text-green-700 rounded-lg text-xs transition-colors duration-300"
+                                >
+                                  <Icon icon="material-symbols:download" className="mr-1" height="14" />
+                                  Descarcă factură
+                                </button>
+                              )}
+                              
+                              {!request.invoice_status && (
+                                <span className="text-xs text-gray-500 italic">
+                                  Nicio solicitare de factură
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                          
+                          {/* Invoice Request Details */}
+                          {request.invoice_details && (
+                            <div className="mt-2 p-2 bg-gray-50 rounded text-xs">
+                              <strong>Detalii solicitare:</strong>
+                              <div>Nume firmă: {request.invoice_details.company_name}</div>
+                              <div>CUI: {request.invoice_details.cui}</div>
+                              <div>Adresă: {request.invoice_details.address}</div>
+                            </div>
+                          )}
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -390,11 +574,21 @@ function Bookings() {
           }   
         </div>
       </div>
+
+      {/* Simple Invoice Generation Modal */}
+      {showInvoiceModal && selectedBookingForInvoice && (
+        <SimpleInvoiceGenerationModal
+          booking={selectedBookingForInvoice}
+          user={users[selectedBookingForInvoice.user_id]}
+          location={state.location}
+          onClose={() => setShowInvoiceModal(false)}
+          onGenerate={handleInvoiceGenerated}
+        />
+      )}
         
-      <div className=''>
-           
+      <div className='bottom-0'>
+        <Footer />   
       </div>
-      
     </div>
   )
 }
